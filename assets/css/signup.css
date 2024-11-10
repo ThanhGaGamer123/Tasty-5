@@ -69,6 +69,11 @@ a {
 .navbar {
   height: 100px;
   background-color: var(--primary-color);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .navbar__row {
@@ -120,6 +125,9 @@ a {
 }
 
 /* main */
+.main {
+  padding: 100px 0 0;
+}
 
 /* form */
 .form {
@@ -172,20 +180,20 @@ a {
 }
 
 .form__btn {
-  padding: 10px 140px;
+  padding: 10px 155px;
   margin: 0 100px;
 }
 
-.form__signup {
+.form__login {
   margin-left: 170px;
   padding: 24px 0 40px;
 }
 
-.signup-link {
+.login-link {
   color: blue;
   transition: 0.2s;
 }
 
-.signup-link:hover {
+.login-link:hover {
   opacity: 0.7;
 }

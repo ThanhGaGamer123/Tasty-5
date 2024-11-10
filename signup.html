@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- link css -->
     <link rel="stylesheet" href="./assets/css/reset.css" />
-    <link rel="stylesheet" href="./assets/css/login.css" />
+    <link rel="stylesheet" href="./assets/css/signup.css" />
     <!-- embed font -->
     <link
       rel="stylesheet"
@@ -173,7 +173,22 @@
     <main class="main">
       <form action="" class="form">
         <!-- heading -->
-        <div class="section-heading form__heading">Đăng Nhập Vào Tasty 5</div>
+        <div class="section-heading form__heading">
+          Đăng Ký Tài Khoản Tasty 5
+        </div>
+
+        <!-- username -->
+        <div class="form-input form__username">
+          <label class="form__label" for="email">Họ và Tên</label> <br />
+          <input
+            type="text"
+            name="username"
+            placeholder="Nhập họ tên của bạn"
+            required="true"
+            id="username"
+            class="form__input"
+          />
+        </div>
 
         <!-- email -->
         <div class="form-input form__email">
@@ -201,18 +216,32 @@
           />
         </div>
 
+        <!-- re-password -->
+        <div class="form-input form__re-password">
+          <label class="form__label" for="re-password">Xác Nhận Mật Khẩu</label>
+          <br />
+          <input
+            type="password"
+            placeholder="Nhập lại mật khẩu của bạn"
+            required="true"
+            name="re-password"
+            id="re-password"
+            class="form__input"
+          />
+        </div>
+
         <!-- forget -->
         <div class="form__forget">
           <a href="./forget.html" class="forget-link">Quên mật khẩu?</a>
         </div>
 
         <!-- button -->
-        <button class="btn form__btn">Đăng Nhập</button>
+        <button class="btn form__btn">Đăng Ký</button>
 
-        <!-- sign up -->
-        <div class="form__signup">
-          Chưa có tài khoản?
-          <a href="./signup.html" class="signup-link">Đăng ký ngay</a>
+        <!-- sign in -->
+        <div class="form__login">
+          Đã có tài khoản?
+          <a href="./login.html" class="login-link">Đăng nhập ngay</a>
         </div>
       </form>
     </main>

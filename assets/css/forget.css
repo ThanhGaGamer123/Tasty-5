@@ -172,20 +172,20 @@ a {
 }
 
 .form__btn {
-  padding: 10px 140px;
+  padding: 10px 135px;
   margin: 0 100px;
 }
 
-.form__signup {
-  margin-left: 170px;
+.form__login {
+  margin-left: 225px;
   padding: 24px 0 40px;
 }
 
-.signup-link {
+.login-link {
   color: blue;
   transition: 0.2s;
 }
 
-.signup-link:hover {
+.login-link:hover {
   opacity: 0.7;
 }
