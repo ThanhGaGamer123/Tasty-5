@@ -19,6 +19,13 @@ html {
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/Open_Sans/static/OpenSans-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
 body {
   font-size: 1.6rem;
   font-family: "Open Sans", sans-serif;
