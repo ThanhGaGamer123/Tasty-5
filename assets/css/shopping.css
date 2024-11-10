@@ -11,6 +11,14 @@ html {
   font-size: 62.5%;
 }
 
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   font-size: 1.6rem;
   font-family: "Open Sans", sans-serif;
