@@ -355,3 +355,54 @@ a {
 .media-icon:hover {
   transform: scale(1.1);
 }
+
+/* copyright */
+.copyright {
+  background: #333;
+}
+
+.copyright__desc {
+  color: #fff;
+  padding: 24px 0;
+  font-size: 2rem;
+  text-align: center;
+}
+
+/* button */
+.button {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+}
+
+@keyframes jumpUp {
+  0% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(5px);
+  }
+  50% {
+    transform: translateY(0px);
+  }
+  75% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.button__img {
+  width: 46px;
+  height: 46px;
+  color: var(--primary-color);
+  filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
+  transition: 0.3s;
+  animation: jumpUp 1.5s linear infinite;
+}
+
+.button__img:hover {
+  transform: scale(1.1);
+  animation: none;
+}
