@@ -196,7 +196,7 @@ a {
 
 .form__btn {
   padding: 10px 155px;
-  margin: 0 100px;
+  margin: 10px 100px;
 }
 
 .form__login {
@@ -211,4 +211,20 @@ a {
 
 .login-link:hover {
   opacity: 0.7;
+}
+
+/* javascript */
+
+/* wrongValue */
+.form__wrong {
+  border: 1px solid red;
+}
+
+.input__wrong {
+  display: block;
+  padding-top: 4px;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: red;
+  width: calc(600px - 210px);
 }
