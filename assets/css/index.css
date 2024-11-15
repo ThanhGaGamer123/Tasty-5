@@ -93,7 +93,7 @@ a {
   align-items: center;
   justify-content: space-between;
   max-height: 100px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .navbar__logo {
@@ -420,4 +420,78 @@ a {
 .button__img:hover {
   transform: scale(1.1);
   animation: none;
+}
+
+/* javascript */
+
+/* log in navbar */
+.navbar__item-desc-active {
+  display: block;
+  margin-top: 2px;
+  font-size: 1.8rem;
+  max-width: 250px;
+}
+
+.log-out {
+  width: 220px;
+  height: 50px;
+  background: var(--secondary-color);
+  border-radius: 8px;
+  position: absolute;
+  left: 0px;
+  top: 30px;
+  display: none;
+}
+
+.log-out__row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.log-out__img {
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  transition: 0.2s;
+}
+
+.log-out__desc {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-left: 12px;
+  transition: 0.2s;
+}
+
+.log-out__row:hover {
+  opacity: 0.8;
+}
+
+.navbar__login:hover {
+  opacity: 1;
+}
+
+.navbar__login-block {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  transition: 0.2s;
+  position: relative;
+}
+
+.navbar__login-block-active:hover .log-out {
+  display: block;
+  box-shadow: rgba(100, 100, 111, 0.5) 0px 7px 29px 0px;
+}
+
+.bridge {
+  width: 220px;
+  height: 30px;
+  background: transparent;
+  position: absolute;
+  top: -10px;
 }
