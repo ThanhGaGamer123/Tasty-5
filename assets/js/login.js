@@ -52,13 +52,12 @@ form.addEventListener("submit", (e) => {
   if (flag) {
     alert("Đăng nhập thành công.");
     const nav__login = document.querySelector("#navbar__login");
-    nav__login.href = "#!";
     nav__login.classList.add("navbar__login");
     const navbar__loginDesc = document.querySelector("#navbar__login-desc");
     navbar__loginDesc.textContent = name; // Sử dụng thuộc tính name
     navbar__loginDesc.classList.add("navbar__item-desc-active");
     const navbar__login_block = document.querySelector(".navbar__login-block");
     navbar__login_block.classList.add("navbar__login-block-active");
-    form.reset();
+    window.location.href = "./index.html";
   } else alert("Tài khoản hoặc mật khẩu không đúng.");
 });
