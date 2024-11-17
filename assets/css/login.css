@@ -231,7 +231,7 @@ a {
 
 .log-out {
   width: 220px;
-  height: 50px;
+  height: 160px;
   background: var(--secondary-color);
   border-radius: 8px;
   position: absolute;
@@ -291,4 +291,23 @@ a {
   background: transparent;
   position: absolute;
   top: -10px;
+}
+
+.others {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 4px;
+}
+
+.others__underline {
+  display: block;
+  width: 210px;
+  height: 0.1px;
+  border-radius: 999px;
+  background: #000;
+  opacity: 0.15;
+  margin-top: 8px;
+  margin-left: 4px;
 }

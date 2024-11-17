@@ -18,7 +18,7 @@ window.addEventListener("load", (e) => {
 });
 
 //Reset tài khoản khi đăng xuất
-const log_out = document.querySelector(".log-out");
+const log_out = document.querySelector("#log_out");
 log_out.addEventListener("click", (e) => {
   e.preventDefault();
   localStorage.removeItem("LoginUser");
