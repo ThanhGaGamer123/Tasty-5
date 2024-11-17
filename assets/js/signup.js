@@ -170,12 +170,14 @@ form.addEventListener("submit", (e) => {
         accArray.push(customer);
         localStorage.setItem("accArray", JSON.stringify(accArray));
         alert("Tạo tài khoản thành công.");
+        window.location.href = "./login.html";
       } else
         alert("Tài khoản email đã được sử dụng. Vui lòng sử dụng email khác.");
     } else {
       accArray.push(customer);
       localStorage.setItem("accArray", JSON.stringify(accArray));
       alert("Tạo tài khoản thành công.");
+      window.location.href = "./login.html";
     }
   }
 });

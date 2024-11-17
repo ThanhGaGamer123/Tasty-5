@@ -38,6 +38,7 @@ form.addEventListener("submit", (e) => {
 
   let flag = false; // Biến để kiểm tra nếu đăng nhập thành công
   let name;
+  const accArray = JSON.parse(localStorage.getItem("accArray"));
   accArray.forEach((singleArray) => {
     if (
       singleArray.email === email.value &&
