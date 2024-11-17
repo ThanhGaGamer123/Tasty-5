@@ -30,6 +30,7 @@ log_out.addEventListener("click", (e) => {
   navbar__loginDesc.classList.remove("navbar__item-desc-active");
   const navbar__login_block = document.querySelector(".navbar__login-block");
   navbar__login_block.classList.remove("navbar__login-block-active");
+  window.location.href = "./login.html"; // Chuyển hướng đến trang login.html
 });
 
 //Kiểm tra đăng nhập

@@ -149,7 +149,9 @@ form.addEventListener("submit", (e) => {
       username.value,
       email.value,
       password.value,
-      "customer"
+      "customer",
+      "",
+      ""
     );
 
     //Kiểm tra tạo mới hoặc ghi đè nếu có

@@ -1,10 +1,12 @@
 //Khởi tạo lớp tài khoản
 class Account {
-  constructor(name, email, password, role) {
+  constructor(name, email, password, role, phone, address) {
     this.name = name;
     this.email = email;
     this.password = password;
     this.role = role;
+    this.phone = phone;
+    this.address = address;
   }
 }
 
@@ -13,35 +15,45 @@ const admin_1 = new Account(
   "Phạm Nguyễn Phú Thành",
   "thanhphamnguyenphu2k5@gmail.com",
   "TaolaThanh123!",
-  "admin"
+  "admin",
+  "",
+  ""
 );
 
 const admin_2 = new Account(
   "Phạm Nguyễn Phú Thành",
   "thanhphamnguyenphu2k5@gmail.com",
   "TaolaThanh123!",
-  "admin"
+  "admin",
+  "",
+  ""
 );
 
 const admin_3 = new Account(
   "Phạm Nguyễn Phú Thành",
   "thanhphamnguyenphu2k5@gmail.com",
   "TaolaThanh123!",
-  "admin"
+  "admin",
+  "",
+  ""
 );
 
 const admin_4 = new Account(
   "Phạm Nguyễn Phú Thành",
   "thanhphamnguyenphu2k5@gmail.com",
   "TaolaThanh123!",
-  "admin"
+  "admin",
+  "",
+  ""
 );
 
 const admin_5 = new Account(
   "Phạm Nguyễn Phú Thành",
   "thanhphamnguyenphu2k5@gmail.com",
   "TaolaThanh123!",
-  "admin"
+  "admin",
+  "",
+  ""
 );
 
 let accArray = [admin_1, admin_2, admin_3, admin_4, admin_5];
