@@ -63,3 +63,23 @@ form.addEventListener("submit", (e) => {
     window.location.href = "./index.html";
   } else alert("Tài khoản hoặc mật khẩu không đúng.");
 });
+
+//Show/Hide Code
+let show__password = document.querySelector(".show__password");
+let hidden__password = document.querySelector(".hidden__password");
+
+show__password.addEventListener("click", (e) => {
+  e.preventDefault();
+  let password = document.querySelector("#password");
+  password.type = "text";
+  show__password.style.display = "none";
+  hidden__password.style.display = "block";
+});
+
+hidden__password.addEventListener("click", (e) => {
+  e.preventDefault();
+  let password = document.querySelector("#password");
+  password.type = "password";
+  hidden__password.style.display = "none";
+  show__password.style.display = "block";
+});

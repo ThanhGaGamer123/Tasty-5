@@ -186,3 +186,42 @@ form.addEventListener("submit", (e) => {
 
 //Xóa sạch local storage (test)
 // localStorage.clear();
+
+//Show/Hide Code
+let show1 = document.querySelector(".show1");
+let hide1 = document.querySelector(".hide1");
+
+show1.addEventListener("click", (e) => {
+  e.preventDefault();
+  let password = document.querySelector("#password");
+  password.type = "text";
+  show1.style.display = "none";
+  hide1.style.display = "block";
+});
+
+hide1.addEventListener("click", (e) => {
+  e.preventDefault();
+  let password = document.querySelector("#password");
+  password.type = "password";
+  hide1.style.display = "none";
+  show1.style.display = "block";
+});
+
+let show2 = document.querySelector(".show2");
+let hide2 = document.querySelector(".hide2");
+
+show2.addEventListener("click", (e) => {
+  e.preventDefault();
+  let re_password = document.querySelector("#re-password");
+  re_password.type = "text";
+  show2.style.display = "none";
+  hide2.style.display = "block";
+});
+
+hide2.addEventListener("click", (e) => {
+  e.preventDefault();
+  let re_password = document.querySelector("#re-password");
+  re_password.type = "password";
+  hide2.style.display = "none";
+  show2.style.display = "block";
+});

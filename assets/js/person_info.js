@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const customer = new Account(
         username__input.value,
         loginUser.email,
-        password__input.value,
+        loginUser.password,
         "customer",
         phone__input.value,
         address__input.value
@@ -242,8 +242,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
       //Cập nhật lại tài khoản hiện tại
       localStorage.setItem("LoginUser", JSON.stringify(customer));
-      alert("Cập nhật thông tin thành công.");
+      alert("Cập nhật mật khẩu thành công.");
       window.location.reload(); // reload trang để hiển thị thông tin mới
     }
   });
+});
+
+//Show/Hide Code
+let show1 = document.querySelector(".show1");
+let hide1 = document.querySelector(".hide1");
+
+show1.addEventListener("click", (e) => {
+  e.preventDefault();
+  let password = document.querySelector("#password");
+  password.type = "text";
+  show1.style.display = "none";
+  hide1.style.display = "block";
+});
+
+hide1.addEventListener("click", (e) => {
+  e.preventDefault();
+  let password = document.querySelector("#password");
+  password.type = "password";
+  hide1.style.display = "none";
+  show1.style.display = "block";
+});
+
+let show2 = document.querySelector(".show2");
+let hide2 = document.querySelector(".hide2");
+
+show2.addEventListener("click", (e) => {
+  e.preventDefault();
+  let new_password = document.querySelector("#new-password");
+  new_password.type = "text";
+  show2.style.display = "none";
+  hide2.style.display = "block";
+});
+
+hide2.addEventListener("click", (e) => {
+  e.preventDefault();
+  let new_password = document.querySelector("#new-password");
+  new_password.type = "password";
+  hide2.style.display = "none";
+  show2.style.display = "block";
+});
+
+let show3 = document.querySelector(".show3");
+let hide3 = document.querySelector(".hide3");
+
+show3.addEventListener("click", (e) => {
+  e.preventDefault();
+  let re_new_password = document.querySelector("#re-new-password");
+  re_new_password.type = "text";
+  show3.style.display = "none";
+  hide3.style.display = "block";
+});
+
+hide3.addEventListener("click", (e) => {
+  e.preventDefault();
+  let re_new_password = document.querySelector("#re-new-password");
+  re_new_password.type = "password";
+  hide3.style.display = "none";
+  show3.style.display = "block";
 });

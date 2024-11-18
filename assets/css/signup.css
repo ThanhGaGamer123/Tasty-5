@@ -228,3 +228,34 @@ a {
   color: red;
   width: calc(600px - 210px);
 }
+
+/* show/hide password */
+.password-setting {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.show__password {
+  width: 24x;
+  height: 24px;
+  color: #333;
+  margin: 10px 0 0 10px;
+  cursor: pointer;
+}
+
+.hidden__password {
+  width: 24x;
+  height: 24px;
+  color: #333;
+  margin: 10px 0 0 9px;
+  cursor: pointer;
+}
+
+.hide1 {
+  display: none;
+}
+
+.hide2 {
+  display: none;
+}

@@ -311,3 +311,27 @@ a {
   margin-top: 8px;
   margin-left: 4px;
 }
+
+/* show/hide password */
+.password-setting {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.show__password {
+  width: 24x;
+  height: 24px;
+  color: #333;
+  margin: 10px 0 0 10px;
+  cursor: pointer;
+}
+
+.hidden__password {
+  width: 24x;
+  height: 24px;
+  color: #333;
+  margin: 10px 0 0 9px;
+  cursor: pointer;
+  display: none;
+}
