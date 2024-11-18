@@ -77,8 +77,9 @@ document.addEventListener("DOMContentLoaded", () => {
         (singleArray) => singleArray.email === customer.email
       );
       if (index !== -1) {
-        accArray.splice(index, 1); // Xóa phần tử cũ
-        accArray.push(customer); // Thêm vào mảng
+        // accArray.splice(index, 1); // Xóa phần tử cũ
+        // accArray.push(customer); // Thêm vào mảng
+        accArray[index] = customer;
         localStorage.setItem("accArray", JSON.stringify(accArray)); // Lưu lại vào local storage
       }
 
