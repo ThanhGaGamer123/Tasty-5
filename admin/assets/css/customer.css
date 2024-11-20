@@ -196,7 +196,7 @@ a {
   gap: 12px;
   width: 250px;
   height: 72px;
-  background: var(--primary-color);
+  background: var(--secondary-color);
   color: #fff;
   border-radius: 12px;
   cursor: pointer;
@@ -204,7 +204,7 @@ a {
 }
 
 .add:hover {
-  background: var(--secondary-color);
+  background: var(--primary-color);
 }
 
 .add__icon {
@@ -267,7 +267,7 @@ a {
 .control__img {
   width: 32px;
   height: 32px;
-  object-fit: cover;
+  object-fit: contain;
   cursor: pointer;
 }
 
@@ -280,19 +280,21 @@ a {
 }
 
 .control__lock {
-  transition: 0.2s;
+  transition: 0.3s;
 }
 
 .control__lock:hover {
-  color: red;
+  filter: invert(15%) sepia(83%) saturate(5934%) hue-rotate(359deg)
+    brightness(112%) contrast(122%);
 }
 
 .control__unlock {
-  transition: 0.2s;
+  transition: 0.3s;
 }
 
 .control__unlock:hover {
-  color: green;
+  filter: invert(21%) sepia(73%) saturate(4965%) hue-rotate(111deg)
+    brightness(94%) contrast(101%);
 }
 
 .control__desc {
@@ -342,3 +344,7 @@ a {
 .bg__super-backward {
   transform: rotate(180deg);
 }
+
+/* javascript */
+
+/* setting */
