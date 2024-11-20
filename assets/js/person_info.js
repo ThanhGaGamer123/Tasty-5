@@ -43,6 +43,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  //Kiểm tra username
+  const username = document.querySelector("#username");
+  const form_username = document.querySelector(".form__username");
+  username.addEventListener("input", (e) => {
+    if (username.value.length > 40) {
+      username.value = username.value.slice(0, 40);
+      wrongValue.textContent = "Tên tài khoản vượt quá 40 kí tự.";
+      if (!form_username.contains(wrongValue)) {
+        form_username.appendChild(wrongValue);
+        username.classList.add("form__wrong");
+      }
+    } else {
+      if (form_username.contains(wrongValue)) {
+        form_username.removeChild(wrongValue);
+        username.classList.remove("form__wrong");
+      }
+    }
+  });
+
+  //Kiểm tra address
+  const address = document.querySelector("#address");
+  const form_address = document.querySelector(".form__address");
+  address.addEventListener("input", (e) => {
+    if (address.value.length > 150) {
+      address.value = address.value.slice(0, 150);
+      wrongValue.textContent = "";
+      if (!form_address.contains(wrongValue)) {
+        form_address.appendChild(wrongValue);
+        address.classList.add("form__wrong");
+      }
+    } else {
+      if (form_address.contains(wrongValue)) {
+        form_address.removeChild(wrongValue);
+        address.classList.remove("form__wrong");
+      }
+    }
+  });
+
   phone__input.addEventListener("blur", (e) => {
     //click ra ngoài thẻ input
     if (phone__input.value.trim() === "") {
