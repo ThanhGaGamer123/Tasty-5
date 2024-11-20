@@ -31,6 +31,8 @@ html {
 body {
   font-size: 1.6rem;
   font-family: "Open Sans", sans-serif;
+  display: grid;
+  grid-template-columns: 2.4fr 8fr;
 }
 
 .container {
@@ -76,4 +78,38 @@ a {
   transform: scale(1.1);
 }
 
-/* navbar */
+/* main */
+.content {
+  text-align: center;
+  padding: 250px 0;
+}
+
+.content__heading {
+  font-size: 10rem;
+  color: var(--text-color);
+  animation: colorChange 2.5s infinite linear;
+}
+
+.content__desc {
+  font-size: 3.6rem;
+  color: var(--text-color);
+  animation: colorChange 2.5s infinite linear reverse;
+}
+
+@keyframes colorChange {
+  0% {
+    color: #ff4500;
+  }
+  25% {
+    color: #ffa500;
+  }
+  50% {
+    color: #ffd700;
+  }
+  75% {
+    color: #8b4513;
+  }
+  100% {
+    color: #ff4500;
+  }
+}
