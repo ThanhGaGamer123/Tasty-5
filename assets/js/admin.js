@@ -85,3 +85,20 @@ if (localStorage.getItem("accArray") != null) {
 
 //Xóa sạch local storage (test)
 // localStorage.clear();
+
+
+
+
+
+
+
+
+
+
+
+
+
+// shopping 
+
+
+// function createId(arr)
