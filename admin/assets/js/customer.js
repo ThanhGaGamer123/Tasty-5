@@ -83,13 +83,13 @@ function createControlDesc(singleArray) {
   // Phone
   const phone = document.createElement("div");
   phone.classList.add("section-desc", "desc__phone");
-  phone.textContent = "Phone: " + singleArray.phone;
+  phone.textContent = "SĐT: " + singleArray.phone;
   control__desc.appendChild(phone);
 
   // Address
   const address = document.createElement("div");
   address.classList.add("section-desc", "desc__address");
-  address.textContent = "Address: " + singleArray.address;
+  address.textContent = "Địa chỉ: " + singleArray.address;
   control__desc.appendChild(address);
 
   return control__desc;
