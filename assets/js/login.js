@@ -38,17 +38,19 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   let flag = false; // Biến để kiểm tra nếu đăng nhập thành công
+  let blocked_role = false;
   let name;
   const accArray = JSON.parse(localStorage.getItem("accArray"));
   accArray.forEach((singleArray) => {
     if (
       singleArray.email === email.value &&
-      singleArray.password === password.value
+      singleArray.password === password.value &&
+      singleArray.role !== "customer-blocked"
     ) {
       flag = true; // Cập nhật flag khi đăng nhập thành công
       name = singleArray.name; // Lấy tên người dùng để hiển thị trên navigation bar
       localStorage.setItem("LoginUser", JSON.stringify(singleArray));
-    }
+    } else if (singleArray.role === "customer-blocked") blocked_role = true;
   });
 
   if (flag) {
@@ -61,6 +63,11 @@ form.addEventListener("submit", (e) => {
     const navbar__login_block = document.querySelector(".navbar__login-block");
     navbar__login_block.classList.add("navbar__login-block-active");
     window.location.href = "./index.html";
+  } else if (blocked_role) {
+    alert(
+      "Tài khoản của bạn đã bị KHÓA. Vui lòng liên hệ admin để biết thêm chi tiết"
+    );
+    window.location.href = "./login.html";
   } else alert("Tài khoản hoặc mật khẩu không đúng.");
 });
 

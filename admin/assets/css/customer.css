@@ -345,6 +345,139 @@ a {
   transform: rotate(180deg);
 }
 
+/* button */
+.button {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+}
+
+@keyframes jumpUp {
+  0% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(5px);
+  }
+  50% {
+    transform: translateY(0px);
+  }
+  75% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.button__img {
+  width: 46px;
+  height: 46px;
+  color: var(--primary-color);
+  filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
+  transition: 0.3s;
+  animation: jumpUp 1.5s linear infinite;
+}
+
+.button__img:hover {
+  transform: scale(1.1);
+  animation: none;
+}
+
 /* javascript */
 
 /* setting */
+.overlay {
+  position: fixed;
+  background: #000;
+  opacity: 0.3;
+  z-index: 9998;
+  top: 0;
+  bottom: 0;
+  left: 22%;
+  right: 0;
+  display: none;
+}
+
+.setting {
+  position: fixed;
+  background: #000;
+  z-index: 9998;
+  top: 10%;
+  bottom: 0;
+  left: 38%;
+  right: 0;
+  width: 700px;
+  height: 600px;
+  background: #fff;
+  border-radius: 24px;
+  display: none;
+}
+
+.setting__exit {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  color: var(--secondary-color);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.setting__exit:hover {
+  color: var(--primary-color);
+}
+
+.setting__heading {
+  font-size: 3.8rem;
+  font-weight: 600;
+  margin-top: 65px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.setting__block {
+  width: 500px;
+  margin: 24px 13%;
+}
+
+.setting__desc {
+  font-size: 2.2rem;
+  display: block;
+}
+
+.setting__input {
+  width: 90%;
+  height: 50px;
+  font-size: 2.2rem;
+  padding: 2px 24px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: #f2f2f2;
+}
+
+.setting__submit {
+  margin-left: 33%;
+  margin-top: 10px;
+}
+
+.setting__submit:hover {
+  transform: scale(1.02);
+}
+
+/* wrongValue */
+.form__wrong {
+  border: 1px solid red;
+}
+
+.input__wrong {
+  display: block;
+  padding-top: 4px;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: red;
+  width: calc(600px - 110px);
+}

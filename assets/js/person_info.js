@@ -43,6 +43,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  phone__input.addEventListener("blur", (e) => {
+    //click ra ngoài thẻ input
+    if (phone__input.value.trim() === "") {
+      //thẻ input rỗng
+      if (form__phone.contains(wrongValue)) {
+        form__phone.removeChild(wrongValue);
+        phone__input.classList.remove("form__wrong");
+      }
+    }
+  });
+
   //Kiểm tra username
   const username = document.querySelector("#username");
   const form_username = document.querySelector(".form__username");
@@ -77,17 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (form_address.contains(wrongValue)) {
         form_address.removeChild(wrongValue);
         address.classList.remove("form__wrong");
-      }
-    }
-  });
-
-  phone__input.addEventListener("blur", (e) => {
-    //click ra ngoài thẻ input
-    if (phone__input.value.trim() === "") {
-      //thẻ input rỗng
-      if (form__phone.contains(wrongValue)) {
-        form__phone.removeChild(wrongValue);
-        phone__input.classList.remove("form__wrong");
       }
     }
   });
