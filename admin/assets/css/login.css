@@ -1,5 +1,7 @@
 /* Common */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: inherit;
 }
 
@@ -80,14 +82,14 @@ a {
 
 /* main */
 .main {
-  padding: 50px 0;
+  /* padding: 50px 0; */
 }
 
 /* form */
 .form {
   width: 600px;
   margin: 70px auto;
-  padding: 0 50px;
+  padding: 50px 50px;
   background: #fff;
   border-radius: 42px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;

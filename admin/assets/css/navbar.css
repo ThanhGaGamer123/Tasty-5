@@ -1,6 +1,6 @@
 /* Common */
 * {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 :root {
@@ -84,6 +84,24 @@ a {
   top: 0;
   bottom: 0;
   left: 0;
+  overflow-y: auto;
+}
+
+.navbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.navbar::-webkit-scrollbar-track {
+  background: #555;
+}
+
+.navbar::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.navbar::-webkit-scrollbar-thumb:hover {
+  background: #ccc;
 }
 
 .navbar__logo {

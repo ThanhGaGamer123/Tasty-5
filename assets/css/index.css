@@ -438,7 +438,7 @@ a {
   background: var(--secondary-color);
   border-radius: 8px;
   position: absolute;
-  left: 0px;
+  right: 0;
   top: 30px;
   display: none;
 }
