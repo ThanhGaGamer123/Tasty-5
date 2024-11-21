@@ -249,7 +249,7 @@ a {
 }
 
 .search-filter__button:hover{
-  opacity: 0.8;
+  background-color: #27ae60;
 }
 
 .search-icon{
@@ -324,7 +324,7 @@ a {
 }
 
 .add-to-cart-btn {
-  background-color: #2ecc71;
+  background-color:  #e92526;  
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -335,7 +335,7 @@ a {
 }
 
 .add-to-cart-btn:hover {
-  background-color: #27ae60;
+  background-color: #2ecc71;
 }
 
 /* Responsive design */
@@ -364,4 +364,79 @@ a {
       font-size: 12px;
       padding: 6px 12px;
   }
+}
+
+/* nut chuyen trang */
+#pagination button {
+  margin: 0 5px; 
+  padding: 5px;
+  border: 1px;
+  border-radius: 5px;
+  cursor: pointer;
+  
+  background-color: #e92526;
+  font-size: 16px;
+
+}
+
+#pagination button:hover {
+  background-color: #27ae60;
+}
+
+#pagination button:disabled {
+  cursor: not-allowed;
+}
+
+
+/* chi tiết sản phẩm */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.quantity-control button {
+  width: 30px;
+  height: 30px;
+}
+
+.quantity-control input {
+  width: 50px;
+  text-align: center;
+}
+
+#detail-product-image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 16/9;
+
+  
+}
+
+.product-detail{
+  vertical-align: middle;
+  align-items: center;
 }

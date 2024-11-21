@@ -1,4 +1,4 @@
-
+//tao san pham
 function createProduct() {
     if (localStorage.getItem('products') == null) {
         let products = [
@@ -132,7 +132,7 @@ function createProduct() {
         product_price: "57.000",
         product_image: "./assets/img/shopping/thitdenuong.jpg",
         added_to_cart: false,
-        topic :'Dê cừu',
+        topic :'Dê,cừu',
         desc: "Thịt dê tươi nướng trên lửa hồng, giữ được vị thơm ngon, hấp dẫn."
     },
     {
@@ -197,67 +197,111 @@ function createProduct() {
 }
 
 }
-
 createProduct();
 
+//     <img class="img-pro" src="${product.product_image}" alt="${product.product_name}"></img> 
 
 
-function displayProducts() {
+
+// hiển thị sản phẩm 
+let currentPage = 1;
+const soLuongSpPerPage = 9;
+function displayProducts(filteredProducts = null) {
     let productList = document.getElementById("product-list");
+    let products = filteredProducts || JSON.parse(localStorage.getItem('products'));
 
-    // Lấy dữ liệu từ localStorage
-    let products = JSON.parse(localStorage.getItem('products'));
-
-    // Kiểm tra nếu có sản phẩm trong localStorage
     if (products && products.length > 0) {
-        // Xóa nội dung cũ của danh sách sản phẩm (nếu có)
         productList.innerHTML = "";
 
-        // Duyệt qua từng sản phẩm và tạo HTML
-        products.forEach(product => {
+        // tính toán vị trí bắt đầu , kết thuc page 
+        const startIndex = (currentPage - 1) * soLuongSpPerPage;
+        const endIndex = startIndex + soLuongSpPerPage;
+        const paginatedProducts = products.slice(startIndex, endIndex);
+ 
+        // tạo HTML cho từng sp
+        paginatedProducts.forEach(product => {
             let productItem = document.createElement("div");
             productItem.classList.add("product-item");
-
-            // Tạo nội dung HTML cho mỗi sản phẩm
             productItem.innerHTML = `
                 <div class="product-card">
                     <div class="product-image">
-                        <img class="img-pro" src="${product.product_image}" alt="${product.product_name}">
-                    </div>
+                 
 
+
+
+                    <img class="img-pro" src="${product.product_image}" alt="${product.product_name}" onclick="showProductDetail(${product.id})">
+
+              
+
+
+                    </div>
                     <div class="product-info">
-
-                            <h3 class="product-name">${product.product_name}</h3>
-               
-                                
-                            <p class="product-price">${product.product_price} VND</p>
-                           <p class="product-desc">${product.desc}</p>
-
-                            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
-                            ${product.added_to_cart ? "Đã thêm vào giỏ" : "Thêm vào giỏ hàng"}
-                                </button>
-
-
+                        <h3 class="product-name">${product.product_name}</h3>
+                        <p class="product-price">${product.product_price} VND</p>
+                        <p class="product-desc">${product.desc}</p>
+                        <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                            ${product.added_to_cart ? "Đã thêm vào giỏ~~~" : "Thêm vào giỏ hàng"}
+                        </button>
                     </div>
-
                 </div>
             `;
-
-            // Thêm sản phẩm vào danh sách
             productList.appendChild(productItem);
         });
+
+
+        Dieukhienpage(products.length);
     } else {
-        // Hiển thị thông báo nếu không có sản phẩm
         productList.innerHTML = "<p>Không có sản phẩm nào để hiển thị.</p>";
     }
 }
 
+// phần phân trang sản phẩm
+function Dieukhienpage(totalProducts) {
+    const phanTrangSp = document.getElementById("pagination");
+    phanTrangSp.innerHTML = ""; 
+
+    const totalPages = Math.ceil(totalProducts / soLuongSpPerPage);
+
+    // trang trước
+    if (currentPage > 1) {
+        const prevButton = document.createElement("button");
+        prevButton.innerText = "trang trước";
+        prevButton.onclick = () => {
+            currentPage--;
+            displayProducts();
+        };
+        phanTrangSp.appendChild(prevButton);
+    }
+
+    // số trang 
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement("button");
+        pageButton.innerText = i;
+        pageButton.onclick = () => {
+            currentPage = i;
+            displayProducts();
+        };
+        if (i === currentPage) {
+            pageButton.disabled = true;
+        }
+        phanTrangSp.appendChild(pageButton);
+    }
+
+    // trang sau
+    if (currentPage < totalPages) {
+        const nextButton = document.createElement("button");
+        nextButton.innerText = "trang sau";
+        nextButton.onclick = () => {
+            currentPage++;
+            displayProducts();
+        };
+        phanTrangSp.appendChild(nextButton);
+    }
+}
 displayProducts();
 
-
-
+//phần thêm sản phẩm vào giỏ hàng 
 function addToCart(productId) {
-    // Lấy danh sách sản phẩm từ localStorage
     let products = JSON.parse(localStorage.getItem('products'));
 
     // Tìm sản phẩm theo ID
@@ -272,13 +316,139 @@ function addToCart(productId) {
             product.added_to_cart = false;
             alert(`${product.product_name} đã được gỡ khỏi giỏ hàng!`);
         }
-
-        // Cập nhật lại localStorage
         localStorage.setItem('products', JSON.stringify(products));
 
-        // Cập nhật lại danh sách hiển thị
          displayProducts(); 
     }
 }
+
+
+// Tìm kiếm và lọc sản phẩm
+function Timkiemsanpham() {
+    const searchInput = document.querySelector(".search-filter__input").value.toLowerCase();
+    const selectedTopic = document.querySelector(".search-filter__select").value;
+
+    // Lấy danh sách sản phẩm từ localStorage
+    let products = JSON.parse(localStorage.getItem('products')) || [];
+
+    // Lọc sản phẩm dựa trên tìm kiếm và danh mục
+    let filteredProducts = products.filter(product => {
+        const matchesSearch = product.product_name.toLowerCase().includes(searchInput);
+        const matchesTopic = selectedTopic ? product.topic === selectedTopic : true;
+        return matchesSearch && matchesTopic;
+    });
+
+    currentPage = 1; // Reset lại trang hiện tại
+    Hienthisanphamtimkiem(filteredProducts); // Hiển thị sản phẩm đã lọc
+}
+
+// Hiển thị sản phẩm đã lọc
+function Hienthisanphamtimkiem(products) {
+    let productList = document.getElementById("product-list");
+    productList.innerHTML = ""; // Xóa danh sách sản phẩm cũ
+
+    if (products.length > 0) {
+        // Tạo danh sách sản phẩm từ mảng đã lọc
+        products.forEach(product => {
+            let productItem = document.createElement("div");
+            productItem.classList.add("product-item");
+            productItem.innerHTML = `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img class="img-pro" src="${product.product_image}" alt="${product.product_name}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.product_name}</h3>
+                        <p class="product-price">${product.product_price} VND</p>
+                        <p class="product-desc">${product.desc}</p>
+                        <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                            ${product.added_to_cart ? "Đã thêm vào giỏ~~~" : "Thêm vào giỏ hàng"}
+                        </button>
+                    </div>
+                </div>
+            `;
+            productList.appendChild(productItem);
+        });
+    } else {
+        productList.innerHTML = "<p>Không tìm thấy sản phẩm phù hợp.</p>";
+    }
+}
+document.querySelector(".search-filter__button").addEventListener("click", Timkiemsanpham);
+displayProducts();
+
+
+//  chi tiết sản phẩm 
+function showProductDetail(productId) {
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+    const product = products.find(p => p.id === productId);
+
+    if (product) {
+        // Nếu modal đã tồn tại, xóa nó để tạo lại
+        let existingModal = document.getElementById("product-detail-modal");
+        if (existingModal) {
+            existingModal.remove();
+        }
+
+        // Tạo modal container
+        const modal = document.createElement("div");
+        modal.id = "product-detail-modal";
+        modal.classList.add("modal");
+
+        // Tạo nội dung của modal                                      &time; là dấu x đóng phần hiển thị sp
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeProductDetail()">&times;</span>
+                <div class="product-detail">
+                    <img id="detail-product-image" src="${product.product_image}" alt="${product.product_name}">
+                    <h2 id="detail-product-name">${product.product_name}</h2>
+                    <p id="detail-product-price">${product.product_price} VND</p>
+                    <p id="detail-product-desc">${product.desc}</p>
+                    <div class="quantity-control">
+                        <button onclick="decreaseQuantity()">-</button>
+                        <input id="detail-product-quantity" type="number" value="${product.soluong}" min="1">
+                        <button onclick="increaseQuantity()">+</button>
+                    </div>
+                    <button id="add-to-cart-detail-btn">
+                        ${product.added_to_cart ? "Đã thêm vào giỏ~~~" : "Thêm vào giỏ hàng"}
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Gắn sự kiện thêm vào giỏ hàng
+        modal.querySelector("#add-to-cart-detail-btn").onclick = function () {
+            addToCart(productId);
+        };
+
+        // Gắn modal vào body
+        document.body.appendChild(modal);
+
+        // Hiển thị modal
+        modal.classList.remove("hidden");
+    }
+}
+
+// Đóng modal chi tiết sản phẩm
+function closeProductDetail() {
+    const modal = document.getElementById("product-detail-modal");
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Hàm tăng/giảm số lượng
+function increaseQuantity() {
+    const quantityInput = document.getElementById("detail-product-quantity");
+    quantityInput.value = parseInt(quantityInput.value) + 1;
+}
+
+function decreaseQuantity() {
+    const quantityInput = document.getElementById("detail-product-quantity");
+    if (quantityInput.value > 1) {
+        quantityInput.value = parseInt(quantityInput.value) - 1;
+    }
+}
+
+
 
 
