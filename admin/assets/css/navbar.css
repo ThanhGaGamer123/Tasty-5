@@ -76,15 +76,22 @@ a {
   transform: scale(1.1);
 }
 
+/* fake navbar */
+.fake-navbar {
+  background: var(--primary-color);
+  width: 100%;
+}
+
 /* navbar */
 .navbar {
   background: var(--primary-color);
-  width: 23%;
+  width: 24%;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   overflow-y: auto;
+  display: none;
 }
 
 .navbar::-webkit-scrollbar {
