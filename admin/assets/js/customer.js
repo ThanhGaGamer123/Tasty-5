@@ -169,19 +169,52 @@ function handleControlClick(e, img, singleArray) {
     wrongValue.classList.add("input__wrong");
 
     //Kiểm tra username
+    function findSpecialChars(str) {
+      const regex = /[!@#$%^&*(),.?":{}|<>]/g; // Mẫu tìm ký tự đặc biệt
+      return str.match(regex);
+    }
+
     const setting__username = document.querySelector("#setting__username");
     const setting__block_username = document.querySelector(
       ".setting__block-username"
     );
+    let condition_3 = true;
     setting__username.addEventListener("input", (e) => {
+      // Kiểm tra ký tự đặc biệt
+      if (findSpecialChars(setting__username.value)) {
+        wrongValue.textContent = "Tên tài khoản không chứa ký tự đặc biệt.";
+      } else {
+        wrongValue.textContent = ""; // Xóa thông báo nếu không có ký tự đặc biệt
+      }
+
+      // Kiểm tra chiều dài tối đa
       if (setting__username.value.length > 40) {
         setting__username.value = setting__username.value.slice(0, 40);
-        wrongValue.textContent = "Tên tài khoản vượt quá 40 kí tự.";
+        wrongValue.textContent = "Tên tài khoản vượt quá 40 ký tự.";
+      }
+
+      // Thêm hoặc xóa thông báo lỗi
+      if (wrongValue.textContent) {
+        // Nếu có thông báo lỗi
         if (!setting__block_username.contains(wrongValue)) {
           setting__block_username.appendChild(wrongValue);
           setting__username.classList.add("form__wrong");
+          condition_3 = false;
         }
       } else {
+        // Nếu không có thông báo lỗi
+        if (setting__block_username.contains(wrongValue)) {
+          setting__block_username.removeChild(wrongValue);
+          setting__username.classList.remove("form__wrong");
+          condition_3 = true;
+        }
+      }
+    });
+
+    setting__username.addEventListener("blur", (e) => {
+      //click ra ngoài thẻ input
+      if (setting__username.value.trim() === "") {
+        //thẻ input rỗng
         if (setting__block_username.contains(wrongValue)) {
           setting__block_username.removeChild(wrongValue);
           setting__username.classList.remove("form__wrong");

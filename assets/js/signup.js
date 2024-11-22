@@ -4,17 +4,50 @@ wrongValue.classList.add("section-desc");
 wrongValue.classList.add("input__wrong");
 
 //username
+function findSpecialChars(str) {
+  const regex = /[!@#$%^&*(),.?":{}|<>]/g; // Mẫu tìm ký tự đặc biệt
+  return str.match(regex);
+}
+
 const username = document.querySelector("#username");
 const form_username = document.querySelector(".form__username");
+let condition_3 = true;
 username.addEventListener("input", (e) => {
+  // Kiểm tra ký tự đặc biệt
+  if (findSpecialChars(username.value)) {
+    wrongValue.textContent = "Tên tài khoản không chứa ký tự đặc biệt.";
+  } else {
+    wrongValue.textContent = ""; // Xóa thông báo nếu không có ký tự đặc biệt
+  }
+
+  // Kiểm tra chiều dài tối đa
   if (username.value.length > 40) {
     username.value = username.value.slice(0, 40);
-    wrongValue.textContent = "Tên tài khoản vượt quá 40 kí tự.";
+    wrongValue.textContent = "Tên tài khoản vượt quá 40 ký tự.";
+  }
+
+  // Thêm hoặc xóa thông báo lỗi
+  if (wrongValue.textContent) {
+    // Nếu có thông báo lỗi
     if (!form_username.contains(wrongValue)) {
       form_username.appendChild(wrongValue);
       username.classList.add("form__wrong");
+      condition_3 = false;
     }
   } else {
+    // Nếu không có thông báo lỗi
+    if (form_username.contains(wrongValue)) {
+      form_username.removeChild(wrongValue);
+      username.classList.remove("form__wrong");
+      condition_3 = true;
+    }
+  }
+});
+
+username.addEventListener("blur", (e) => {
+  //click ra ngoài thẻ input
+  if (username.value.trim() === "") {
+    //thẻ input rỗng
     if (form_username.contains(wrongValue)) {
       form_username.removeChild(wrongValue);
       username.classList.remove("form__wrong");
@@ -23,25 +56,27 @@ username.addEventListener("input", (e) => {
 });
 
 //email
+function isValidEmail(email) {
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return regex.test(email);
+}
+
 const email = document.querySelector("#email");
 const form_email = document.querySelector(".form__email");
+let condition_4 = false;
 email.addEventListener("input", (e) => {
-  let array = email.value.split("");
-  let flag = false;
-  array.forEach((singleArray) => {
-    if (singleArray === "@") flag = true;
-  });
-
-  if (!flag) {
-    wrongValue.textContent = "Thiếu kí tự '@'.";
+  if (!isValidEmail(email.value) && email.value !== null) {
+    wrongValue.textContent = "Email không hợp lệ.";
     if (!form_email.contains(wrongValue)) {
       form_email.appendChild(wrongValue);
       email.classList.add("form__wrong");
+      condition_4 = false;
     }
   } else {
     if (form_email.contains(wrongValue)) {
       form_email.removeChild(wrongValue);
       email.classList.remove("form__wrong");
+      condition_4 = true;
     }
   }
 });
@@ -139,10 +174,8 @@ re_password.addEventListener("input", (e) => {
 const form = document.querySelector(".form");
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  if (!condition_1) {
-    alert("Mật khẩu không phù hợp.");
-  } else if (!condition_2) {
-    alert("Mật khẩu không khớp.");
+  if (!condition_1 || !condition_2 || !condition_3 || !condition_4) {
+    alert("Thông tin đăng ký không hợp lệ.");
   } else {
     //Khởi tạo lớp tài khoản (từ admin.js)
     const customer = new Account(

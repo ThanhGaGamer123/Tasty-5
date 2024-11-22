@@ -55,17 +55,51 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   //Kiểm tra username
+  //username
+  function findSpecialChars(str) {
+    const regex = /[!@#$%^&*(),.?":{}|<>]/g; // Mẫu tìm ký tự đặc biệt
+    return str.match(regex);
+  }
+
   const username = document.querySelector("#username");
   const form_username = document.querySelector(".form__username");
+  let condition_3 = true;
   username.addEventListener("input", (e) => {
+    // Kiểm tra ký tự đặc biệt
+    if (findSpecialChars(username.value)) {
+      wrongValue.textContent = "Tên tài khoản không chứa ký tự đặc biệt.";
+    } else {
+      wrongValue.textContent = ""; // Xóa thông báo nếu không có ký tự đặc biệt
+    }
+
+    // Kiểm tra chiều dài tối đa
     if (username.value.length > 40) {
       username.value = username.value.slice(0, 40);
-      wrongValue.textContent = "Tên tài khoản vượt quá 40 kí tự.";
+      wrongValue.textContent = "Tên tài khoản vượt quá 40 ký tự.";
+    }
+
+    // Thêm hoặc xóa thông báo lỗi
+    if (wrongValue.textContent) {
+      // Nếu có thông báo lỗi
       if (!form_username.contains(wrongValue)) {
         form_username.appendChild(wrongValue);
         username.classList.add("form__wrong");
+        condition_3 = false;
       }
     } else {
+      // Nếu không có thông báo lỗi
+      if (form_username.contains(wrongValue)) {
+        form_username.removeChild(wrongValue);
+        username.classList.remove("form__wrong");
+        condition_3 = true;
+      }
+    }
+  });
+
+  username.addEventListener("blur", (e) => {
+    //click ra ngoài thẻ input
+    if (username.value.trim() === "") {
+      //thẻ input rỗng
       if (form_username.contains(wrongValue)) {
         form_username.removeChild(wrongValue);
         username.classList.remove("form__wrong");
@@ -96,8 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const form__info = document.querySelector(".form__info");
   form__info.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (!condition) {
-      alert("Số điện thoại không hợp lệ.");
+    if (!condition || !condition_3) {
+      alert("Thông tin không hợp lệ.");
       return;
     } else {
       //Khởi tạo lớp tài khoản (từ admin.js)
