@@ -265,14 +265,36 @@
         <!-- filter -->
         <div class="filter">
           <!-- list -->
-          <details class="list">
-            <summary class="list__heading">Tất cả</summary>
-            <div class="list-option">
-              <div class="list__active">Đang hoạt động</div>
-              <div class="underline"></div>
-              <div class="list__blocked">Đã bị khóa</div>
+          <div class="list">
+            <div class="list__item list__main">
+              <!-- main -->
+              <svg
+                class="list__img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 320 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8l256 0c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"
+                />
+              </svg>
+              <div class="list__desc list__disable">Tất cả</div>
+
+              <div class="list__item list__sub0">
+                <div class="list__desc list__content0">Tất cả</div>
+
+                <!-- sub 1 -->
+                <div class="list__item list__sub1">
+                  <div class="list__desc list__content1">Đang hoạt động</div>
+
+                  <!-- sub 2 -->
+                  <div class="list__item list__sub2">
+                    <div class="list__desc list__content2">Đã bị khóa</div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </details>
+          </div>
 
           <!-- search bar -->
           <div class="search">
@@ -316,58 +338,7 @@
         </div>
 
         <!-- controls -->
-        <div class="control-list">
-          <!-- control item sample -->
-          <div class="control-item">
-            <!-- heading -->
-            <div class="control__heading">
-              <!-- name -->
-              <div class="section-desc control__name">
-                Phạm Nguyễn Phú Thành
-              </div>
-
-              <!-- group -->
-              <div class="control__group">
-                <!-- setting -->
-                <img
-                  src="./assets/img/customer/setting.svg"
-                  alt="setting"
-                  class="control__img control__setting"
-                />
-
-                <!-- lock -->
-                <img
-                  src="./assets/img/customer/lock.svg"
-                  alt=""
-                  class="control__img control__lock"
-                />
-
-                <!-- unlock -->
-                <img
-                  src="./assets/img/customer/unlock.svg"
-                  alt=""
-                  class="control__img control__unlock"
-                />
-              </div>
-            </div>
-
-            <!-- desc -->
-            <div class="control__desc">
-              <!-- email -->
-              <div class="section-desc desc__email">
-                thanhphamnguyenphu2k5@gmail.com
-              </div>
-
-              <!-- phone -->
-              <div class="section-desc desc__phone">0904421101</div>
-
-              <!-- address -->
-              <div class="section-desc desc__address">
-                Thành phố Hồ Chí Minh
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="control-list"></div>
 
         <!-- setting control -->
         <div class="overlay"></div>

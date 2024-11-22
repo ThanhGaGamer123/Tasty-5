@@ -6,11 +6,63 @@ if (!control_list) {
   console.error("Không tìm thấy phần tử .control-list");
 }
 
-accArray.forEach((singleArray) => {
-  if (singleArray.role !== "admin") {
-    const control_item = createControlItem(singleArray);
-    control_list.appendChild(control_item);
-  }
+// Lọc danh sách khách hàng
+const list__disable = document.querySelector(".list__disable");
+const list__content0 = document.querySelector(".list__content0");
+const list__content1 = document.querySelector(".list__content1");
+const list__content2 = document.querySelector(".list__content2");
+let flag__all = true,
+  flag__active = false,
+  flag__blocked = false;
+
+// Hàm để cập nhật danh sách khách hàng
+function updateControlList() {
+  // Xóa tất cả các phần tử hiện tại
+  control_list.innerHTML = "";
+
+  accArray.forEach((singleArray) => {
+    if (singleArray.role !== "admin") {
+      // Kiểm tra cờ để quyết định loại khách hàng nào sẽ được hiển thị
+      if (
+        flag__all ||
+        (flag__active && singleArray.role === "customer") ||
+        (flag__blocked && singleArray.role === "customer-blocked")
+      ) {
+        const control_item = createControlItem(singleArray);
+        control_list.appendChild(control_item);
+      }
+    }
+  });
+}
+
+// Khởi tạo danh sách với tất cả khách hàng khi trang tải
+updateControlList();
+
+list__content0.addEventListener("click", (e) => {
+  e.preventDefault();
+  list__disable.textContent = list__content0.textContent;
+  flag__all = true;
+  flag__active = false;
+  flag__blocked = false;
+  updateControlList(); // Cập nhật danh sách
+});
+
+list__content1.addEventListener("click", (e) => {
+  e.preventDefault();
+  list__disable.textContent = list__content1.textContent;
+  flag__all = false;
+  flag__active = true;
+  flag__blocked = false;
+  updateControlList(); // Cập nhật danh sách
+});
+
+list__content2.addEventListener("click", (e) => {
+  e.preventDefault();
+  list__disable.textContent = list__content2.textContent;
+  flag__all = false;
+  flag__active = false;
+  flag__blocked = true;
+  updateControlList(); // Cập nhật danh sách
 });
 
 function createControlItem(singleArray) {
@@ -240,6 +292,7 @@ function handleControlClick(e, img, singleArray) {
       img.src = "./assets/img/customer/unlock.svg";
       singleArray.role = "customer";
       localStorage.setItem("accArray", JSON.stringify(accArray));
+      updateControlList(); // Cập nhật danh sách
     });
   }
 
@@ -252,6 +305,7 @@ function handleControlClick(e, img, singleArray) {
       img.src = "./assets/img/customer/lock.svg";
       singleArray.role = "customer-blocked";
       localStorage.setItem("accArray", JSON.stringify(accArray));
+      updateControlList(); // Cập nhật danh sách
     });
   }
 }
