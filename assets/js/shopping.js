@@ -78,6 +78,7 @@ function createProduct() {
         product_price: "34.000",
         product_image: "./assets/img/shopping/canhganuongmatong.jpg",
         added_to_cart: false,
+        soluong :1,
         topic :'Gà',
         desc: "Cánh gà được ướp mật ong và gia vị, nướng vàng óng, thơm ngọt quyến rũ."
     },
@@ -87,6 +88,7 @@ function createProduct() {
         product_price: "37.000",
         product_image: "./assets/img/shopping/duoiheonuongxaot.jpg",
         added_to_cart: false,
+        soluong :1,
         topic :'Heo',
         desc: "Đuôi heo được ướp sả thơm lừng, nướng vàng giòn, vị béo ngậy hấp dẫn."
     },
@@ -96,6 +98,7 @@ function createProduct() {
         product_price: "55.000",
         product_image: "./assets/img/shopping/gyu-kushi.jpg",
         added_to_cart: false,
+        soluong :1,
         topic :'Bò',
         desc: "Xiên bò kiểu Nhật nướng trên than hoa, giữ trọn vị ngon mềm và gia vị đặc trưng."
     },
@@ -105,6 +108,7 @@ function createProduct() {
         product_price: "43.000",
         product_image: "./assets/img/shopping/muc_nuongHQ.webp",
         added_to_cart: false,
+        soluong :1,
         topic :'Hải sản',
         desc: "Mực tươi nướng với gia vị Hàn Quốc, đậm đà, cay nhẹ, hương vị khó quên."
     },
@@ -114,6 +118,7 @@ function createProduct() {
         product_price: "75.000",
         product_image: "./assets/img/shopping/suon_cuu.jpg",
         added_to_cart: false,
+        soluong :1,
         topic :'Dê,cừu',
         desc: "Sườn cừu nướng mềm, ướp gia vị đặc biệt, thơm ngon và bổ dưỡng."
     },
@@ -123,6 +128,7 @@ function createProduct() {
         product_price: "65.000",
         product_image: "./assets/img/shopping/suonbonuong.jpg",
         added_to_cart: false,
+        soluong :1,
         topic :'Bò',
         desc: "Sườn bò nướng chín mềm, ướp gia vị đậm đà, thơm lừng."
     },
@@ -132,6 +138,7 @@ function createProduct() {
         product_price: "57.000",
         product_image: "./assets/img/shopping/thitdenuong.jpg",
         added_to_cart: false,
+        soluong :1,
         topic :'Dê,cừu',
         desc: "Thịt dê tươi nướng trên lửa hồng, giữ được vị thơm ngon, hấp dẫn."
     },
@@ -141,6 +148,7 @@ function createProduct() {
         product_price: "38.000",
         product_image: "./assets/img/shopping/thitganuongcay.jpg",
         added_to_cart: false,
+        soluong :1,
         topic :'Gà',
         desc: "Gà nướng với gia vị cay nồng, thơm lừng, thích hợp cho những ai yêu thích món cay."
     },
@@ -150,6 +158,7 @@ function createProduct() {
         product_price: "46.000",
         product_image: "./assets/img/shopping/thitheonuongsate.jpg",
         added_to_cart: false,
+        soluong :1,
         topic :'Heo',
         desc: "Thịt heo nướng sa tế cay nồng, thơm lừng, ăn kèm rau sống."
     },
@@ -159,6 +168,7 @@ function createProduct() {
         product_price: "45.000",
         product_image: "./assets/img/shopping/tom_nuong.jpg",
         added_to_cart: false,
+        soluong :1,
         topic :'Hải sản',
         desc: "Tôm nướng với mỡ hành béo ngậy, giữ trọn vị ngọt của tôm tươi."
     },
@@ -168,6 +178,7 @@ function createProduct() {
         product_price: "67.000",
         product_image: "./assets/img/shopping/tomnuongphomai.jpg",
         added_to_cart: false,
+        soluong :1,
         topic :'Hải sản',
         desc: "Tôm nướng kết hợp phô mai tan chảy, tạo nên món ăn độc đáo."
     },
@@ -177,6 +188,7 @@ function createProduct() {
         product_price: "47.000",
         product_image: "./assets/img/shopping/yakitori_ga(nhatban).jpg",
         added_to_cart: false,
+        soluong :1,
         topic :'Gà',
         desc: "Món xiên gà nướng kiểu Nhật, tẩm gia vị đậm đà, thích hợp làm món khai vị."
     },
@@ -186,6 +198,7 @@ function createProduct() {
         product_price: "5.000",
         product_image: "./assets/img/shopping/saladrau.jpg",
         added_to_cart: false,
+        soluong :1, 
         topic :'Rau',
         desc: "Salad tươi mát từ các loại rau sống, dùng để ăn kèm với các món nướng."
     }
@@ -404,9 +417,9 @@ function showProductDetail(productId) {
                     <p id="detail-product-price">${product.product_price} VND</p>
                     <p id="detail-product-desc">${product.desc}</p>
                     <div class="quantity-control">
-                        <button onclick="decreaseQuantity()">-</button>
+                        <button class="btnDescAdd-Sub" onclick="decreaseQuantity()">-</button>
                         <input id="detail-product-quantity" type="number" value="${product.soluong}" min="1">
-                        <button onclick="increaseQuantity()">+</button>
+                        <button class="btnDescAdd-Sub" onclick="increaseQuantity()">+</button>
                     </div>
                     <button id="add-to-cart-detail-btn">
                         ${product.added_to_cart ? "Đã thêm vào giỏ~~~" : "Thêm vào giỏ hàng"}
@@ -449,6 +462,9 @@ function decreaseQuantity() {
     }
 }
 
+increaseQuantity();
+
+decreaseQuantity();
 
 
 
