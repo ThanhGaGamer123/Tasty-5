@@ -65,8 +65,15 @@ const email = document.querySelector("#email");
 const form_email = document.querySelector(".form__email");
 let condition_4 = false;
 email.addEventListener("input", (e) => {
-  if (!isValidEmail(email.value) && email.value !== null) {
-    wrongValue.textContent = "Email không hợp lệ.";
+  let email_flag = false;
+  accArray.forEach((singleArray2) => {
+    if (singleArray2.email === page__email.value) {
+      email_flag = true;
+    }
+  });
+
+  if ((!isValidEmail(email.value) || email_flag) && email.value !== null) {
+    wrongValue.textContent = "Email không hợp lệ hoặc đã được sử dụng.";
     if (!form_email.contains(wrongValue)) {
       form_email.appendChild(wrongValue);
       email.classList.add("form__wrong");

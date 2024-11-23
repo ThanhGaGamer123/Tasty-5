@@ -335,6 +335,80 @@
             <!-- desc -->
             <div class="section-desc add__desc">Thêm khách hàng</div>
           </div>
+
+          <!-- add page -->
+          <div class="add__overlay"></div>
+          <form action="" class="add__page">
+            <!-- exit -->
+            <svg
+              class="page__exit"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="currentColor"
+                d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"
+              />
+            </svg>
+
+            <!-- heading -->
+            <div class="page__heading">Thêm Thông Tin Khách Hàng</div>
+
+            <!-- username -->
+            <div class="page__block page__block-username">
+              <label class="page__desc" for="page__username">Họ và Tên</label>
+              <br />
+              <input
+                type="text"
+                class="page__input"
+                id="page__username"
+                placeholder="Nhập tên khách hàng..."
+                required
+              />
+            </div>
+
+            <!-- email -->
+            <div class="page__block page__block-email">
+              <label class="page__desc" for="page__email">Email</label>
+              <br />
+              <input
+                type="text"
+                class="page__input"
+                id="page__email"
+                placeholder="Nhập email khách hàng..."
+                required
+              />
+            </div>
+
+            <!-- phone -->
+            <div class="page__block page__block-phone">
+              <label class="page__desc" for="page__phone">Số điện thoại</label>
+              <br />
+              <input
+                type="text"
+                id="page__phone"
+                class="page__input"
+                placeholder="Nhập số điện thoại khách hàng..."
+                required
+              />
+            </div>
+
+            <!-- address -->
+            <div class="page__block page__block-address">
+              <label class="page__desc" for="page__address">Địa chỉ</label>
+              <br />
+              <input
+                type="text"
+                id="page__address"
+                class="page__input"
+                placeholder="Nhập địa chỉ khách hàng..."
+                required
+              />
+            </div>
+
+            <!-- submit -->
+            <button class="btn page__submit">Thêm thông tin</button>
+          </form>
         </div>
 
         <!-- controls -->

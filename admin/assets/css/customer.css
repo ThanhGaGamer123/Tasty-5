@@ -458,8 +458,9 @@ a {
 
 /* javascript */
 
-/* setting */
-.overlay {
+/* setting & add page */
+.overlay,
+.add__overlay {
   position: fixed;
   background: #000;
   opacity: 0.3;
@@ -471,7 +472,8 @@ a {
   display: none;
 }
 
-.setting {
+.setting,
+.add__page {
   position: fixed;
   background: #000;
   z-index: 9998;
@@ -486,7 +488,16 @@ a {
   display: none;
 }
 
-.setting__exit {
+.add__page {
+  overflow-y: auto;
+}
+
+.add__page::-webkit-scrollbar {
+  border-radius: 12px;
+}
+
+.setting__exit,
+.page__exit {
   position: absolute;
   top: 18px;
   right: 18px;
@@ -498,11 +509,13 @@ a {
   transition: 0.2s;
 }
 
-.setting__exit:hover {
+.setting__exit:hover,
+.page__exit:hover {
   color: var(--primary-color);
 }
 
-.setting__heading {
+.setting__heading,
+.page__heading {
   font-size: 3.8rem;
   font-weight: 600;
   margin-top: 65px;
@@ -510,17 +523,20 @@ a {
   text-align: center;
 }
 
-.setting__block {
+.setting__block,
+.page__block {
   width: 500px;
   margin: 24px 13%;
 }
 
-.setting__desc {
+.setting__desc,
+.page__desc {
   font-size: 2.2rem;
   display: block;
 }
 
-.setting__input {
+.setting__input,
+.page__input {
   width: 90%;
   height: 50px;
   font-size: 2.2rem;
@@ -536,7 +552,12 @@ a {
   margin-top: 10px;
 }
 
-.setting__submit:hover {
+.page__submit {
+  margin: 10px 0 50px 30%;
+}
+
+.setting__submit:hover,
+.page__submit:hover {
   transform: scale(1.02);
 }
 
