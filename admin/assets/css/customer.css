@@ -99,7 +99,7 @@ a {
 }
 
 .main {
-  /* animation: slideX 1.2s ease-out; */
+  animation: slideX 1.2s ease-out;
 }
 
 .navbar {
@@ -405,6 +405,16 @@ a {
 
 .bg__super-backward {
   transform: rotate(180deg);
+}
+
+.button__disable {
+  cursor: not-allowed;
+  background: #ccc;
+}
+
+.button__disable:hover {
+  cursor: not-allowed;
+  background: #ccc;
 }
 
 /* button */

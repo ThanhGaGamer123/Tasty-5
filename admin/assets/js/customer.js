@@ -15,28 +15,135 @@ let flag__all = true,
   flag__active = false,
   flag__blocked = false;
 
+// Biến để phân trang
+const itemsPerPage = 3; // Số lượng khách hàng hiển thị mỗi trang
+let currentPage = 1; // Trang hiện tại
+
 // Hàm để cập nhật danh sách khách hàng
 function updateControlList() {
-  // Xóa tất cả các phần tử hiện tại
   control_list.innerHTML = "";
+  console.log(currentPage);
 
-  accArray.forEach((singleArray) => {
-    if (singleArray.role !== "admin") {
-      // Kiểm tra cờ để quyết định loại khách hàng nào sẽ được hiển thị
-      if (
-        flag__all ||
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const filteredAccounts = accArray.filter((singleArray) => {
+    return (
+      singleArray.role !== "admin" &&
+      (flag__all ||
         (flag__active && singleArray.role === "customer") ||
-        (flag__blocked && singleArray.role === "customer-blocked")
-      ) {
-        const control_item = createControlItem(singleArray);
-        control_list.appendChild(control_item);
-      }
-    }
+        (flag__blocked && singleArray.role === "customer-blocked"))
+    );
   });
+
+  const currentAccounts = filteredAccounts.slice(startIndex, endIndex);
+
+  currentAccounts.forEach((singleArray) => {
+    const control_item = createControlItem(singleArray);
+    control_list.appendChild(control_item);
+  });
+
+  updatePagination(filteredAccounts.length);
+}
+
+// Cập nhật phân trang
+function updatePagination(totalItems) {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  console.log(currentPage);
+
+  // Nút lùi
+  const bg__backward = document.querySelector(".bg__backward");
+  bg__backward.classList.remove("button__disable");
+
+  if (currentPage <= 1) {
+    currentPage = 1; // Đảm bảo currentPage không âm
+    bg__backward.classList.add("button__disable");
+  } else {
+    bg__backward.onclick = () => {
+      currentPage--;
+      if (currentPage < 1) currentPage = 1; // Đảm bảo không bị âm
+      updateControlList();
+    };
+  }
+
+  // Nút lùi về đầu
+  const bg__super_backward = document.querySelector(".bg__super-backward");
+  bg__super_backward.classList.remove("button__disable");
+
+  if (currentPage === 1) {
+    bg__super_backward.classList.add("button__disable");
+  } else {
+    bg__super_backward.onclick = () => {
+      currentPage = 1;
+      updateControlList();
+    };
+  }
+
+  // Nút tiến
+  const bg__forward = document.querySelector(".bg__forward");
+  bg__forward.classList.remove("button__disable");
+
+  if (currentPage >= totalPages) {
+    currentPage = totalPages; // Đảm bảo currentPage không vượt quá tổng số trang
+    bg__forward.classList.add("button__disable");
+  } else {
+    bg__forward.onclick = () => {
+      currentPage++;
+      if (currentPage > totalPages) currentPage = totalPages; // Đảm bảo không vượt quá tổng số trang
+      updateControlList();
+    };
+  }
+
+  // Nút tiến về cuối
+  const bg__super_forward = document.querySelector(".bg__super-forward");
+  bg__super_forward.classList.remove("button__disable");
+
+  if (currentPage === totalPages) {
+    bg__super_forward.classList.add("button__disable");
+  } else {
+    bg__super_forward.onclick = () => {
+      currentPage = totalPages;
+      updateControlList();
+    };
+  }
 }
 
 // Khởi tạo danh sách với tất cả khách hàng khi trang tải
 updateControlList();
+
+// Chức năng tìm kiếm theo search bar
+function updateControlListForSearch(search__input) {
+  control_list.innerHTML = "";
+
+  const searchValue = search__input.value.toLowerCase();
+
+  const filteredAccounts = accArray.filter((singleArray) => {
+    return (
+      singleArray.role !== "admin" &&
+      (flag__all ||
+        (flag__active && singleArray.role === "customer") ||
+        (flag__blocked && singleArray.role === "customer-blocked")) &&
+      singleArray.name.toLowerCase().includes(searchValue)
+    );
+  });
+
+  const currentAccounts = filteredAccounts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  currentAccounts.forEach((singleArray) => {
+    const control_item = createControlItem(singleArray);
+    control_list.appendChild(control_item);
+  });
+
+  updatePagination(filteredAccounts.length);
+}
+
+const search__input = document.querySelector(".search__input");
+search__input.addEventListener("input", (e) => {
+  updateControlListForSearch(search__input);
+});
 
 list__content0.addEventListener("click", (e) => {
   e.preventDefault();
@@ -44,7 +151,7 @@ list__content0.addEventListener("click", (e) => {
   flag__all = true;
   flag__active = false;
   flag__blocked = false;
-  updateControlList(); // Cập nhật danh sách
+  updateControlListForSearch(search__input); // Cập nhật danh sách
 });
 
 list__content1.addEventListener("click", (e) => {
@@ -53,7 +160,7 @@ list__content1.addEventListener("click", (e) => {
   flag__all = false;
   flag__active = true;
   flag__blocked = false;
-  updateControlList(); // Cập nhật danh sách
+  updateControlListForSearch(search__input); // Cập nhật danh sách
 });
 
 list__content2.addEventListener("click", (e) => {
@@ -62,9 +169,10 @@ list__content2.addEventListener("click", (e) => {
   flag__all = false;
   flag__active = false;
   flag__blocked = true;
-  updateControlList(); // Cập nhật danh sách
+  updateControlListForSearch(search__input); // Cập nhật danh sách
 });
 
+// Tạo control item
 function createControlItem(singleArray) {
   const control_item = document.createElement("div");
   control_item.classList.add("control-item");
@@ -83,7 +191,7 @@ function createControlItem(singleArray) {
   const control__heading_child_2 = document.createElement("div");
   control__heading_child_2.classList.add("control__group");
 
-  // Tạo các controls
+  // Tạo các nút điều khiển cho control item
   const controls = [
     { class: "control__setting", src: "./assets/img/customer/setting.svg" },
     { class: "control__lock", src: "./assets/img/customer/lock.svg" },
@@ -115,6 +223,7 @@ function createControlItem(singleArray) {
   return control_item;
 }
 
+// Thêm ảnh cho các nút điều khiển của control item
 function createControlImage(control) {
   const img = document.createElement("img");
   img.classList.add("control__img", control.class);
@@ -122,6 +231,7 @@ function createControlImage(control) {
   return img;
 }
 
+// Tự động điền dữ liệu khách hàng
 function createControlDesc(singleArray) {
   const control__desc = document.createElement("div");
   control__desc.classList.add("control__desc");
@@ -147,9 +257,11 @@ function createControlDesc(singleArray) {
   return control__desc;
 }
 
+// Thiết lập chức năng cho các nút điều khiển
 function handleControlClick(e, img, singleArray) {
   e.preventDefault();
 
+  // Chức năng chỉnh sửa thông tin khách hàng
   if (img.classList.contains("control__setting")) {
     // Hiển thị thông tin cài đặt khách hàng
     const overlay = document.querySelector(".overlay");
@@ -283,8 +395,8 @@ function handleControlClick(e, img, singleArray) {
     //Cập nhật lại dữ liệu info
     setting.addEventListener("submit", (e) => {
       e.preventDefault();
-      if (!condition) {
-        alert("Số điện thoại không hợp lệ.");
+      if (!condition || !condition_3) {
+        alert("Thông tin thay đổi không hợp lệ.");
         return;
       } else {
         // Cập nhật lại dữ liệu gốc
@@ -316,6 +428,7 @@ function handleControlClick(e, img, singleArray) {
     });
   }
 
+  // Chức năng khóa
   if (img.classList.contains("control__lock")) {
     // Xử lý khoá (có thể thêm chức năng ở đây)
     img.addEventListener("click", (e) => {
@@ -329,6 +442,7 @@ function handleControlClick(e, img, singleArray) {
     });
   }
 
+  // Chức năng mở khóa
   if (img.classList.contains("control__unlock")) {
     // Xử lý mở khoá (có thể thêm chức năng ở đây)
     img.addEventListener("click", (e) => {
