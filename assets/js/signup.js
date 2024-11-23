@@ -51,6 +51,7 @@ username.addEventListener("blur", (e) => {
     if (form_username.contains(wrongValue)) {
       form_username.removeChild(wrongValue);
       username.classList.remove("form__wrong");
+      condition_3 = true;
     }
   }
 });
@@ -63,17 +64,10 @@ function isValidEmail(email) {
 
 const email = document.querySelector("#email");
 const form_email = document.querySelector(".form__email");
-let condition_4 = false;
+let condition_4 = true;
 email.addEventListener("input", (e) => {
-  let email_flag = false;
-  accArray.forEach((singleArray2) => {
-    if (singleArray2.email === page__email.value) {
-      email_flag = true;
-    }
-  });
-
-  if ((!isValidEmail(email.value) || email_flag) && email.value !== null) {
-    wrongValue.textContent = "Email không hợp lệ hoặc đã được sử dụng.";
+  if (!isValidEmail(email.value) && email.value !== null) {
+    wrongValue.textContent = "Email không hợp lệ.";
     if (!form_email.contains(wrongValue)) {
       form_email.appendChild(wrongValue);
       email.classList.add("form__wrong");
@@ -95,6 +89,7 @@ email.addEventListener("blur", (e) => {
     if (form_email.contains(wrongValue)) {
       form_email.removeChild(wrongValue);
       email.classList.remove("form__wrong");
+      condition_4 = true;
     }
   }
 });
@@ -102,7 +97,7 @@ email.addEventListener("blur", (e) => {
 //password
 const password = document.querySelector("#password");
 const form_password = document.querySelector(".form__password");
-let condition_1 = false;
+let condition_1 = true;
 password.addEventListener("input", (e) => {
   let array = password.value.split("");
   let lengthArray = array.length; //12 - 30 kí tự
@@ -135,13 +130,14 @@ password.addEventListener("input", (e) => {
     if (!form_password.contains(wrongValue)) {
       form_password.appendChild(wrongValue);
       password.classList.add("form__wrong");
+      condition_1 = false;
     }
   } else {
     if (form_password.contains(wrongValue)) {
       form_password.removeChild(wrongValue);
       password.classList.remove("form__wrong");
+      condition_1 = true; //đã nhập password đúng điều kiện
     }
-    condition_1 = true; //đã nhập password đúng điều kiện
   }
 });
 
@@ -152,6 +148,7 @@ password.addEventListener("blur", (e) => {
     if (form_password.contains(wrongValue)) {
       form_password.removeChild(wrongValue);
       password.classList.remove("form__wrong");
+      condition_1 = true; //đã nhập password đúng điều kiện
     }
   }
 });
@@ -159,7 +156,7 @@ password.addEventListener("blur", (e) => {
 //re_password
 const re_password = document.querySelector("#re-password");
 const form__re_password = document.querySelector(".form__re-password");
-let condition_2 = false;
+let condition_2 = true;
 re_password.addEventListener("input", (e) => {
   if (password.value !== re_password.value) {
     re_password.value = re_password.value.slice(0, 30);
@@ -167,13 +164,26 @@ re_password.addEventListener("input", (e) => {
     if (!form__re_password.contains(wrongValue)) {
       form__re_password.appendChild(wrongValue);
       re_password.classList.add("form__wrong");
+      condition_2 = false;
     }
   } else {
     if (form__re_password.contains(wrongValue)) {
       form__re_password.removeChild(wrongValue);
       re_password.classList.remove("form__wrong");
+      condition_2 = true; //đã nhập re_password đúng điều kiện
     }
-    condition_2 = true; //đã nhập re_password đúng điều kiện
+  }
+});
+
+re_password.addEventListener("blur", (e) => {
+  //click ra ngoài thẻ input
+  if (re_password.value.trim() === "") {
+    //thẻ input rỗng
+    if (form__re_password.contains(wrongValue)) {
+      form__re_password.removeChild(wrongValue);
+      re_password.classList.remove("form__wrong");
+      condition_2 = true; //đã nhập re_password đúng điều kiện
+    }
   }
 });
 
