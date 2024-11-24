@@ -1,7 +1,5 @@
 /* Common */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: inherit;
 }
 
@@ -33,8 +31,6 @@ html {
 body {
   font-size: 1.6rem;
   font-family: "Open Sans", sans-serif;
-  display: grid;
-  grid-template-columns: 2.4fr 8fr;
 }
 
 .container {
@@ -81,12 +77,6 @@ a {
 }
 
 /* main */
-.main {
-  min-height: 100vh;
-  /* thử xóa padding */
-  /* padding: 24px 0; */
-}
-
 @keyframes slideX {
   0% {
     opacity: 0;
@@ -99,6 +89,8 @@ a {
 }
 
 .main {
+  margin-left: 25%;
+  position: relative;
   animation: slideX 1.2s ease-out;
 }
 
@@ -109,9 +101,11 @@ a {
 /* filter */
 .filter {
   padding-top: 50px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  column-gap: 12px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 /* list */
@@ -135,7 +129,7 @@ a {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  width: 250px;
+  width: 100%;
   height: 50px;
   border-radius: 12px;
 }
@@ -152,7 +146,7 @@ a {
 .list__sub0 {
   position: absolute;
   bottom: -50px;
-  width: 250px;
+  width: 100%;
   height: 50px;
   display: flex;
   align-items: center;
@@ -164,7 +158,7 @@ a {
 .list__sub1 {
   position: absolute;
   bottom: -50px;
-  width: 250px;
+  width: 100%;
   height: 50px;
   display: flex;
   align-items: center;
@@ -176,7 +170,7 @@ a {
 .list__sub2 {
   position: absolute;
   bottom: -50px;
-  width: 250px;
+  width: 100%;
   height: 50px;
   background: #d1d1d1;
   display: flex;
@@ -240,7 +234,7 @@ a {
 .search__input {
   border: none;
   outline: none;
-  width: 400px;
+  width: 100%;
   height: 50px;
   font-size: 2.2rem;
   background: #dcdcdce1;
@@ -255,7 +249,7 @@ a {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  width: 250px;
+  width: 100%;
   height: 72px;
   background: var(--secondary-color);
   color: #fff;
@@ -279,7 +273,6 @@ a {
 .add__desc {
   font-size: 2rem;
   font-weight: 600;
-  line-height: 1.5;
   cursor: pointer;
   user-select: none;
 }
@@ -478,9 +471,8 @@ a {
   background: #000;
   z-index: 9998;
   top: 10%;
-  bottom: 0;
-  left: 38%;
-  right: 0;
+  left: 0;
+  margin-left: 40%;
   width: 700px;
   height: 600px;
   background: #fff;
@@ -488,6 +480,7 @@ a {
   display: none;
 }
 
+.setting,
 .add__page {
   overflow-y: auto;
 }
@@ -550,6 +543,7 @@ a {
 .setting__submit {
   margin-left: 33%;
   margin-top: 10px;
+  margin-bottom: 24px;
 }
 
 .page__submit {

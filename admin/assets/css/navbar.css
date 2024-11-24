@@ -76,12 +76,6 @@ a {
   transform: scale(1.1);
 }
 
-/* fake navbar */
-.fake-navbar {
-  background: var(--primary-color);
-  width: 100%;
-}
-
 /* navbar */
 .navbar {
   background: var(--primary-color);

@@ -1,0 +1,82 @@
+:root {
+  --primary-color: #e92526;
+  --secondary-color: #df6b00;
+  --text-color: #000;
+}
+
+/* PC */
+@media (min-width: 992px) {
+  /* Ẩn chế độ thu menu */
+  .menu,
+  .overlay,
+  .navbar__close {
+    display: none;
+  }
+}
+
+/* Tablet & Mobile */
+@media (max-width: 991.98px) {
+  /* Chế độ menu */
+  .fake-navbar {
+    display: none;
+  }
+
+  body {
+    display: block;
+  }
+
+  .menu {
+    z-index: 9997;
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    color: var(--primary-color);
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #000;
+    opacity: 0.3;
+    display: none;
+  }
+
+  .overlay-active {
+    display: block;
+  }
+
+  .navbar__close {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    color: #fff;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    cursor: pointer;
+  }
+
+  .navbar {
+    width: 350px;
+    transform: translateX(-100%);
+    transition: 0.8s;
+  }
+
+  .navbar-active {
+    transform: translateX(0);
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991.98px) {
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+}
