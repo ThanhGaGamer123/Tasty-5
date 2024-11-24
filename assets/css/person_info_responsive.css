@@ -15,28 +15,31 @@
   /* form */
   .info__form {
     flex-direction: column;
-    gap: 100px;
+    gap: 50px;
   }
 
   .form__input {
-    width: calc(600px - 230px);
-  }
-
-  .form-pass {
-    margin-left: 36px;
+    width: calc(100% - 100px);
   }
 
   .header__heading {
     text-align: center;
-    margin-right: 54px;
+    margin-left: 0;
   }
 
   .header__desc {
-    margin-left: 24px;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .form__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .form__button {
-    margin-left: 80px;
+    margin-left: 0;
   }
 }
 

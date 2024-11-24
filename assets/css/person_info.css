@@ -157,21 +157,34 @@ a {
 }
 
 .info__header {
-  margin-left: 50px;
+  width: 100%;
 }
 
 .header__heading {
   font-size: 4rem;
   font-weight: 600;
   margin-bottom: 6px;
+  margin-left: 24px;
+}
+
+.header__desc {
+  margin-left: 24px;
 }
 
 .info__form {
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 38px;
-  margin-left: 50px;
+  justify-content: center;
+  gap: 50px;
+}
+
+.form__info {
+  width: 100%;
+}
+
+.form-pass {
+  width: 100%;
 }
 
 .form-group {
@@ -180,11 +193,13 @@ a {
 
 .form__label {
   font-weight: 600;
+  margin-left: 24px;
 }
 
 .form__input {
-  width: calc(600px - 50px);
+  width: calc(100% - 50px);
   margin-top: 12px;
+  margin-left: 24px;
   padding: 22px 20px;
   border: none;
   border-radius: 8px;
@@ -193,9 +208,14 @@ a {
   font-size: 1.8rem;
 }
 
+.form__btn {
+  width: 100%;
+}
+
 .form__button {
   padding: 20px 40px;
   margin-top: 24px;
+  margin-left: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -447,6 +467,7 @@ a {
   color: #333;
   margin: 10px 0 0 10px;
   cursor: pointer;
+  margin-right: 24px;
 }
 
 .hidden__password {
@@ -456,6 +477,7 @@ a {
   margin: 10px 0 0 9px;
   cursor: pointer;
   display: none;
+  margin-right: 24px;
 }
 
 .hide1 {
