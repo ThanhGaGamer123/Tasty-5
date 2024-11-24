@@ -1,0 +1,49 @@
+:root {
+  --primary-color: #e92526;
+  --secondary-color: #df6b00;
+  --text-color: #000;
+}
+
+/* PC */
+@media (min-width: 992px) {
+}
+
+/* Tablet & Mobile */
+@media (max-width: 991.98px) {
+  /* main */
+
+  /* form */
+  .info__form {
+    flex-direction: column;
+    gap: 100px;
+  }
+
+  .form__input {
+    width: calc(600px - 230px);
+  }
+
+  .form-pass {
+    margin-left: 36px;
+  }
+
+  .header__heading {
+    text-align: center;
+    margin-right: 54px;
+  }
+
+  .header__desc {
+    margin-left: 24px;
+  }
+
+  .form__button {
+    margin-left: 80px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991.98px) {
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+}

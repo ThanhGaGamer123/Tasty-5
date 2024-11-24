@@ -1,0 +1,109 @@
+:root {
+  --primary-color: #e92526;
+  --secondary-color: #df6b00;
+  --text-color: #000;
+}
+
+/* PC */
+@media (min-width: 992px) {
+}
+
+/* Tablet & Mobile */
+@media (max-width: 991.98px) {
+  /* hero */
+  .hero-row {
+    flex-direction: column;
+    padding: 150px 0 25px;
+    gap: 24px;
+  }
+
+  .hero-right__img {
+    width: 700px;
+    height: 500px;
+  }
+
+  .hero-left__heading {
+    text-align: center;
+  }
+
+  .hero-left__desc {
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  .hero-left__link {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+  }
+
+  /* main */
+
+  /* introduce */
+  .introduce-row {
+    flex-direction: column-reverse;
+    gap: 50px;
+  }
+
+  .introduce__heading {
+    text-align: center;
+  }
+
+  .introduce__desc {
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  /* history */
+  .history-row {
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  .history__heading {
+    text-align: center;
+  }
+
+  .history__desc {
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  /* popular */
+  .popular-row {
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  .popular__heading {
+    text-align: center;
+  }
+
+  .popular__desc {
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  /* commit */
+  .commit-row {
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  .commit__heading {
+    text-align: center;
+  }
+
+  .commit__desc {
+    text-align: center;
+    margin-top: 24px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991.98px) {
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+}
