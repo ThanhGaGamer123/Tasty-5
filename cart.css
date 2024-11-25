@@ -1,0 +1,312 @@
+/* Common */
+* {
+  box-sizing: inherit;
+}
+
+:root {
+  --primary-color: #e92526;
+  --secondary-color: #df6b00;
+  --text-color: #000;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/Open_Sans/static/OpenSans-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "Open Sans", sans-serif;
+}
+
+.container {
+  max-width: calc(100% - 140px);
+  margin: 0 auto;
+}
+
+a {
+  text-decoration: none;
+}
+/* header */
+
+/* navbar */
+.navbar {
+  height: 100px;
+  background-color: var(--primary-color);
+  position: sticky;
+  right: 0;
+  left: 0;
+}
+
+.navbar__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-height: 100px;
+  /* overflow: hidden; */
+}
+
+.navbar__logo {
+  width: 200px;
+  height: 100px;
+  object-fit: cover;
+  margin-left: 24px;
+}
+
+.navbar__list {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 63px;
+  margin-right: 24px;
+}
+
+.navbar__item {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  transition: 0.2s;
+}
+
+.navbar__item:hover {
+  opacity: 0.8;
+}
+
+.navbar__item-logo {
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+}
+
+.navbar__item-desc {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+/* javascript */
+
+/* log in navbar */
+.navbar__item-desc-active {
+  display: block;
+  margin-top: 2px;
+  font-size: 1.8rem;
+  max-width: 250px;
+}
+
+.log-out {
+  width: 220px;
+  height: 160px;
+  background: var(--secondary-color);
+  border-radius: 8px;
+  position: absolute;
+  left: 0px;
+  top: 30px;
+  display: none;
+}
+
+.log-out__row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  margin-left: 20px;
+}
+
+.log-out__img {
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  transition: 0.2s;
+}
+
+.log-out__desc {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-left: 12px;
+  transition: 0.2s;
+}
+
+.log-out__row:hover {
+  opacity: 0.8;
+}
+
+.navbar__login:hover {
+  opacity: 1;
+}
+
+.navbar__login-block {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  transition: 0.2s;
+  position: relative;
+}
+
+.navbar__login-block-active:hover .log-out {
+  display: block;
+  box-shadow: rgba(100, 100, 111, 0.5) 0px 7px 29px 0px;
+}
+
+.bridge {
+  width: 220px;
+  height: 30px;
+  background: transparent;
+  position: absolute;
+  top: -10px;
+}
+
+.others {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 4px;
+}
+
+.others__underline {
+  display: block;
+  width: 210px;
+  height: 0.1px;
+  border-radius: 999px;
+  background: #000;
+  opacity: 0.15;
+  margin-top: 8px;
+  margin-left: 4px;
+}
+/* phần thêm */
+.menu-section {
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid black;
+  max-width: 80%;
+}
+
+.menu-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.menu-item {
+  display: flex;
+  width: 48%;
+  margin-bottom: 20px;
+  border: 1px solid black;
+  padding: 10px;
+  background: #fff;
+}
+
+.menu-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.menu-info {
+  flex: 1;
+}
+
+.menu-name {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.menu-price {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.menu-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-btn {
+  width: 30px;
+  height: 30px;
+  font-size: 1.4rem;
+  background: #e92526;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.quantity-btn:hover {
+  opacity: 0.8;
+}
+
+.customer-info {
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid black;
+  max-width: 80%;
+  background: #fff;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 1.4rem;
+}
+
+.payment-section {
+  margin: 20px auto;
+  text-align: center;
+}
+
+.total-price {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.payment-btn {
+  padding: 10px 20px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #fff;
+  background: #e92526;
+  border: none;
+  cursor: pointer;
+}
+
+.payment-btn:hover {
+  opacity: 0.8;
+}
