@@ -1,0 +1,114 @@
+:root {
+  --primary-color: #e92526;
+  --secondary-color: #df6b00;
+  --text-color: #000;
+}
+
+/* PC */
+@media (min-width: 1200px) {
+}
+
+/* Tablet & Mobile */
+@media (max-width: 1199.98px) {
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+}
+
+/* Mobile */
+@media (max-width: 699.98px) {
+  .form {
+    width: calc(100% - 100px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form__input,
+  .form-input {
+    padding: 20px 0;
+    position: relative;
+  }
+
+  .hidden__password,
+  .show__password {
+    position: absolute;
+    right: 2%;
+  }
+
+  .form__login {
+    margin: 0 0;
+    align-self: center;
+    padding: 12px 12px 24px;
+  }
+
+  .form__btn {
+    align-self: center;
+    padding: 10px 50px;
+  }
+
+  .form__signup {
+    margin: 0 0;
+    align-self: center;
+  }
+}
+
+@media (max-width: 499.98px) {
+  /* common */
+  .container {
+    max-width: 100%;
+  }
+
+  .section-heading {
+    font-size: 4rem;
+  }
+
+  .section-desc {
+    font-size: 1.8rem;
+  }
+
+  .btn {
+    font-size: 1.8rem;
+    padding: 10px 30px;
+  }
+
+  /* form */
+  .form {
+    width: 100%;
+  }
+
+  .form__input,
+  .form-input {
+    width: clamp(300px, 70vw, 500px);
+  }
+
+  .form__btn {
+    align-self: center;
+    padding: 10px 50px;
+    white-space: nowrap;
+  }
+
+  /* media */
+  .media-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* button */
+  .button {
+    bottom: 12px;
+    right: 12px;
+  }
+
+  .button__img {
+    width: 32px;
+    height: 32px;
+  }
+}
