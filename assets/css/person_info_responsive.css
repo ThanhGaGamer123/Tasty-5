@@ -5,11 +5,11 @@
 }
 
 /* PC */
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
 }
 
 /* Tablet & Mobile */
-@media (max-width: 991.98px) {
+@media (max-width: 1199.98px) {
   /* main */
 
   /* form */
@@ -44,9 +44,73 @@
 }
 
 /* Tablet */
-@media (min-width: 768px) and (max-width: 991.98px) {
+@media (min-width: 768px) and (max-width: 1199.98px) {
 }
 
 /* Mobile */
-@media (max-width: 767.98px) {
+@media (max-width: 699.98px) {
+  .container {
+    max-width: 100%;
+  }
+
+  .info-row {
+    margin: 0 0;
+    width: 100%;
+  }
+
+  .form__input,
+  .form-input {
+    position: relative;
+  }
+
+  .hidden__password,
+  .show__password {
+    position: absolute;
+    right: 6%;
+  }
+
+  .form__button {
+    align-self: center;
+    padding: 14px 50px;
+  }
+}
+
+@media (max-width: 499.98px) {
+  /* common */
+  .section-heading {
+    font-size: 4rem;
+  }
+
+  .section-desc {
+    font-size: 1.8rem;
+  }
+
+  .btn {
+    font-size: 1.8rem;
+    padding: 14px 30px;
+  }
+
+  /* media */
+  .media-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* button */
+  .button {
+    bottom: 12px;
+    right: 12px;
+  }
+
+  .button__img {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* other */
+  .input__wrong {
+    width: calc(100% - 40px);
+    white-space: wrap;
+    font-size: 1.5rem;
+  }
 }

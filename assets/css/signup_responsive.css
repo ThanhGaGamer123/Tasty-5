@@ -111,4 +111,11 @@
     width: 32px;
     height: 32px;
   }
+
+  /* other */
+  .input__wrong {
+    width: calc(100% - 40px);
+    white-space: wrap;
+    font-size: 1.5rem;
+  }
 }
