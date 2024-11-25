@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./assets/css/index.css" />
     <link rel="stylesheet" href="./assets/css/navbar_responsive.css" />
     <link rel="stylesheet" href="./assets/css/index_responsive.css" />
+    <link rel="stylesheet" href="./assets/css/footer_responsive.css" />
     <!-- embed font -->
     <link
       rel="stylesheet"
@@ -175,6 +176,69 @@
                   </svg>
                   <span class="re-desc navbar__item-desc">Giỏ hàng</span>
                 </a>
+
+                <!-- underline -->
+                <div class="others__underline underline"></div>
+
+                <!-- Log in -->
+                <a href="./login.html" class="re-list__item re-login">
+                  <svg
+                    class="re-list__img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"
+                    />
+                  </svg>
+                  <span class="re-list__desc re-login__desc"> Đăng nhập </span>
+                </a>
+
+                <!-- Personal Information -->
+                <a href="./person_info.html" class="re-list__item re-person">
+                  <svg
+                    class="re-list__img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M406.5 399.6C387.4 352.9 341.5 320 288 320l-64 0c-53.5 0-99.4 32.9-118.5 79.6C69.9 362.2 48 311.7 48 256C48 141.1 141.1 48 256 48s208 93.1 208 208c0 55.7-21.9 106.2-57.5 143.6zm-40.1 32.7C334.4 452.4 296.6 464 256 464s-78.4-11.6-110.5-31.7c7.3-36.7 39.7-64.3 78.5-64.3l64 0c38.8 0 71.2 27.6 78.5 64.3zM256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-272a40 40 0 1 1 0-80 40 40 0 1 1 0 80zm-88-40a88 88 0 1 0 176 0 88 88 0 1 0 -176 0z"
+                    />
+                  </svg>
+                  <span class="re-list__desc">Tài khoản của tôi</span>
+                </a>
+
+                <!-- My Cart -->
+                <a href="./my_cart.html" class="re-list__item re-mycart">
+                  <svg
+                    class="re-list__img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M160 112c0-35.3 28.7-64 64-64s64 28.7 64 64l0 48-128 0 0-48zm-48 48l-64 0c-26.5 0-48 21.5-48 48L0 416c0 53 43 96 96 96l256 0c53 0 96-43 96-96l0-208c0-26.5-21.5-48-48-48l-64 0 0-48C336 50.1 285.9 0 224 0S112 50.1 112 112l0 48zm24 48a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm152 24a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"
+                    />
+                  </svg>
+                  <span class="re-list__desc">Đơn hàng của tôi</span>
+                </a>
+
+                <!-- Log out -->
+                <div class="re-list__item re-logout">
+                  <svg
+                    class="re-list__img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
+                    />
+                  </svg>
+                  <span class="re-list__desc re-logout__desc">Đăng xuất</span>
+                </div>
               </div>
             </div>
 
@@ -235,7 +299,11 @@
               </a>
 
               <!-- Login/Logout/Others -->
-              <a href="./login.html" id="navbar__login" class="navbar__item">
+              <a
+                href="./login.html"
+                id="navbar__login"
+                class="navbar__item old__login"
+              >
                 <div class="navbar__login-block">
                   <svg
                     id="navbar__login-logo"

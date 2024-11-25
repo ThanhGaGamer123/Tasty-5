@@ -5,7 +5,7 @@
 }
 
 /* PC */
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   /* Ẩn menu */
   .navbar__menu {
     display: none;
@@ -19,7 +19,7 @@
 }
 
 /* Tablet & Mobile */
-@media (max-width: 991.98px) {
+@media (max-width: 1199.98px) {
   /* Ẩn chức năng home, shopping, cart */
   .navbar__home,
   .navbar__shopping,
@@ -117,9 +117,57 @@
 }
 
 /* Tablet */
-@media (min-width: 768px) and (max-width: 991.98px) {
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  /* Ẩn login mới */
+  .underline,
+  .re-list__item {
+    display: none;
+  }
 }
 
 /* Mobile */
 @media (max-width: 767.98px) {
+  /* Ẩn login cũ */
+  .old__login {
+    display: none;
+  }
+
+  .re-list__item {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  .re-list__img {
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    color: #fff;
+  }
+
+  .re-list__desc {
+    font-size: 1.8rem;
+    color: #fff;
+  }
+
+  .re-home,
+  .re-shopping,
+  .re-cart {
+    justify-content: start;
+  }
+
+  .re-person,
+  .re-mycart,
+  .re-logout {
+    display: none;
+  }
+
+  .re-person-active,
+  .re-mycart-active,
+  .re-logout-active {
+    display: flex;
+  }
 }

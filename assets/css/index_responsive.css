@@ -5,11 +5,11 @@
 }
 
 /* PC */
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
 }
 
 /* Tablet & Mobile */
-@media (max-width: 991.98px) {
+@media (max-width: 1199.98px) {
   /* hero */
   .hero-row {
     flex-direction: column;
@@ -101,9 +101,81 @@
 }
 
 /* Tablet */
-@media (min-width: 768px) and (max-width: 991.98px) {
+@media (min-width: 768px) and (max-width: 1199.98px) {
 }
 
 /* Mobile */
 @media (max-width: 767.98px) {
+  /* container */
+  .container {
+    max-width: 100%;
+  }
+
+  /* hero */
+  .hero-right__img {
+    width: clamp(300px, 70vw, 700px);
+    height: clamp(100px, 50vw, 500px);
+    object-fit: cover;
+  }
+
+  /* introduce */
+  .introduce__img {
+    width: clamp(300px, 70vw, 700px);
+    height: clamp(100px, 70vw, 500px);
+    object-fit: cover;
+  }
+
+  /* history */
+  .history__img {
+    width: clamp(300px, 70vw, 700px);
+    height: clamp(100px, 70vw, 500px);
+    object-fit: cover;
+  }
+
+  /* popular */
+  .popular__img {
+    width: clamp(300px, 70vw, 700px);
+    height: clamp(100px, 70vw, 500px);
+    object-fit: cover;
+  }
+
+  /* commit */
+  .commit__img {
+    width: clamp(300px, 70vw, 700px);
+    height: clamp(100px, 70vw, 500px);
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 499.98px) {
+  /* common */
+  .section-heading {
+    font-size: 4rem;
+  }
+
+  .section-desc {
+    font-size: 1.8rem;
+  }
+
+  .btn {
+    font-size: 1.8rem;
+    padding: 10px 30px;
+  }
+
+  /* media */
+  .media-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* button */
+  .button {
+    bottom: 12px;
+    right: 12px;
+  }
+
+  .button__img {
+    width: 32px;
+    height: 32px;
+  }
 }

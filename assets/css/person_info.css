@@ -452,6 +452,7 @@ a {
   font-weight: 500;
   color: red;
   width: calc(600px - 110px);
+  margin-left: 24px;
 }
 
 /* show/hide password */
