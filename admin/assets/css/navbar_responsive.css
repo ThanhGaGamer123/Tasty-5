@@ -4,8 +4,12 @@
   --text-color: #000;
 }
 
+.overlay {
+  z-index: 9999;
+}
+
 /* PC */
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   /* Ẩn chế độ thu menu */
   .menu,
   .overlay,
@@ -15,14 +19,9 @@
 }
 
 /* Tablet & Mobile */
-@media (max-width: 991.98px) {
-  /* Chế độ menu */
-  .fake-navbar {
-    display: none;
-  }
-
+@media (max-width: 1199.98px) {
   body {
-    display: block;
+    display: flex;
   }
 
   .menu {
@@ -70,13 +69,58 @@
 
   .navbar-active {
     transform: translateX(0);
+    overflow-y: auto;
+  }
+
+  .navbar__menu {
+    height: 0;
+    gap: 50px;
   }
 }
 
 /* Tablet */
-@media (min-width: 768px) and (max-width: 991.98px) {
+@media (min-width: 768px) and (max-width: 1199.98px) {
 }
 
 /* Mobile */
-@media (max-width: 767.98px) {
+@media (max-width: 699.98px) {
+}
+
+@media (max-width: 499.98px) {
+  .navbar,
+  .navbar-active {
+    max-width: 250px;
+  }
+
+  .navbar__logo {
+    padding: 30px 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo__img {
+    width: 50%;
+    height: auto;
+  }
+
+  .navbar__menu {
+    height: 0;
+    gap: 50px;
+  }
+
+  .menu-desc {
+    font-size: 1.8rem;
+  }
+
+  .navbar__close {
+    width: 32px;
+    height: 32px;
+  }
 }

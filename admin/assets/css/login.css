@@ -33,8 +33,6 @@ html {
 body {
   font-size: 1.6rem;
   font-family: "Open Sans", sans-serif;
-  display: grid;
-  grid-template-columns: 2.4fr 8fr;
 }
 
 .container {
@@ -81,11 +79,14 @@ a {
 }
 
 /* main */
+.main {
+  width: 75%;
+  margin-left: 25%;
+}
 
 /* form */
 .form {
-  width: 0%;
-  min-width: 600px;
+  width: clamp(300px, 100%, 600px);
   margin: 120px auto;
   background: #fff;
   border-radius: 42px;
