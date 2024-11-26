@@ -5,14 +5,24 @@
 }
 
 /* PC */
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
 }
 
 /* Tablet & Mobile */
-@media (max-width: 991.98px) {
+@media (max-width: 1199.98px) {
   /* main */
   .main {
-    margin-left: 0;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .container {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .filter {
+    margin-top: 20px;
   }
 
   .overlay,
@@ -22,17 +32,106 @@
 
   .setting,
   .add__page {
+    top: 2.5vh;
+    left: 20vw;
     margin-left: 0;
-    left: 15%;
-    width: calc(100vw - 300px);
-    height: calc(100vh - 100px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .setting,
+  .add__page {
+    top: 2.5vh;
+    left: 14vw;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .setting,
+  .add__page {
+    top: 2.5vh;
+    left: 9vw;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 775px) {
+  .setting,
+  .add__page {
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
   }
 }
 
 /* Tablet */
-@media (min-width: 768px) and (max-width: 991.98px) {
+@media (min-width: 768px) and (max-width: 1199.98px) {
 }
 
 /* Mobile */
-@media (max-width: 767.98px) {
+@media (max-width: 699.98px) {
+  .list__desc,
+  .search__input,
+  .section-desc {
+    font-size: 2rem;
+  }
+
+  .add__desc {
+    font-size: 1.8rem;
+  }
+
+  .control__img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 499.98px) {
+  .filter {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+  /* add page */
+
+  .add {
+    margin-top: 12px;
+  }
+
+  .form-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 36px;
+  }
+
+  .page__exit {
+    top: 12px;
+    right: 0px;
+  }
+
+  .page__block {
+    width: 90%;
+    margin-left: 0;
+  }
+
+  .page__submit {
+    margin: 10px 0 50px;
+  }
+
+  .list__desc,
+  .search__input,
+  .section-desc {
+    font-size: 1.8rem;
+    width: 100%;
+    word-wrap: break-word;
+  }
+
+  .add__desc {
+    font-size: 1.6rem;
+  }
 }

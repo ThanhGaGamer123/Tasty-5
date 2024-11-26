@@ -90,6 +90,7 @@ a {
 
 .main {
   margin-left: 25%;
+  width: 75%;
   position: relative;
   animation: slideX 1.2s ease-out;
 }
