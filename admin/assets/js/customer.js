@@ -550,7 +550,6 @@ add.addEventListener("click", (e) => {
       if (page__block_username.contains(wrongValue2)) {
         page__block_username.removeChild(wrongValue2);
         page__username.classList.remove("form__wrong");
-        conditioN_3 = true;
       }
     }
   });
@@ -598,7 +597,6 @@ add.addEventListener("click", (e) => {
       if (page__block_email.contains(wrongValue2)) {
         page__block_email.removeChild(wrongValue2);
         page__email.classList.remove("form__wrong");
-        conditioN_4 = true;
       }
     }
   });
@@ -650,7 +648,6 @@ add.addEventListener("click", (e) => {
       if (page__block_phone.contains(wrongValue2)) {
         page__block_phone.removeChild(wrongValue2);
         page__phone.classList.remove("form__wrong");
-        conditioN = true;
       }
     }
   });
@@ -689,6 +686,7 @@ add.addEventListener("click", (e) => {
       alert("Thêm khách hàng thành công.");
       add__overlay.style.display = "none";
       add__page.style.display = "none";
+      add__page.reset();
       window.location.reload(); // reload trang để hiển thị thông tin mới
     }
   });

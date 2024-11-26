@@ -171,14 +171,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!form__password.contains(wrongValue)) {
         form__password.appendChild(wrongValue);
         password__input.classList.add("form__wrong");
+        condition = false;
       }
-      condition = false;
     } else {
       if (form__password.contains(wrongValue)) {
         form__password.removeChild(wrongValue);
         password__input.classList.remove("form__wrong");
+        condition = true;
       }
-      condition = true;
     }
   });
 
@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //Kiểm tra mật khẩu mới
   const new_password = document.querySelector("#new-password");
   const form_new_password = document.querySelector(".form__new-password");
-  let conditionPass2 = false;
+  let conditionPass2 = true;
   new_password.addEventListener("input", (e) => {
     let array = new_password.value.split("");
     let lengthArray = array.length; //12 - 30 kí tự
@@ -230,13 +230,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!form_new_password.contains(wrongValue)) {
         form_new_password.appendChild(wrongValue);
         new_password.classList.add("form__wrong");
+        conditionPass2 = false;
       }
     } else {
       if (form_new_password.contains(wrongValue)) {
         form_new_password.removeChild(wrongValue);
         new_password.classList.remove("form__wrong");
+        conditionPass2 = true; //đã nhập new_password đúng điều kiện
       }
-      conditionPass2 = true; //đã nhập new_password đúng điều kiện
     }
   });
 
@@ -263,14 +264,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!form__re_new_password.contains(wrongValue)) {
         form__re_new_password.appendChild(wrongValue);
         re_new_password.classList.add("form__wrong");
+        conditionPass3 = false;
       }
-      conditionPass3 = false;
     } else {
       if (form__re_new_password.contains(wrongValue)) {
         form__re_new_password.removeChild(wrongValue);
         re_new_password.classList.remove("form__wrong");
+        conditionPass3 = true;
       }
-      conditionPass3 = true;
     }
   });
 
