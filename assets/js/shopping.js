@@ -201,7 +201,20 @@ function createProduct() {
         soluong :1, 
         topic :'Rau',
         desc: "Salad tươi mát từ các loại rau sống, dùng để ăn kèm với các món nướng."
-    }
+    },
+    {
+        id: 21,
+        product_name: "Hào nướng mỡ hành",
+        product_price: "50.000",
+        product_image: "./assets/img/shopping/haonuongmohanh.jpg",
+        added_to_cart: false,
+        soluong :1, 
+        topic :'Hải sản',
+        desc: "Sự kết hợp hoàn hảo giữa vị ngọt tươi của biển cả và hương thơm đặc trưng của mỡ hành phi, mang đến một trải nghiệm ẩm thực tuyệt vời."
+    },
+    
+
+
 ];
 
 
@@ -302,25 +315,6 @@ function Dieukhienpage(totalProducts) {
 }
 displayProducts();
             // Tìm kiếm và lọc sản phẩm
-
-            /** 
-function Timkiemsanpham() {
-    const searchInput = document.querySelector(".search-filter__input").value.toLowerCase();
-    const selectedTopic = document.querySelector(".search-filter__select").value;
-
-    // Lấy danh sách sản phẩm từ localStorage
-    let products = JSON.parse(localStorage.getItem('products')) || [];
-
-    // Lọc sản phẩm dựa trên tìm kiếm và danh mục
-    let filteredProducts = products.filter(product => {
-        const matchesSearch = product.product_name.toLowerCase().includes(searchInput);
-        const matchesTopic = selectedTopic ? product.topic === selectedTopic : true;
-        return matchesSearch && matchesTopic;
-    });
-
-    currentPage = 1; // Reset lại trang hiện tại
-    Hienthisanphamtimkiem(filteredProducts); // Hiển thị sản phẩm đã lọc
-}*/
 function Timkiemsanpham() {
     const searchInput = document.querySelector(".search-filter__input").value.toLowerCase();
     const selectedTopic = document.querySelector(".search-filter__select").value;
@@ -408,10 +402,10 @@ function chiTietSanPham(productId) {
                 </div>
             </div>
         `;
-
         // Gắn sự kiện thêm vào giỏ hàng
         modal.querySelector("#add-to-cart-detail-btn").onclick = function () {
             addToCart(productId);
+            alert("Đã cập nhật số lượng món ăn!!!");
         };
 
         // Gắn modal vào body
@@ -428,72 +422,7 @@ function closeProductDetail() {
         modal.remove();
     }
 }
-/**
-function nhapSoluongSp(productId, action) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || ['xuanthien'];
 
-    // Tìm sản phẩm trong giỏ hàng
-    let cartItem = cart.find(item => item.id === productId);
-    if (!cartItem) return; // Nếu sản phẩm không có trong giỏ hàng, thoát
-
-    const quantityInput = document.getElementById("detail-product-quantity");
-    if (action === 'increase') {
-        cartItem.soluong += 1;
-        quantityInput.value = cartItem.soluong; 
-    } else if (action === 'decrease' && cartItem.soluong > 1) {
-        cartItem.soluong -= 1;
-        quantityInput.value = cartItem.soluong;
-    } else if (action === 'input') {
-        const newQuantity = parseInt(quantityInput.value);
-        if (newQuantity > 0) {
-            cartItem.soluong = newQuantity;
-        } else {
-            quantityInput.value = cartItem.soluong; // Reset về giá trị cũ nếu nhập không hợp lệ
-        }
-    }
-    // Cập nhật lại giỏ hàng trong Local Storage
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
- */
-
-/**
-
-function nhapSoluongSp(productId, action) {
-    let cartArray = JSON.parse(localStorage.getItem('cartArray')) || [];
-    const loginUser = JSON.parse(localStorage.getItem('LoginUser'));
-
-    if (!loginUser || !loginUser.email) {
-        alert("Bạn cần đăng nhập để thay đổi số lượng sản phẩm!");
-        return;
-    }
-
-    let userCart = cartArray.find(cart => cart.buyer.email === loginUser.email);
-    if (!userCart) return; // Nếu không có giỏ hàng, thoát
-
-    // Tìm sản phẩm trong giỏ hàng
-    let cartItem = userCart.cart.find(item => item.id === productId);
-    if (!cartItem) return; // Nếu sản phẩm không tồn tại, thoát
-
-    const quantityInput = document.getElementById("detail-product-quantity");
-    if (action === 'increase') {
-        cartItem.soluong += 1;
-        quantityInput.value = cartItem.soluong;
-    } else if (action === 'decrease' && cartItem.soluong > 1) {
-        cartItem.soluong -= 1;
-        quantityInput.value = cartItem.soluong;
-    } else if (action === 'input') {
-        const newQuantity = parseInt(quantityInput.value);
-        if (newQuantity > 0) {
-            cartItem.soluong = newQuantity;
-        } else {
-            quantityInput.value = cartItem.soluong; // Reset giá trị cũ nếu nhập không hợp lệ
-        }
-    }
-
-    // Lưu lại giỏ hàng vào localStorage
-    localStorage.setItem('cartArray', JSON.stringify(cartArray));
-}
- */
 
 function nhapSoluongSp(productId, action) {
     let cart = JSON.parse(localStorage.getItem('cart')) || ['xuanthien'];
@@ -521,62 +450,6 @@ function nhapSoluongSp(productId, action) {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-
-
-//ham fail
-/** 
-function tangGiamSp(productId) {
-    let cartArray = JSON.parse(localStorage.getItem('cartArray')) || [];
-
-    // Kiểm tra người dùng đã đăng nhập hay chưa
-    const loginUser = JSON.parse(localStorage.getItem('LoginUser'));
-    if (!loginUser || !loginUser.email) {
-        alert("Bạn cần đăng nhập trước khi thêm sản phẩm vào giỏ hàng!");
-        return;
-    }
-
-    // Tìm giỏ hàng của người dùng đăng nhập
-    let userCart = cartArray.find(cart => cart.buyer.email === loginUser.email);
-    if (!userCart) {
-        // Nếu chưa có giỏ hàng, tạo giỏ hàng mới
-        userCart = {
-            buyer: {
-                name: loginUser.name || "Người dùng",
-                email: loginUser.email,
-                phone: loginUser.phone || "Chưa có số điện thoại"
-            },
-            cart: []
-        };
-        cartArray.push(userCart);
-    }
-
-    // Tìm sản phẩm trong giỏ hàng
-    let cartItemIndex = userCart.cart.findIndex(item => item.id === productId);
-    if (cartItemIndex !== -1) {
-        // Nếu sản phẩm đã tồn tại, xóa khỏi giỏ hàng
-        userCart.cart.splice(cartItemIndex, 1);
-        alert("Sản phẩm đã được gỡ khỏi giỏ hàng!");
-    } else {
-        // Nếu sản phẩm chưa tồn tại, thêm vào giỏ
-        let products = JSON.parse(localStorage.getItem('products')) || [];
-        let product = products.find(p => p.id === productId);
-        if (product) {
-            userCart.cart.push({
-                id: product.id,
-                product_name: product.product_name,
-                product_price: product.product_price,
-                product_image: product.product_image,
-                soluong: 1
-            });
-            alert("Sản phẩm đã được thêm vào giỏ hàng!");
-        }
-    }
-
-    // Lưu lại giỏ hàng vào localStorage
-    localStorage.setItem('cartArray', JSON.stringify(cartArray));
-    updateCartButton(productId);
-}
-*/
 
 function copyCartToArray() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
