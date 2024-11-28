@@ -146,6 +146,7 @@ function updateCartQuantity(productId, action, newQuantity = null) {
 
     localStorage.setItem('cart', JSON.stringify(cart));
     displayCart();
+    displayCartSummary();
 }
 
 // Gọi hàm hiển thị giỏ hàng khi tải trang
@@ -284,46 +285,74 @@ window.addEventListener('load', () => {
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-function displayCartSummary() {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const tableBody = document.getElementById("summary-table").querySelector("tbody");
-    tableBody.innerHTML = ""; // Xóa nội dung cũ
 
-    if (cart.length <= 1) { 
-        // Nếu giỏ hàng trống, ẩn bảng tóm tắt
-        document.getElementById("order-summary").style.display = "none";
+function displayCartSummary() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || []; // Lấy dữ liệu giỏ hàng
+    let summaryContainer = document.getElementById("cart-summary"); // Phần tử chứa tóm tắt
+
+    if (!summaryContainer) {
+        console.error("Không tìm thấy phần tử chứa tóm tắt giỏ hàng (cart-summary).");
         return;
     }
 
+    summaryContainer.innerHTML = ""; // Xóa nội dung cũ
+
+    // Nếu giỏ hàng trống hoặc chỉ chứa thông tin khách hàng
+    if (cart.length <= 1) {
+        summaryContainer.innerHTML = "<p>Giỏ hàng của bạn đang trống. Không thể tóm tắt đơn hàng.</p>";
+        return;
+    }
+
+    let products = cart.slice(1); // Bỏ qua thông tin khách hàng
     let totalPrice = 0;
 
-    // Duyệt qua giỏ hàng và tạo các dòng trong bảng tóm tắt
-    cart.slice(1).forEach(item => { // Bỏ qua thông tin khách hàng ở phần tử đầu
-        const itemTotal = item.soluong * parseInt(item.product_price.replace(/\./g, '').replace("VND", ""));
+    // Tạo bảng tóm tắt
+    let table = document.createElement("table");
+    table.classList.add("cart-summary-table");
+    table.innerHTML = `
+        <thead>
+            <tr>
+                <th>Tên món</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    `;
+
+    let tbody = table.querySelector("tbody");
+
+    // Thêm thông tin từng sản phẩm vào bảng
+    products.forEach(item => {
+        let price = parseInt(item.product_price.replace(/\./g, '').replace("VND", ""));
+        let itemTotal = price * item.soluong;
         totalPrice += itemTotal;
 
-        // Tạo một hàng mới cho bảng tóm tắt
-        const row = document.createElement("tr");
+        let row = document.createElement("tr");
         row.innerHTML = `
             <td>${item.product_name}</td>
             <td>${item.soluong}</td>
-            <td>${parseInt(item.product_price.replace(/\./g, '').replace("VND", "")).toLocaleString()} VND</td>
+            <td>${price.toLocaleString()} VND</td>
             <td>${itemTotal.toLocaleString()} VND</td>
         `;
-        tableBody.appendChild(row);
+        tbody.appendChild(row);
     });
 
-    // Thêm dòng tổng cộng vào bảng
-    const totalRow = document.createElement("tr");
+    // Thêm dòng tổng cộng
+    let totalRow = document.createElement("tr");
     totalRow.innerHTML = `
-        <td colspan="3" style="font-weight: bold; text-align: right;">Tổng cộng:</td>
+        <td colspan="3" style="text-align: right; font-weight: bold;">Tổng cộng:</td>
         <td style="font-weight: bold; color: #e63946;">${totalPrice.toLocaleString()} VND</td>
     `;
-    tableBody.appendChild(totalRow);
+    tbody.appendChild(totalRow);
 
-    // Hiển thị bảng tóm tắt
-    document.getElementById("order-summary").style.display = "block";
+    // Gắn bảng vào container
+    summaryContainer.appendChild(table);
 }
+
+// Gọi hàm hiển thị tóm tắt khi trang tải
+document.addEventListener("DOMContentLoaded", displayCartSummary);
 
 
 
@@ -445,6 +474,7 @@ function removeFromCart(productId) {
     localStorage.setItem('cart', JSON.stringify(cart));
     alert("Sản phẩm đã được xóa khỏi giỏ hàng!");
     displayCart();
+    displayCartSummary();
 }
 
 
