@@ -284,6 +284,53 @@ window.addEventListener('load', () => {
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+function displayCartSummary() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const tableBody = document.getElementById("summary-table").querySelector("tbody");
+    tableBody.innerHTML = ""; // Xóa nội dung cũ
+
+    if (cart.length <= 1) { 
+        // Nếu giỏ hàng trống, ẩn bảng tóm tắt
+        document.getElementById("order-summary").style.display = "none";
+        return;
+    }
+
+    let totalPrice = 0;
+
+    // Duyệt qua giỏ hàng và tạo các dòng trong bảng tóm tắt
+    cart.slice(1).forEach(item => { // Bỏ qua thông tin khách hàng ở phần tử đầu
+        const itemTotal = item.soluong * parseInt(item.product_price.replace(/\./g, '').replace("VND", ""));
+        totalPrice += itemTotal;
+
+        // Tạo một hàng mới cho bảng tóm tắt
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${item.product_name}</td>
+            <td>${item.soluong}</td>
+            <td>${parseInt(item.product_price.replace(/\./g, '').replace("VND", "")).toLocaleString()} VND</td>
+            <td>${itemTotal.toLocaleString()} VND</td>
+        `;
+        tableBody.appendChild(row);
+    });
+
+    // Thêm dòng tổng cộng vào bảng
+    const totalRow = document.createElement("tr");
+    totalRow.innerHTML = `
+        <td colspan="3" style="font-weight: bold; text-align: right;">Tổng cộng:</td>
+        <td style="font-weight: bold; color: #e63946;">${totalPrice.toLocaleString()} VND</td>
+    `;
+    tableBody.appendChild(totalRow);
+
+    // Hiển thị bảng tóm tắt
+    document.getElementById("order-summary").style.display = "block";
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 function checkout() {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -361,6 +408,8 @@ function checkout() {
     // Lưu mảng hoaDon vào localStorage
     localStorage.setItem('hoaDon', JSON.stringify(hoaDon));
 
+    
+
     // Giả lập thanh toán thành công
     alert("Thanh toán thành công! Cảm ơn quý khách!");
 
@@ -372,6 +421,7 @@ function checkout() {
 
     // Cập nhật giao diện giỏ hàng sau khi thanh toán
     displayCart();
+    displayCartSummary();
 
     // Ẩn phần nhập thông tin
     document.getElementById("checkout-details").style.display = "none";
@@ -401,5 +451,7 @@ function removeFromCart(productId) {
 
 
 
-
+document.addEventListener("DOMContentLoaded", () => {
+    displayCartSummary(); // Hiển thị tóm tắt giỏ hàng ngay khi trang tải
+});
 

@@ -193,3 +193,40 @@ a {
   margin-top: 8px;
   margin-left: 4px;
 }
+
+
+/* new css */
+
+
+.order-container {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+.order-container h3 {
+  margin-bottom: 10px;
+}
+.order-container ul {
+  padding-left: 20px;
+}
+.order-container p {
+  margin: 5px 0;
+}
+
+
+#order-details{
+  padding-top: 100px;
+}
+
+
+
+
+
+
+
+
+
+
+
