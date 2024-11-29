@@ -193,3 +193,85 @@ a {
   margin-top: 8px;
   margin-left: 4px;
 }
+/* CSS cải tiến */
+.order-container {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.order-container:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.order-container h3 {
+  display: inline-block;
+  margin-bottom: 15px;
+  font-size: 2rem;
+  color: var(--primary-color);
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.order-container ul {
+  padding-left: 25px;
+  margin-top: 10px;
+}
+
+.order-container p {
+  margin: 8px 0;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: #555;
+}
+
+#order-details {
+  padding-top: 100px;
+  
+}
+
+
+
+/* CSS cho nút ẩn/hiển thị */
+.toggle-btn {
+  float: right;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: 0.3s;
+}
+
+.toggle-btn:hover {
+  background-color: var(--secondary-color);
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* CSS cho nội dung ẩn */
+.order-details {
+  display: block;
+  transition: max-height 0.3s ease-out;
+  overflow: hidden;
+}
+
+/* Hiển thị thêm hiệu ứng khi nội dung mở */
+.order-details.open {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.order-details.closed {
+  max-height: 0;
+  opacity: 0;
+}
+

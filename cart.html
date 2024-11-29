@@ -382,10 +382,57 @@
     <!-- main -->
     <main class="main"></main>
 
+    <div id="customer-info-container">
+      <h3>Thông tin khách hàng</h3>
+      <div id="customer-info">
+          <!-- Thông tin khách hàng sẽ được hiển thị ở đây -->
+      </div>
+
+    <div id="cart-list" class="cart-container">
+      <!-- Nội dung giỏ hàng sẽ được hiển thị tại đây -->
+  </div>
+
+  <div id="cart-list"></div>
+   <div id="checkout-details" style="display: none;">
+  <h3>Thông tin nhận hàng</h3>
+
+  <label for="city">Tỉnh/Thành phố:</label>
+  <select id="city" name="city" required>
+      <option value="">Chọn Tỉnh/Thành phố</option>
+      <!-- Các tỉnh/thành phố sẽ được liệt kê ở đây -->
+  </select>
+
+  <label for="district">Quận/Huyện:</label>
+  <select id="district" name="district" required>
+      <option value="">Chọn Quận/Huyện</option>
+      <!-- Các quận/huyện sẽ được liệt kê ở đây -->
+  </select>
+
+  <label for="street">Số nhà/Đường:</label>
+  <input type="text" id="street" placeholder="Nhập số nhà hoặc tên đường" required />
+
+    <h3>Phương thức thanh toán</h3>
+    <label>
+        <input type="radio" name="payment-method" value="COD" checked /> Thanh toán khi nhận hàng (COD)
+    </label>
+    <label>
+        <input type="radio" name="payment-method" value="BankTransfer" /> Chuyển khoản ngân hàng
+    </label>
+    <label>
+        <input type="radio" name="payment-method" value="EWallet" /> Thanh toán qua ví điện tử
+    </label>
+    <button id="final-checkout-btn">Xác nhận thanh toán</button>
+    </div>
+
+    
+
+
+
     <!-- footer -->
-    <footer class="footer"></footer>
+    <footer class="footer"><p>&copy; 2024 Cửa hàng của bạn. All rights reserved.</p></footer>
 
     <!-- javascript -->
+    <script src="./assets/js/cart.js"></script>
     <script src="./assets/js/admin.js"></script>
     <script src="./assets/js/login.js"></script>
     <script src="./assets/js/others.js"></script>
