@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="./assets/css/reset.css" />
     <link rel="stylesheet" href="./assets/css/navbar.css" />
     <link rel="stylesheet" href="./assets/css/product.css" />
-    <link rel="stylesheet" href="./assets/css/navbar_responsive.css" />
     <!-- embed font -->
     <link
       rel="stylesheet"
@@ -90,29 +89,8 @@
     <title>Trang chủ</title>
   </head>
   <body>
-    <!-- menu -->
-    <svg class="menu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-      <path
-        fill="currentColor"
-        d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"
-      />
-    </svg>
-
     <!-- navbar -->
-    <div class="overlay"></div>
     <nav class="navbar">
-      <!-- exit -->
-      <svg
-        class="navbar__close"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 512 512"
-      >
-        <path
-          fill="currentColor"
-          d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"
-        />
-      </svg>
-
       <!-- logo -->
       <div class="navbar__logo">
         <a href="./index.html" class="logo__link">
@@ -278,11 +256,57 @@
       </div>
     </nav>
 
-    <!-- fake navbar -->
-    <div class="fake-navbar"></div>
+    <main>
+      <!-- phan tim kiem , loc san pham -->
+      <div class="search-filter">
+        <div class="containered">
+          <input type="text"     class="search-filter__input"   placeholder="Tìm kiếm tên món ăn..." >
+
+          <select class="search-filter__select">
+            <option value="">Các loại món ăn</option>
+            <option value="Bò">Thịt Bò</option>
+            <option value="Heo">Thịt Heo</option>
+            <option value="Gà">Gà</option>
+            <option value="Dê,cừu">Dê , cừu</option>
+            <option value="Hải sản">Hải sản</option>
+            <option value="Bánh nướng">Bánh nướng</option>
+            <option value="Rau">Rau ăn kèm </option>
+          </select>
+
+          <button class="search-filter__button">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path fill="#fdfcfc" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+              Tìm kiếm
+          </button>
+        </div>
+      </div>
+
+
+      <!-- phan icon them , xoa , sua san pham -->
+       <div class="setting-products">
+        <div class="container-txs">
+            <button class="btn-option">
+              Thêm sản phẩm
+            </button>      
+        </div>
+       </div>
+
+       <!-- phan hien thi san pham -->
+       <div class="container">
+        <div id="product-list">
+
+        </div>
+    </div>
+
+    <div id="pagination" style="text-align: center; margin: 20px 0;height: 80px;">
+
+
+    </div>
+
+    </main>
 
     <!-- javascript -->
     <script src="./assets/js/navbar.js"></script>
-    <script src="./assets/js/navbar_responsive.js"></script>
+    <script src="./assets/js/product.js"></script>
   </body>
 </html>
