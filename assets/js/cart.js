@@ -1,21 +1,29 @@
 function displayCustomerInfo() {
-    const loginUser = JSON.parse(localStorage.getItem("LoginUser"));
+    // Lấy giỏ hàng từ localStorage (giả sử giỏ hàng được lưu dưới key "cart")
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // Kiểm tra nếu người dùng đã đăng nhập
-    if (loginUser) {
+    // Kiểm tra nếu giỏ hàng có ít nhất một phần tử
+    if (cart.length > 0) {
+        // Lấy thông tin người dùng từ phần tử cart[0]
+        let customerInfo = cart[0];
+
         // Hiển thị thông tin khách hàng
         document.getElementById("customer-info").innerHTML = `
-            <p><strong>Tên:</strong> ${loginUser.name}</p>
-            <p><strong>Email:</strong> ${loginUser.email}</p>
-            <p><strong>Số điện thoại:</strong> ${loginUser.phone}</p>
+            <p><strong>Tên:</strong> ${customerInfo.name}</p>
+            <p><strong>Email:</strong> ${customerInfo.email}</p>
+            <p><strong>Số điện thoại:</strong> ${customerInfo.phone}</p>
         `;
     } else {
-        // Nếu chưa đăng nhập, hiển thị thông báo yêu cầu đăng nhập
+        // Nếu giỏ hàng trống, hiển thị thông báo yêu cầu thêm sản phẩm
         document.getElementById("customer-info").innerHTML = `
-            <p>Vui lòng đăng nhập để xem thông tin khách hàng của bạn.</p>
+            <p>Giỏ hàng của bạn hiện tại không có thông tin khách hàng.</p>
         `;
     }
 }
+
+// Gọi hàm khi trang tải
+window.onload = displayCustomerInfo;
+
 
 // Gọi hàm khi trang tải
 window.onload = displayCustomerInfo;
@@ -221,14 +229,27 @@ function displayCart() {
 
 
 
-// Hàm tự động điền thông tin địa chỉ khách hàng vào form từ LoginUser
+// Hàm tự động điền thông tin địa chỉ khách hàng vào form từ cart[0]
 function autofillDeliveryAddress() {
-    const loginUser = JSON.parse(localStorage.getItem("LoginUser"));
+    // Lấy dữ liệu giỏ hàng từ localStorage
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // Kiểm tra nếu đã có thông tin đăng nhập
-    if (loginUser && loginUser.address) {
+    // Kiểm tra nếu cart có dữ liệu và phần tử đầu tiên có thông tin cần thiết
+    if (cart.length > 0 && cart[0].deliveryAddress) {
         // Tự động điền địa chỉ vào trường nhập liệu
-        document.getElementById("delivery-address").value = loginUser.address;
+        document.getElementById("delivery-address").value = cart[0].deliveryAddress;
+    }
+
+    // Kiểm tra nếu cart có dữ liệu và phần tử đầu tiên có thông tin người nhận
+    if (cart.length > 0 && cart[0].receiverName) {
+        // Tự động điền tên người nhận vào trường nhập liệu
+        document.getElementById("receiver-name").value = cart[0].receiverName;
+    }
+
+    // Kiểm tra nếu cart có dữ liệu và phần tử đầu tiên có thông tin số điện thoại
+    if (cart.length > 0 && cart[0].receiverPhone) {
+        // Tự động điền số điện thoại vào trường nhập liệu
+        document.getElementById("receiver-phone").value = cart[0].receiverPhone;
     }
 }
 

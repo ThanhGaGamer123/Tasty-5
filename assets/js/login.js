@@ -15,12 +15,33 @@ window.addEventListener("load", (e) => {
     const navbar__login_block = document.querySelector(".navbar__login-block");
     navbar__login_block.classList.add("navbar__login-block-active");
   }
+
+  const cartArray = JSON.parse(localStorage.getItem("cartArray"));
+
+  if (loginUser && cartArray) {
+    let flag = false;
+    cartArray.forEach((singleArray) => {
+      if (singleArray[0].email === loginUser.email) {
+        console.log(singleArray[0].email);
+        flag = true;
+        localStorage.setItem("cart", JSON.stringify(singleArray));
+      }
+    });
+    if (!flag) {
+      const cart = [];
+      cart.push(loginUser);
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }
 });
 
 //Reset tài khoản khi đăng xuất
 const log_out = document.querySelector("#log_out");
 log_out.addEventListener("click", (e) => {
   e.preventDefault();
+
+  localStorage.removeItem("cart");
+
   localStorage.removeItem("LoginUser");
   const nav__login = document.querySelector("#navbar__login");
   nav__login.href = "./login.html";
