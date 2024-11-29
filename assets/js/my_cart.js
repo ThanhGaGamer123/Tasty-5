@@ -31,7 +31,7 @@ function displayOrderDetails(filteredOrders = null) {
         orderContainer.innerHTML += `
             <div class="order-header" data-index="${index}">
                 <span><strong>Đơn hàng #${index + 1}</strong></span>
-                <span>Ngày đặt: ${new Date(orderStatus.orderDate).toLocaleDateString()}</span>
+                <span>Ngày đặt: ${new Date(orderStatus.orderDate).toLocaleDateString()} ${new Date(orderStatus.orderDate).toLocaleTimeString()}</span>
                 <span>Tình trạng: <strong>${orderStatus.orderStatus}</strong></span>
                 <button class="toggle-details">Hiển thị chi tiết</button>
             </div>
@@ -48,6 +48,7 @@ function displayOrderDetails(filteredOrders = null) {
     });
 }
 
+// Hàm để bảo vệ an toàn HTML
 function escapeHTML(str) {
     var element = document.createElement('div');
     if (str) {
@@ -57,6 +58,7 @@ function escapeHTML(str) {
     return element.innerHTML;
 }
 
+// Hàm hiển thị chi tiết đơn hàng, bao gồm cả ghi chú
 function toggleOrderDetails(index, cart, orderStatus) {
     let detailsElement = document.getElementById(`order-details-${index}`);
 
@@ -81,9 +83,12 @@ function toggleOrderDetails(index, cart, orderStatus) {
         }, 0);
 
         // Kiểm tra và thêm ghi chú (nếu có)
-        let notesHTML = orderStatus.notes
-            ? `<p><strong>Ghi chú:</strong> ${escapeHTML(orderStatus.notes)}</p>`
+        let notesHTML = orderStatus.note
+            ? `<p><strong>Ghi chú:</strong> ${escapeHTML(orderStatus.note)}</p>`
             : `<p><strong>Ghi chú:</strong> Không có</p>`;
+
+        // Thêm thông tin ngày giờ đặt hàng vào chi tiết
+        let orderDateHTML = `<p><strong>Ngày giờ đặt hàng:</strong> ${new Date(orderStatus.orderDate).toLocaleDateString()} ${new Date(orderStatus.orderDate).toLocaleTimeString()}</p>`;
 
         detailsElement.innerHTML = `
             <p><strong>Sản phẩm:</strong></p>
@@ -91,15 +96,14 @@ function toggleOrderDetails(index, cart, orderStatus) {
             <p><strong>Địa chỉ nhận hàng:</strong> ${orderStatus.deliveryAddress}</p>
             <p><strong>Phương thức thanh toán:</strong> ${orderStatus.paymentMethod}</p>
             ${notesHTML}
+            ${orderDateHTML} <!-- Thêm ngày giờ đặt hàng -->
             <p><strong>Tổng tiền:</strong> ${totalPrice.toLocaleString()} VND</p>
         `;
         detailsElement.style.display = "block";
     }
 }
 
-
-
-// Lọc đơn hàng
+// Lọc đơn hàng theo trạng thái và ngày
 function filterOrders() {
     let statusFilter = document.getElementById("status-filter").value;
     let dateFilter = document.getElementById("date-filter").value;
