@@ -381,8 +381,25 @@
 
     <!-- main -->
     <main class="main"></main>
+    <div class="filter-container">
+      <label for="status-filter">Tình trạng:</label>
+      <select id="status-filter">
+          <option value="">Tất cả</option>
+          <option value="Chưa xử lý">Chưa xử lý</option>
+          <option value="Đã xác nhận">Đã xác nhận</option>
+          <option value="Đã giao thành công">Đã giao thành công</option>
+          <option value="Đã hủy">Đã hủy</option>
+      </select>
+  
+      <label for="date-filter">Ngày đặt hàng:</label>
+      <input type="date" id="date-filter">
+  
+      <button id="filter-btn">Lọc</button>
+  </div>
+  
+  <div id="order-details"></div>
+  
 
-    <div id="order-details"></div>
 
     <!-- footer -->
     <footer class="footer"></footer>

@@ -221,6 +221,86 @@ a {
 }
 
 
+/* lọc */
+
+
+
+/* Container của phần lọc */
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  align-items: center;
+  padding-top: 100px;
+}
+
+/* Label */
+.filter-container label {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Dropdown và input */
+.filter-container select,
+.filter-container input[type="date"] {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* Hover và focus cho input và dropdown */
+.filter-container select:hover,
+.filter-container input[type="date"]:hover,
+.filter-container select:focus,
+.filter-container input[type="date"]:focus {
+  border-color: #007bff;
+}
+
+/* Button lọc */
+.filter-container button {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover và active cho button */
+.filter-container button:hover {
+  background-color: #0056b3;
+}
+
+.filter-container button:active {
+  background-color: #004494;
+}
+
+/* Responsive: Thu gọn các thành phần trên màn hình nhỏ */
+@media (max-width: 768px) {
+  .filter-container {
+      flex-direction: column;
+      gap: 10px;
+  }
+
+  .filter-container select,
+  .filter-container input[type="date"],
+  .filter-container button {
+      width: 100%;
+  }
+}
 
 
 

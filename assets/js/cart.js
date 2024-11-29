@@ -363,7 +363,7 @@ document.addEventListener("DOMContentLoaded", displayCartSummary);
 
 function checkout() {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
+
     // Kiểm tra nếu giỏ hàng trống
     if (cart.length <= 1) {
         alert("Giỏ hàng của bạn đang trống!");
@@ -390,6 +390,9 @@ function checkout() {
         return;
     }
 
+    // Lấy ghi chú đơn hàng từ trường nhập liệu
+    let orderNote = document.getElementById("order-note").value.trim();
+
     // Tạo địa chỉ hoàn chỉnh theo định dạng: Số nhà/Đường, Quận/Huyện, Thành phố
     let deliveryAddress = `${street}, ${district}, ${city}`;
 
@@ -412,20 +415,20 @@ function checkout() {
         phone: loginUser.phone,      // Lấy số điện thoại từ LoginUser
         address: deliveryAddress,    // Địa chỉ nhận hàng
         paymentMethod: paymentMethod, // Phương thức thanh toán
+        note: orderNote              // Ghi chú đơn hàng
     };
-
-    
 
     // Tạo đơn hàng (donHang) với phần tử đầu tiên là cart
     let donHang = [];
     donHang.push(cart); // Phần tử đầu tiên của mảng donHang là giỏ hàng (cart)
 
-    // Thêm thông tin tình trạng đơn hàng
+    // Thêm thông tin tình trạng đơn hàng và ghi chú
     donHang.push({
         paymentMethod: paymentMethod,    // Phương thức thanh toán
         orderDate: orderDate,            // Ngày đặt hàng
         deliveryAddress: deliveryAddress, // Địa chỉ nhận hàng
-        orderStatus: "Chưa xử lý"         // Tình trạng đơn hàng (mặc định là "Chưa xử lý")
+        orderStatus: "Chưa xử lý",        // Tình trạng đơn hàng (mặc định là "Chưa xử lý")
+        note: orderNote                  // Ghi chú đơn hàng
     });
 
     // Kiểm tra xem mảng hoaDon đã có trong localStorage chưa, nếu chưa thì khởi tạo mảng rỗng
@@ -436,8 +439,6 @@ function checkout() {
 
     // Lưu mảng hoaDon vào localStorage
     localStorage.setItem('hoaDon', JSON.stringify(hoaDon));
-
-    
 
     // Giả lập thanh toán thành công
     alert("Thanh toán thành công! Cảm ơn quý khách!");
@@ -455,6 +456,9 @@ function checkout() {
     // Ẩn phần nhập thông tin
     document.getElementById("checkout-details").style.display = "none";
 }
+
+
+
 
 // Xử lý nút xác nhận thanh toán
 document.getElementById("final-checkout-btn").addEventListener("click", checkout);

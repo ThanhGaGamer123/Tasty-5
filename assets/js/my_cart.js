@@ -1,7 +1,11 @@
-// Hàm hiển thị chi tiết hóa đơn
-function displayOrderDetails() {
+function displayOrderDetails(filteredOrders = null) {
     // Lấy danh sách hóa đơn từ localStorage
-    let hoaDon = JSON.parse(localStorage.getItem('hoaDon')) || [];
+    let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+
+    // Nếu có dữ liệu lọc, sử dụng dữ liệu đó
+    if (filteredOrders) {
+        hoaDon = filteredOrders;
+    }
 
     // Kiểm tra nếu không có hóa đơn nào
     if (hoaDon.length === 0) {
@@ -16,26 +20,50 @@ function displayOrderDetails() {
     orderDetailsContainer.innerHTML = ""; // Xóa nội dung cũ
 
     hoaDon.forEach((donHang, index) => {
-        // Lấy thông tin giỏ hàng và trạng thái đơn hàng
-        let cart = donHang[0]; // Phần tử đầu tiên là giỏ hàng
-        let orderStatus = donHang[1]; // Phần tử thứ hai là thông tin trạng thái đơn hàng
+        let cart = donHang[0]; // Giỏ hàng
+        let orderStatus = donHang[1]; // Trạng thái đơn hàng
 
-        // Tạo một container cho mỗi hóa đơn
+        // Container cho mỗi đơn hàng
         let orderContainer = document.createElement("div");
         orderContainer.classList.add("order-container");
-        orderContainer.classList.add("container");
-        // Hiển thị tiêu đề hóa đơn
-        orderContainer.innerHTML += `<h3>Đơn Hàng #${index + 1}</h3>`;
 
-        // Hiển thị thông tin khách hàng
-        if (cart.length > 0) {
-            orderContainer.innerHTML += `
-                <p><strong>Tên khách hàng:</strong> ${cart[0].customerInfo.name || "Không xác định"}</p>
-                <p><strong>Email:</strong> ${cart[0].customerInfo.email || "Không xác định"}</p>
-            `;
-        }
+        // Phần hiển thị thu gọn
+        orderContainer.innerHTML += `
+            <div class="order-header" data-index="${index}">
+                <span><strong>Đơn hàng #${index + 1}</strong></span>
+                <span>Ngày đặt: ${new Date(orderStatus.orderDate).toLocaleDateString()}</span>
+                <span>Tình trạng: <strong>${orderStatus.orderStatus}</strong></span>
+                <button class="toggle-details">Hiển thị chi tiết</button>
+            </div>
+            <div class="order-details" id="order-details-${index}" style="display: none;">
+                <!-- Nội dung chi tiết sẽ được thêm ở đây -->
+            </div>
+        `;
 
-        // Hiển thị thông tin sản phẩm trong giỏ hàng
+        orderDetailsContainer.appendChild(orderContainer);
+
+        // Nút "Hiển thị chi tiết"
+        let toggleBtn = orderContainer.querySelector(".toggle-details");
+        toggleBtn.addEventListener("click", () => toggleOrderDetails(index, cart, orderStatus));
+    });
+}
+
+function escapeHTML(str) {
+    var element = document.createElement('div');
+    if (str) {
+        element.innerText = str;
+        element.textContent = str;
+    }
+    return element.innerHTML;
+}
+
+function toggleOrderDetails(index, cart, orderStatus) {
+    let detailsElement = document.getElementById(`order-details-${index}`);
+
+    if (detailsElement.style.display === "block") {
+        detailsElement.style.display = "none"; // Ẩn chi tiết nếu đang hiển thị
+    } else {
+        // Hiển thị chi tiết
         let productListHTML = "<ul>";
         cart.slice(1).forEach(item => {
             productListHTML += `
@@ -46,32 +74,54 @@ function displayOrderDetails() {
             `;
         });
         productListHTML += "</ul>";
-        orderContainer.innerHTML += `
-            <p><strong>Sản phẩm:</strong></p>
-            ${productListHTML}
-        `;
 
-        // Hiển thị thông tin thanh toán và địa chỉ
-        orderContainer.innerHTML += `
-            <p><strong>Ngày đặt hàng:</strong> ${new Date(orderStatus.orderDate).toLocaleString()}</p>
-            <p><strong>Địa chỉ nhận hàng:</strong> ${orderStatus.deliveryAddress}</p>
-            <p><strong>Phương thức thanh toán:</strong> ${orderStatus.paymentMethod}</p>
-            <p><strong>Tình trạng:</strong> ${orderStatus.orderStatus}</p>
-        `;
-
-        // Hiển thị tổng tiền
         let totalPrice = cart.slice(1).reduce((total, item) => {
             let price = parseInt(item.product_price.replace(/\./g, '').replace("VND", ""));
             return total + price * item.soluong;
         }, 0);
-        orderContainer.innerHTML += `
+
+        // Kiểm tra và thêm ghi chú (nếu có)
+        let notesHTML = orderStatus.notes
+            ? `<p><strong>Ghi chú:</strong> ${escapeHTML(orderStatus.notes)}</p>`
+            : `<p><strong>Ghi chú:</strong> Không có</p>`;
+
+        detailsElement.innerHTML = `
+            <p><strong>Sản phẩm:</strong></p>
+            ${productListHTML}
+            <p><strong>Địa chỉ nhận hàng:</strong> ${orderStatus.deliveryAddress}</p>
+            <p><strong>Phương thức thanh toán:</strong> ${orderStatus.paymentMethod}</p>
+            ${notesHTML}
             <p><strong>Tổng tiền:</strong> ${totalPrice.toLocaleString()} VND</p>
         `;
-
-        // Thêm hóa đơn vào danh sách
-        orderDetailsContainer.appendChild(orderContainer);
-    });
+        detailsElement.style.display = "block";
+    }
 }
 
-// Gọi hàm khi trang tải
-document.addEventListener("DOMContentLoaded", displayOrderDetails);
+
+
+// Lọc đơn hàng
+function filterOrders() {
+    let statusFilter = document.getElementById("status-filter").value;
+    let dateFilter = document.getElementById("date-filter").value;
+
+    // Lấy danh sách hóa đơn từ localStorage
+    let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+
+    let filteredOrders = hoaDon.filter(donHang => {
+        let orderStatus = donHang[1];
+        let isStatusMatch = !statusFilter || orderStatus.orderStatus === statusFilter;
+        let isDateMatch = !dateFilter || new Date(orderStatus.orderDate).toLocaleDateString() === new Date(dateFilter).toLocaleDateString();
+
+        return isStatusMatch && isDateMatch;
+    });
+
+    displayOrderDetails(filteredOrders); // Hiển thị đơn hàng đã lọc
+}
+
+// Gọi hàm hiển thị đơn hàng khi trang tải
+document.addEventListener("DOMContentLoaded", () => {
+    displayOrderDetails();
+
+    // Thêm sự kiện cho nút lọc
+    document.getElementById("filter-btn").addEventListener("click", filterOrders);
+});
