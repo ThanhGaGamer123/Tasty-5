@@ -597,43 +597,43 @@ document.addEventListener("DOMContentLoaded", () => {
   cart.forEach((item) => updateCartButton(item.id));
 });
 
-// Hàm đăng xuất
-function checkLogOut() {
-  localStorage.removeItem("cart");
-  // localStorage.removeItem("LoginUser");
-  console.log("Đăng xuất thành công.");
-}
-
-const log_out_button = document.querySelector("#log_out");
-log_out_button.addEventListener("click", (e) => {
-  e.preventDefault();
-  checkLogOut();
-  window.location.href = "./index.html";
-});
-
 // Gọi hàm hiển thị sản phẩm khi trang được tải
 document.addEventListener("DOMContentLoaded", () => {
   displayProducts(); // Hiển thị sản phẩm
 });
 
-// Hàm đăng nhập
-window.addEventListener("load", (e) => {
-  const loginUser = JSON.parse(localStorage.getItem("LoginUser"));
-  const cartArray = JSON.parse(localStorage.getItem("cartArray"));
+// Hàm đăng xuất cart
+// function checkLogOut() {
+//   localStorage.removeItem("cart");
+//   // localStorage.removeItem("LoginUser");
+//   console.log("Đăng xuất thành công.");
+// }
 
-  if (loginUser && cartArray) {
-    let flag = false;
-    cartArray.forEach((singleArray) => {
-      if (singleArray[0].email === loginUser.email) {
-        console.log(singleArray[0].email);
-        flag = true;
-        localStorage.setItem("cart", JSON.stringify(singleArray));
-      }
-    });
-    if (!flag) {
-      const cart = [];
-      cart.push(loginUser);
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }
-  }
-});
+// const log_out_button = document.querySelector("#log_out");
+// log_out_button.addEventListener("click", (e) => {
+//   e.preventDefault();
+//   checkLogOut();
+//   window.location.href = "./index.html";
+// });
+
+// Hàm đăng nhập
+// window.addEventListener("load", (e) => {
+//   const loginUser = JSON.parse(localStorage.getItem("LoginUser"));
+//   const cartArray = JSON.parse(localStorage.getItem("cartArray"));
+
+//   if (loginUser && cartArray) {
+//     let flag = false;
+//     cartArray.forEach((singleArray) => {
+//       if (singleArray[0].email === loginUser.email) {
+//         console.log(singleArray[0].email);
+//         flag = true;
+//         localStorage.setItem("cart", JSON.stringify(singleArray));
+//       }
+//     });
+//     if (!flag) {
+//       const cart = [];
+//       cart.push(loginUser);
+//       localStorage.setItem("cart", JSON.stringify(cart));
+//     }
+//   }
+// });
