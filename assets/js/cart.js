@@ -656,7 +656,7 @@ document.querySelectorAll('input[name="payment-method"]').forEach((input) => {
 // Xử lý nút xác nhận thanh toán
 document.getElementById("final-checkout-btn").addEventListener("click", checkout);
 document.getElementById("final-checkout-btn").addEventListener("click", confirmPayment);
-document.getElementById("final-checkout-btn").addEventListener("click", clearCartArray);
+
 
 
 
@@ -684,8 +684,17 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+function removeCartItemByEmail() {
+    // Lấy mảng cartArray từ localStorage
+    let cartArray = JSON.parse(localStorage.getItem('cartArray')) || [];
+    let userEmail = localStorage.getItem('userEmail');
+    // Kiểm tra nếu mảng không trống
+    if (cartArray.length > 0) {
+        // Duyệt qua từng phần tử trong mảng
+        cartArray = cartArray.filter(item => item.email !== userEmail);
 
-function clearCartArray() {
-    // Xóa toàn bộ mảng cartArray trong localStorage
-    localStorage.removeItem('cartArray');
+        // Cập nhật lại mảng sau khi xóa phần tử vào localStorage
+        localStorage.setItem('cartArray', JSON.stringify(cartArray));
+    }
 }
+document.getElementById("final-checkout-btn").addEventListener("click", removeCartItemByEmail);
