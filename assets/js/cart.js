@@ -327,7 +327,7 @@ function displayCartSummary() {
     let products = cart.slice(1); // Bỏ qua thông tin khách hàng
     let totalPrice = 0;
 
-    // Tạo bảng tóm tắt
+    // Tạo bảng tóm tắt giỏ hàng
     let table = document.createElement("table");
     table.classList.add("cart-summary-table");
     table.innerHTML = `
@@ -368,12 +368,147 @@ function displayCartSummary() {
     `;
     tbody.appendChild(totalRow);
 
+    // Lấy thông tin đơn hàng từ localStorage
+    let hoaDon = JSON.parse(localStorage.getItem('hoaDon')) || [];
+    if (hoaDon.length > 0) {
+        // Lấy thông tin đơn hàng (đơn hàng cuối cùng)
+        let donHang = hoaDon[hoaDon.length - 1];
+        let orderInfo = donHang[1]; // Đơn hàng đầu tiên có thông tin thanh toán
+
+        // Tạo div chứa thông tin tóm tắt đơn hàng
+        let summaryDiv = document.createElement("div");
+
+        // Kiểm tra tính hợp lệ của địa chỉ (đảm bảo có đầy đủ thành phố, quận/huyện, và đường)
+        if (orderInfo.deliveryAddress && orderInfo.deliveryAddress.trim() !== "") {
+            summaryDiv.innerHTML += `
+                <p><strong>Địa chỉ giao hàng:</strong> ${orderInfo.deliveryAddress}</p>
+            `;
+        } else {
+            summaryDiv.innerHTML += `
+                <p><strong>Địa chỉ giao hàng:</strong> Chưa có địa chỉ hợp lệ</p>
+            `;
+        }
+
+        // Kiểm tra và hiển thị thông tin phương thức thanh toán nếu có
+        if (orderInfo.paymentMethod) {
+            summaryDiv.innerHTML += `
+                <p><strong>Phương thức thanh toán:</strong> ${orderInfo.paymentMethod}</p>
+            `;
+        }
+
+        // Thêm thông tin ghi chú vào phần tóm tắt, luôn hiển thị mặc định nếu không có
+        summaryDiv.innerHTML += `
+            <p><strong>Ghi chú:</strong> ${orderInfo.note || "Không có ghi chú"}</p>
+        `;
+
+        // Thêm div vào phần tóm tắt
+        summaryContainer.appendChild(summaryDiv);
+    }
+
     // Gắn bảng vào container
     summaryContainer.appendChild(table);
 }
 
+// Hàm cập nhật địa chỉ khi người dùng nhập đủ thông tin
+function updateAddress() {
+    let city = document.getElementById("city").value.trim();
+    let district = document.getElementById("district").value.trim();
+    let street = document.getElementById("street").value.trim();
+
+    // Nếu địa chỉ hợp lệ, tạo chuỗi địa chỉ đầy đủ và lưu vào localStorage
+    if (city && district && street) {
+        let deliveryAddress = `${street}, ${district}, ${city}`;
+
+        // Lấy thông tin đơn hàng từ localStorage
+        let hoaDon = JSON.parse(localStorage.getItem('hoaDon')) || [];
+        if (hoaDon.length > 0) {
+            let donHang = hoaDon[hoaDon.length - 1]; // Đơn hàng cuối cùng
+            donHang[1].deliveryAddress = deliveryAddress;
+
+            // Cập nhật lại hoaDon vào localStorage
+            localStorage.setItem('hoaDon', JSON.stringify(hoaDon));
+        }
+
+        // Cập nhật lại tóm tắt giỏ hàng
+        displayCartSummary();
+    }
+}
+
+// Hàm cập nhật phương thức thanh toán
+function updatePaymentMethod() {
+    let paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+
+    // Lấy thông tin đơn hàng từ localStorage
+    let hoaDon = JSON.parse(localStorage.getItem('hoaDon')) || [];
+    if (hoaDon.length > 0) {
+        let donHang = hoaDon[hoaDon.length - 1]; // Đơn hàng cuối cùng
+        donHang[1].paymentMethod = paymentMethod;
+
+        // Cập nhật lại hoaDon vào localStorage
+        localStorage.setItem('hoaDon', JSON.stringify(hoaDon));
+    }
+
+    // Cập nhật lại tóm tắt giỏ hàng
+    displayCartSummary();
+}
+
+// Hàm cập nhật ghi chú
+function updateOrderNote() {
+    let orderNote = document.getElementById("order-note").value.trim();
+
+    // Lấy thông tin đơn hàng từ localStorage
+    let hoaDon = JSON.parse(localStorage.getItem('hoaDon')) || [];
+    if (hoaDon.length > 0) {
+        let donHang = hoaDon[hoaDon.length - 1]; // Đơn hàng cuối cùng
+        donHang[1].note = orderNote;
+
+        // Cập nhật lại hoaDon vào localStorage
+        localStorage.setItem('hoaDon', JSON.stringify(hoaDon));
+    }
+
+    // Cập nhật lại tóm tắt giỏ hàng
+    displayCartSummary();
+}
+
+// Lắng nghe sự thay đổi của các trường nhập liệu và tự động cập nhật
+document.getElementById("city").addEventListener("input", updateAddress);
+document.getElementById("district").addEventListener("input", updateAddress);
+document.getElementById("street").addEventListener("input", updateAddress);
+document.getElementById("order-note").addEventListener("input", updateOrderNote);
+
+// Lắng nghe sự thay đổi của phương thức thanh toán
+document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
+    radio.addEventListener("change", updatePaymentMethod);
+});
+
 // Gọi hàm hiển thị tóm tắt khi trang tải
 document.addEventListener("DOMContentLoaded", displayCartSummary);
+
+
+
+
+
+
+
+// Hàm xác nhận thanh toán và reset thông tin
+function confirmPayment() {
+    // Xóa thông tin địa chỉ và ghi chú trong localStorage
+    let hoaDon = JSON.parse(localStorage.getItem('hoaDon')) || [];
+    if (hoaDon.length > 0) {
+        let donHang = hoaDon[hoaDon.length - 1]; // Lấy đơn hàng cuối cùng
+        donHang[1].deliveryAddress = '';  // Reset địa chỉ
+        donHang[1].note = '';  // Reset ghi chú
+
+        // Cập nhật lại thông tin đơn hàng trong localStorage
+        localStorage.setItem('hoaDon', JSON.stringify(hoaDon));
+    }
+
+    // Sau khi xác nhận thanh toán, cập nhật lại tóm tắt giỏ hàng (sẽ không còn địa chỉ và ghi chú)
+    displayCartSummary();
+}
+
+
+
 
 
 
@@ -515,6 +650,7 @@ document.querySelectorAll('input[name="payment-method"]').forEach((input) => {
 
 // Xử lý nút xác nhận thanh toán
 document.getElementById("final-checkout-btn").addEventListener("click", checkout);
+document.getElementById("final-checkout-btn").addEventListener("click", confirmPayment);
 
 
 
