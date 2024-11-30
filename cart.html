@@ -380,22 +380,40 @@
     </header>
 
     <!-- main -->
-    <main class="main"></main>
-
-    <div id="customer-info-container">
-      <h3>Thông tin khách hàng</h3>
-      <div id="customer-info">
-          <!-- Thông tin khách hàng sẽ được hiển thị ở đây -->
+    <main class="main">
+      <!-- Bên trái: Giỏ hàng -->
+      <div id="cart-list" class="cart-container">
+        <!-- Nội dung giỏ hàng sẽ được hiển thị tại đây -->
       </div>
+    
+      <!-- Bên phải: Thông tin khách hàng và tóm tắt -->
+      <div class="customer-summary-container">
+        <div id="customer-info-container">
+          <h3>Thông tin khách hàng</h3>
+          <div id="customer-info">
+            <!-- Thông tin khách hàng sẽ được hiển thị ở đây -->
+          </div>
+        </div>
+        <div id="cart-summary">
+          <!-- Bảng tóm tắt giỏ hàng sẽ được hiển thị ở đây -->
+        </div>
+      </div>
+    </main>
+    
 
-    <div id="cart-list" class="cart-container">
-      <!-- Nội dung giỏ hàng sẽ được hiển thị tại đây -->
-  </div>
+
+
+  <!-- Add this input field for Ghi chú -->
+<div class="checkout-note">
+  <label for="order-note">Ghi chú:</label>
+  <textarea id="order-note" placeholder="Nhập ghi chú cho đơn hàng của bạn..."></textarea>
+</div>
+
 
   <div id="cart-list"></div>
    <div id="checkout-details" style="display: none;">
-  <h3>Thông tin nhận hàng</h3>
-
+    <h3>Thông tin nhận hàng</h3>
+  
   <label for="city">Tỉnh/Thành phố:</label>
   <select id="city" name="city" required>
       <option value="">Chọn Tỉnh/Thành phố</option>
@@ -421,15 +439,18 @@
     <label>
         <input type="radio" name="payment-method" value="EWallet" /> Thanh toán qua ví điện tử
     </label>
+    
     <button id="final-checkout-btn">Xác nhận thanh toán</button>
     </div>
 
     
 
+    <div id="cart-summary">
+      <!-- Bảng tóm tắt giỏ hàng sẽ được hiển thị ở đây -->
+  </div>
 
 
     <!-- footer -->
-    <footer class="footer"><p>&copy; 2024 Cửa hàng của bạn. All rights reserved.</p></footer>
 
     <!-- javascript -->
     <script src="./assets/js/cart.js"></script>
