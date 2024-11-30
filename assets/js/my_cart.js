@@ -1,3 +1,4 @@
+// Hàm hiển thị chi tiết đơn hàng
 function displayOrderDetails(filteredOrders = null) {
     // Lấy danh sách hóa đơn từ localStorage
     let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
@@ -32,6 +33,7 @@ function displayOrderDetails(filteredOrders = null) {
             <div class="order-header" data-index="${index}">
                 <span><strong>Đơn hàng #${index + 1}</strong></span>
                 <span>Ngày đặt: ${new Date(orderStatus.orderDate).toLocaleDateString()} ${new Date(orderStatus.orderDate).toLocaleTimeString()}</span>
+                <span>Email: <strong>${orderStatus.email}</strong></span>
                 <span>Tình trạng: <strong>${orderStatus.orderStatus}</strong></span>
                 <button class="toggle-details">Hiển thị chi tiết</button>
             </div>
@@ -48,7 +50,7 @@ function displayOrderDetails(filteredOrders = null) {
     });
 }
 
-// Hàm để bảo vệ an toàn HTML
+// Hàm bảo vệ an toàn HTML
 function escapeHTML(str) {
     var element = document.createElement('div');
     if (str) {
@@ -58,7 +60,7 @@ function escapeHTML(str) {
     return element.innerHTML;
 }
 
-// Hàm hiển thị chi tiết đơn hàng, bao gồm cả ghi chú
+// Hàm hiển thị chi tiết đơn hàng
 function toggleOrderDetails(index, cart, orderStatus) {
     let detailsElement = document.getElementById(`order-details-${index}`);
 
@@ -90,6 +92,7 @@ function toggleOrderDetails(index, cart, orderStatus) {
         // Thêm thông tin ngày giờ đặt hàng vào chi tiết
         let orderDateHTML = `<p><strong>Ngày giờ đặt hàng:</strong> ${new Date(orderStatus.orderDate).toLocaleDateString()} ${new Date(orderStatus.orderDate).toLocaleTimeString()}</p>`;
 
+        // Hiển thị các thông tin chi tiết của đơn hàng
         detailsElement.innerHTML = `
             <p><strong>Sản phẩm:</strong></p>
             ${productListHTML}
@@ -103,29 +106,67 @@ function toggleOrderDetails(index, cart, orderStatus) {
     }
 }
 
-// Lọc đơn hàng theo trạng thái và ngày
+// Hàm lọc đơn hàng theo email
 function filterOrders() {
-    let statusFilter = document.getElementById("status-filter").value;
-    let dateFilter = document.getElementById("date-filter").value;
+    // Lấy thông tin người dùng đăng nhập
+    const loginUser = JSON.parse(localStorage.getItem("LoginUser"));
+    if (!loginUser || !loginUser.email) {
+        alert("Bạn cần đăng nhập để xem đơn hàng.");
+        return;
+    }
+    const userEmail = loginUser.email;
 
     // Lấy danh sách hóa đơn từ localStorage
     let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
 
+    // Lọc hóa đơn theo email
     let filteredOrders = hoaDon.filter(donHang => {
-        let orderStatus = donHang[1];
-        let isStatusMatch = !statusFilter || orderStatus.orderStatus === statusFilter;
-        let isDateMatch = !dateFilter || new Date(orderStatus.orderDate).toLocaleDateString() === new Date(dateFilter).toLocaleDateString();
-
-        return isStatusMatch && isDateMatch;
+        // Kiểm tra xem `orderStatus` có chứa email người dùng không
+        let orderInfo = donHang[1];
+        return orderInfo.email === userEmail; // Kiểm tra email khớp
     });
 
-    displayOrderDetails(filteredOrders); // Hiển thị đơn hàng đã lọc
+    // Hiển thị đơn hàng đã lọc
+    displayOrderDetails(filteredOrders);
 }
 
-// Gọi hàm hiển thị đơn hàng khi trang tải
-document.addEventListener("DOMContentLoaded", () => {
-    displayOrderDetails();
+// Hàm lọc đơn hàng với bộ lọc theo trạng thái và ngày
+function filterOrdersWithFilters(statusFilter, dateFilter) {
+    // Lấy thông tin người dùng đăng nhập
+    const loginUser = JSON.parse(localStorage.getItem("LoginUser"));
+    if (!loginUser || !loginUser.email) {
+        alert("Bạn cần đăng nhập để xem đơn hàng.");
+        return;
+    }
+    const userEmail = loginUser.email;
 
-    // Thêm sự kiện cho nút lọc
-    document.getElementById("filter-btn").addEventListener("click", filterOrders);
+    // Lấy danh sách hóa đơn từ localStorage
+    let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+
+    // Lọc hóa đơn theo email, trạng thái và ngày
+    let filteredOrders = hoaDon.filter(donHang => {
+        let orderInfo = donHang[1];
+        let isEmailMatch = orderInfo.email === userEmail;
+        let isStatusMatch = !statusFilter || orderInfo.orderStatus === statusFilter;
+        let isDateMatch = !dateFilter || new Date(orderInfo.orderDate).toLocaleDateString() === new Date(dateFilter).toLocaleDateString();
+
+        return isEmailMatch && isStatusMatch && isDateMatch;
+    });
+
+    // Hiển thị đơn hàng đã lọc
+    displayOrderDetails(filteredOrders);
+}
+
+// Lắng nghe sự kiện khi trang tải
+document.addEventListener("DOMContentLoaded", () => {
+    filterOrders(); // Tự động lọc đơn hàng theo email khi tải trang
+
+    // Thêm sự kiện cho nút lọc nếu người dùng muốn lọc thêm theo trạng thái hoặc ngày
+    document.getElementById("filter-btn").addEventListener("click", () => {
+        let statusFilter = document.getElementById("status-filter").value;
+        let dateFilter = document.getElementById("date-filter").value;
+
+        // Gọi lại hàm `filterOrdersWithFilters` với trạng thái và ngày
+        filterOrdersWithFilters(statusFilter, dateFilter);
+    });
 });

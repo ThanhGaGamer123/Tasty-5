@@ -380,7 +380,25 @@
     </header>
 
     <!-- main -->
-    <main class="main"></main>
+    <main class="main">
+      <!-- Bên trái: Giỏ hàng -->
+      <div id="cart-list" class="cart-container">
+        <!-- Nội dung giỏ hàng sẽ được hiển thị tại đây -->
+      </div>
+    
+      <!-- Bên phải: Thông tin khách hàng và tóm tắt -->
+      <div class="customer-summary-container">
+        <div id="customer-info-container">
+          <h3>Thông tin khách hàng</h3>
+          <div id="customer-info">
+            <!-- Thông tin khách hàng sẽ được hiển thị ở đây -->
+          </div>
+        </div>
+        <div id="cart-summary">
+          <!-- Bảng tóm tắt giỏ hàng sẽ được hiển thị ở đây -->
+        </div>
+      </div>
+    </main>
 
     <div id="customer-info-container">
       <h3>Thông tin khách hàng</h3>
@@ -419,19 +437,25 @@
   <label for="street">Số nhà/Đường:</label>
   <input type="text" id="street" placeholder="Nhập số nhà hoặc tên đường" required />
 
-    <h3>Phương thức thanh toán</h3>
-    <label>
-        <input type="radio" name="payment-method" value="COD" checked /> Thanh toán khi nhận hàng (COD)
-    </label>
-    <label>
-        <input type="radio" name="payment-method" value="BankTransfer" /> Chuyển khoản ngân hàng
-    </label>
-    <label>
-        <input type="radio" name="payment-method" value="EWallet" /> Thanh toán qua ví điện tử
-    </label>
-    
-    <button id="final-checkout-btn">Xác nhận thanh toán</button>
-    </div>
+  <h3>Phương thức thanh toán</h3>
+  <label>
+      <input type="radio" name="payment-method" value="COD" checked /> Thanh toán khi nhận hàng (COD)
+  </label>
+  <label>
+      <input type="radio" name="payment-method" value="BankTransfer" /> Chuyển khoản ngân hàng
+  </label>
+  <label>
+      <input type="radio" name="payment-method" value="EWallet" /> Thanh toán qua ví điện tử
+  </label>
+  
+  <!-- Input để nhập thông tin thẻ hoặc tài khoản -->
+  <div id="payment-info" style="display: none;">
+      <label for="payment-details">Nhập thông tin tài khoản hoặc số thẻ:</label>
+      <input type="text" id="payment-details" placeholder="Nhập số thẻ hoặc tài khoản" />
+  </div>
+  
+  <button id="final-checkout-btn">Xác nhận thanh toán</button>
+  
 
     
 
