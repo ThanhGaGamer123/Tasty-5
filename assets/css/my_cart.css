@@ -936,7 +936,3 @@ a {
 .order-container button.active::after {
   transform: rotate(180deg);
 }
-
-/* Cải tiến thanh lọc - Giữ nguyên không thay đổi */
-
-/* Phần này đã được chỉnh sửa cẩn thận */
