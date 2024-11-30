@@ -259,10 +259,15 @@ document.addEventListener("DOMContentLoaded", autofillDeliveryAddress);
 
 
 const provinces = [
-    { name: "Hà Nội", districts: ["Ba Đình", "Hoàn Kiếm", "Cầu Giấy", "Thanh Xuân"] },
-    { name: "TP Hồ Chí Minh", districts: ["Quận 1", "Quận 2", "Quận 3", "Quận 5"] },
-    { name: "Đà Nẵng", districts: ["Hải Châu", "Liên Chiểu", "Thanh Khê"] },
-    { name: "Cần Thơ", districts: ["Ninh Kiều", "Cái Răng", "Ô Môn"] },
+    
+    { name: "TP Hồ Chí Minh", districts:  [
+        "Quận 1", "Quận 2", "Quận 3", "Quận 4", "Quận 5", "Quận 6", "Quận 7", "Quận 8", 
+        "Quận 9", "Quận 10", "Quận 11", "Quận 12", "Quận Bình Tân", "Quận Bình Thạnh", 
+        "Quận Gò Vấp", "Quận Phú Nhuận", "Quận Tân Bình", "Quận Tân Phú", "Quận Thủ Đức", 
+        "Huyện Cần Giờ", "Huyện Củ Chi", "Huyện Hóc Môn", "Huyện Nhà Bè"
+    ]  }
+    
+    
     // Thêm các tỉnh thành khác vào đây
 ];
 
