@@ -656,7 +656,7 @@ document.querySelectorAll('input[name="payment-method"]').forEach((input) => {
 // Xử lý nút xác nhận thanh toán
 document.getElementById("final-checkout-btn").addEventListener("click", checkout);
 document.getElementById("final-checkout-btn").addEventListener("click", confirmPayment);
-
+document.getElementById("final-checkout-btn").addEventListener("click", clearCartArray);
 
 
 
@@ -683,3 +683,9 @@ document.addEventListener("DOMContentLoaded", () => {
     displayCartSummary(); // Hiển thị tóm tắt giỏ hàng ngay khi trang tải
 });
 
+
+
+function clearCartArray() {
+    // Xóa toàn bộ mảng cartArray trong localStorage
+    localStorage.removeItem('cartArray');
+}
