@@ -1,7 +1,14 @@
-// Hàm hiển thị chi tiết hóa đơn
-function displayOrderDetails() {
-    let hoaDon = JSON.parse(localStorage.getItem('hoaDon')) || [];
+// Hàm hiển thị chi tiết đơn hàng
+function displayOrderDetails(filteredOrders = null) {
+    // Lấy danh sách hóa đơn từ localStorage
+    let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
 
+    // Nếu có dữ liệu lọc, sử dụng dữ liệu đó
+    if (filteredOrders) {
+        hoaDon = filteredOrders;
+    }
+
+    // Kiểm tra nếu không có hóa đơn nào
     if (hoaDon.length === 0) {
         document.getElementById("order-details").innerHTML = `
             <p>Hiện tại bạn chưa có đơn hàng nào.</p>
@@ -9,44 +16,58 @@ function displayOrderDetails() {
         return;
     }
 
+    // Hiển thị danh sách đơn hàng
     let orderDetailsContainer = document.getElementById("order-details");
-    orderDetailsContainer.innerHTML = ""; 
+    orderDetailsContainer.innerHTML = ""; // Xóa nội dung cũ
 
     hoaDon.forEach((donHang, index) => {
-        let cart = donHang[0];
-        let orderStatus = donHang[1];
+        let cart = donHang[0]; // Giỏ hàng
+        let orderStatus = donHang[1]; // Trạng thái đơn hàng
 
+        // Container cho mỗi đơn hàng
         let orderContainer = document.createElement("div");
-        orderContainer.classList.add("order-container", "container");
+        orderContainer.classList.add("order-container");
 
-        // Thêm nút ẩn/hiển thị
-        let toggleButton = document.createElement("button");
-        toggleButton.textContent = "Ẩn thông tin";
-        toggleButton.classList.add("toggle-btn");
-        toggleButton.addEventListener("click", function () {
-            let details = orderContainer.querySelector(".order-details");
-            if (details.style.display === "none") {
-                details.style.display = "block";
-                toggleButton.textContent = "Ẩn thông tin";
-            } else {
-                details.style.display = "none";
-                toggleButton.textContent = "Hiển thị thông tin";
-            }
-        });
+        // Phần hiển thị thu gọn
+        orderContainer.innerHTML += `
+            <div class="order-header" data-index="${index}">
+                <span><strong>Đơn hàng #${index + 1}</strong></span>
+                <span>Ngày đặt: ${new Date(orderStatus.orderDate).toLocaleDateString()} ${new Date(orderStatus.orderDate).toLocaleTimeString()}</span>
+                <span>Email: <strong>${orderStatus.email}</strong></span>
+                <span>Tình trạng: <strong>${orderStatus.orderStatus}</strong></span>
+                <button class="toggle-details">Hiển thị chi tiết</button>
+            </div>
+            <div class="order-details" id="order-details-${index}" style="display: none;">
+                <!-- Nội dung chi tiết sẽ được thêm ở đây -->
+            </div>
+        `;
 
-        orderContainer.innerHTML += `<h3>Đơn Hàng #${index + 1}</h3>`;
-        orderContainer.appendChild(toggleButton);
+        orderDetailsContainer.appendChild(orderContainer);
 
-        let orderDetails = document.createElement("div");
-        orderDetails.classList.add("order-details");
+        // Nút "Hiển thị chi tiết"
+        let toggleBtn = orderContainer.querySelector(".toggle-details");
+        toggleBtn.addEventListener("click", () => toggleOrderDetails(index, cart, orderStatus));
+    });
+}
 
-        if (cart.length > 0) {
-            orderDetails.innerHTML += `
-                <p><strong>Tên khách hàng:</strong> ${cart[0].customerInfo.name || "Không xác định"}</p>
-                <p><strong>Email:</strong> ${cart[0].customerInfo.email || "Không xác định"}</p>
-            `;
-        }
+// Hàm bảo vệ an toàn HTML
+function escapeHTML(str) {
+    var element = document.createElement('div');
+    if (str) {
+        element.innerText = str;
+        element.textContent = str;
+    }
+    return element.innerHTML;
+}
 
+// Hàm hiển thị chi tiết đơn hàng
+function toggleOrderDetails(index, cart, orderStatus) {
+    let detailsElement = document.getElementById(`order-details-${index}`);
+
+    if (detailsElement.style.display === "block") {
+        detailsElement.style.display = "none"; // Ẩn chi tiết nếu đang hiển thị
+    } else {
+        // Hiển thị chi tiết
         let productListHTML = "<ul>";
         cart.slice(1).forEach(item => {
             productListHTML += `
@@ -58,25 +79,94 @@ function displayOrderDetails() {
         });
         productListHTML += "</ul>";
 
-        orderDetails.innerHTML += `
+        let totalPrice = cart.slice(1).reduce((total, item) => {
+            let price = parseInt(item.product_price.replace(/\./g, '').replace("VND", ""));
+            return total + price * item.soluong;
+        }, 0);
+
+        // Kiểm tra và thêm ghi chú (nếu có)
+        let notesHTML = orderStatus.note
+            ? `<p><strong>Ghi chú:</strong> ${escapeHTML(orderStatus.note)}</p>`
+            : `<p><strong>Ghi chú:</strong> Không có</p>`;
+
+        // Thêm thông tin ngày giờ đặt hàng vào chi tiết
+        let orderDateHTML = `<p><strong>Ngày giờ đặt hàng:</strong> ${new Date(orderStatus.orderDate).toLocaleDateString()} ${new Date(orderStatus.orderDate).toLocaleTimeString()}</p>`;
+
+        // Hiển thị các thông tin chi tiết của đơn hàng
+        detailsElement.innerHTML = `
             <p><strong>Sản phẩm:</strong></p>
             ${productListHTML}
-        `;
-        orderDetails.innerHTML += `
-            <p><strong>Ngày đặt hàng:</strong> ${new Date(orderStatus.orderDate).toLocaleString()}</p>
             <p><strong>Địa chỉ nhận hàng:</strong> ${orderStatus.deliveryAddress}</p>
             <p><strong>Phương thức thanh toán:</strong> ${orderStatus.paymentMethod}</p>
-            <p><strong>Tình trạng:</strong> ${orderStatus.orderStatus}</p>
-            <p><strong>Tổng tiền:</strong> ${cart.slice(1).reduce((total, item) => {
-                let price = parseInt(item.product_price.replace(/\./g, '').replace("VND", ""));
-                return total + price * item.soluong;
-            }, 0).toLocaleString()} VND</p>
+            ${notesHTML}
+            ${orderDateHTML} <!-- Thêm ngày giờ đặt hàng -->
+            <p><strong>Tổng tiền:</strong> ${totalPrice.toLocaleString()} VND</p>
         `;
-
-        orderContainer.appendChild(orderDetails);
-        orderDetailsContainer.appendChild(orderContainer);
-    });
+        detailsElement.style.display = "block";
+    }
 }
 
-// Gọi hàm khi trang tải
-document.addEventListener("DOMContentLoaded", displayOrderDetails);
+// Hàm lọc đơn hàng theo email
+function filterOrders() {
+    // Lấy thông tin người dùng đăng nhập
+    const loginUser = JSON.parse(localStorage.getItem("LoginUser"));
+    if (!loginUser || !loginUser.email) {
+        alert("Bạn cần đăng nhập để xem đơn hàng.");
+        return;
+    }
+    const userEmail = loginUser.email;
+
+    // Lấy danh sách hóa đơn từ localStorage
+    let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+
+    // Lọc hóa đơn theo email
+    let filteredOrders = hoaDon.filter(donHang => {
+        // Kiểm tra xem `orderStatus` có chứa email người dùng không
+        let orderInfo = donHang[1];
+        return orderInfo.email === userEmail; // Kiểm tra email khớp
+    });
+
+    // Hiển thị đơn hàng đã lọc
+    displayOrderDetails(filteredOrders);
+}
+
+// Hàm lọc đơn hàng với bộ lọc theo trạng thái và ngày
+function filterOrdersWithFilters(statusFilter, dateFilter) {
+    // Lấy thông tin người dùng đăng nhập
+    const loginUser = JSON.parse(localStorage.getItem("LoginUser"));
+    if (!loginUser || !loginUser.email) {
+        alert("Bạn cần đăng nhập để xem đơn hàng.");
+        return;
+    }
+    const userEmail = loginUser.email;
+
+    // Lấy danh sách hóa đơn từ localStorage
+    let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+
+    // Lọc hóa đơn theo email, trạng thái và ngày
+    let filteredOrders = hoaDon.filter(donHang => {
+        let orderInfo = donHang[1];
+        let isEmailMatch = orderInfo.email === userEmail;
+        let isStatusMatch = !statusFilter || orderInfo.orderStatus === statusFilter;
+        let isDateMatch = !dateFilter || new Date(orderInfo.orderDate).toLocaleDateString() === new Date(dateFilter).toLocaleDateString();
+
+        return isEmailMatch && isStatusMatch && isDateMatch;
+    });
+
+    // Hiển thị đơn hàng đã lọc
+    displayOrderDetails(filteredOrders);
+}
+
+// Lắng nghe sự kiện khi trang tải
+document.addEventListener("DOMContentLoaded", () => {
+    filterOrders(); // Tự động lọc đơn hàng theo email khi tải trang
+
+    // Thêm sự kiện cho nút lọc nếu người dùng muốn lọc thêm theo trạng thái hoặc ngày
+    document.getElementById("filter-btn").addEventListener("click", () => {
+        let statusFilter = document.getElementById("status-filter").value;
+        let dateFilter = document.getElementById("date-filter").value;
+
+        // Gọi lại hàm `filterOrdersWithFilters` với trạng thái và ngày
+        filterOrdersWithFilters(statusFilter, dateFilter);
+    });
+});

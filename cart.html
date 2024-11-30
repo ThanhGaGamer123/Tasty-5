@@ -399,9 +399,6 @@
         </div>
       </div>
     </main>
-    
-
-
 
   <!-- Add this input field for Ghi chú -->
 <div class="checkout-note">
@@ -429,19 +426,25 @@
   <label for="street">Số nhà/Đường:</label>
   <input type="text" id="street" placeholder="Nhập số nhà hoặc tên đường" required />
 
-    <h3>Phương thức thanh toán</h3>
-    <label>
-        <input type="radio" name="payment-method" value="COD" checked /> Thanh toán khi nhận hàng (COD)
-    </label>
-    <label>
-        <input type="radio" name="payment-method" value="BankTransfer" /> Chuyển khoản ngân hàng
-    </label>
-    <label>
-        <input type="radio" name="payment-method" value="EWallet" /> Thanh toán qua ví điện tử
-    </label>
-    
-    <button id="final-checkout-btn">Xác nhận thanh toán</button>
-    </div>
+  <h3>Phương thức thanh toán</h3>
+  <label>
+      <input type="radio" name="payment-method" value="COD" checked /> Thanh toán khi nhận hàng (COD)
+  </label>
+  <label>
+      <input type="radio" name="payment-method" value="BankTransfer" /> Chuyển khoản ngân hàng
+  </label>
+  <label>
+      <input type="radio" name="payment-method" value="EWallet" /> Thanh toán qua ví điện tử
+  </label>
+  
+  <!-- Input để nhập thông tin thẻ hoặc tài khoản -->
+  <div id="payment-info" style="display: none;">
+      <label for="payment-details">Nhập thông tin tài khoản hoặc số thẻ:</label>
+      <input type="text" id="payment-details" placeholder="Nhập số thẻ hoặc tài khoản" />
+  </div>
+  
+  <button id="final-checkout-btn">Xác nhận thanh toán</button>
+  
 
     
 
