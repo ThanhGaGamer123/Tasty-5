@@ -32,6 +32,7 @@ body {
   font-size: 1.6rem;
   font-family: "Open Sans", sans-serif;
   overflow-x: hidden;
+  user-select: none;
 }
 
 .container {
@@ -339,6 +340,15 @@ a {
 }
 
 /* Phần thêm */
+p,
+h3 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+input {
+  font-size: 1.8rem;
+}
 
 .main {
   display: flex;
@@ -393,7 +403,7 @@ a {
   text-align: left;
   padding: 8px;
   border-bottom: 1px solid #ccc;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
 }
 
 .customer-summary-container th {
@@ -437,7 +447,7 @@ a {
 }
 
 .cart-item-price {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   color: #333;
   margin-bottom: 8px;
 }
@@ -445,6 +455,7 @@ a {
 .cart-item-quantity {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .quantity-btn {
@@ -467,7 +478,7 @@ a {
   background-color: #e92526;
   color: #fff;
   padding: 8px 16px;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -522,7 +533,7 @@ a {
 
 #checkout-details label {
   display: block;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 500;
   margin-bottom: 8px;
   color: #333;
@@ -533,7 +544,7 @@ a {
 #checkout-details textarea {
   width: 100%;
   padding: 8px;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 16px;
@@ -698,7 +709,7 @@ a {
 
 .checkout-note label {
   display: block;
-  font-size: 1.6rem;
+  font-size: 2.4rem;
   font-weight: bold;
   margin-bottom: 8px;
 }
@@ -708,7 +719,7 @@ a {
   min-height: 80px; /* Chiều cao tối thiểu */
   max-height: none; /* Không giới hạn chiều cao tối đa */
   resize: vertical; /* Cho phép người dùng thay đổi kích thước theo chiều dọc */
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-family: inherit;
   padding: 8px;
   border: 1px solid #ccc;
