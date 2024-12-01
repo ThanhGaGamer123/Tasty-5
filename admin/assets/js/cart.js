@@ -89,4 +89,11 @@ function closeOrderDetails() {
 }
 
 // Gọi hàm displayOrders khi trang được tải
-window.onload = displayOrders;
+window.onload = displayOrders; 
+
+
+
+
+///////////////////////////////////////////////////////////
+
+
