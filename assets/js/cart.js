@@ -668,6 +668,7 @@ function displayCustomerInfo() {
   document
     .getElementById("final-checkout-btn")
     .addEventListener("click", confirmPayment);
+    
   
   // Hàm xóa sản phẩm khỏi giỏ hàng
   function removeFromCart(productId) {
