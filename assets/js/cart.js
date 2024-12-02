@@ -519,7 +519,7 @@ function confirmPayment() {
     donHang[1].note = ""; // Reset ghi chú
 
     // Cập nhật lại thông tin đơn hàng trong localStorage
-    localStorage.setItem("hoaDon", JSON.stringify(hoaDon));
+    
   }
 
   // Sau khi xác nhận thanh toán, cập nhật lại tóm tắt giỏ hàng (sẽ không còn địa chỉ và ghi chú)
@@ -628,6 +628,8 @@ function checkout() {
 
   // Lưu mảng hoaDon vào localStorage
   localStorage.setItem("hoaDon", JSON.stringify(hoaDon));
+
+  
 
   // Giả lập thanh toán thành công
   alert("Thanh toán thành công! Cảm ơn quý khách!");

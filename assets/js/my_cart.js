@@ -1,8 +1,4 @@
-// Biến toàn cục để theo dõi trang hiện tại
-let currentPage = 1;
-const itemsPerPage = 20;
-
-// Hàm hiển thị chi tiết đơn hàng với phân trang
+// Hàm hiển thị chi tiết đơn hàng
 function displayOrderDetails(filteredOrders = null) {
   // Lấy danh sách hóa đơn từ localStorage
   let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
@@ -15,28 +11,16 @@ function displayOrderDetails(filteredOrders = null) {
   // Kiểm tra nếu không có hóa đơn nào
   if (hoaDon.length === 0) {
     document.getElementById("order-details").innerHTML = `
-      <p>Hiện tại bạn chưa có đơn hàng nào.</p>
-    `;
+            <p>Hiện tại bạn chưa có đơn hàng nào.</p>
+        `;
     return;
   }
 
-  // Tính toán số trang
-  const totalPages = Math.ceil(hoaDon.length / itemsPerPage);
-
-  // Đảm bảo trang hiện tại nằm trong phạm vi hợp lệ
-  if (currentPage > totalPages) currentPage = totalPages;
-  if (currentPage < 1) currentPage = 1;
-
-  // Lấy danh sách hóa đơn cho trang hiện tại
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, hoaDon.length);
-  const currentOrders = hoaDon.slice(startIndex, endIndex);
-
-  // Hiển thị danh sách đơn hàng cho trang hiện tại
+  // Hiển thị danh sách đơn hàng
   let orderDetailsContainer = document.getElementById("order-details");
   orderDetailsContainer.innerHTML = ""; // Xóa nội dung cũ
 
-  currentOrders.forEach((donHang, index) => {
+  hoaDon.forEach((donHang, index) => {
     let cart = donHang[0]; // Giỏ hàng
     let orderStatus = donHang[1]; // Trạng thái đơn hàng
 
@@ -46,29 +30,32 @@ function displayOrderDetails(filteredOrders = null) {
 
     // Phần hiển thị thu gọn
     orderContainer.innerHTML += `
-      <div class="order-header" data-index="${startIndex + index}">
-        <span><strong>Đơn hàng #${startIndex + index + 1}</strong></span>
-        <span>Ngày đặt: ${new Date(orderStatus.orderDate).toLocaleDateString()} ${new Date(orderStatus.orderDate).toLocaleTimeString()}</span>
-        <span>Email: <strong>${orderStatus.email}</strong></span>
-        <span>Tình trạng: <strong>${orderStatus.orderStatus}</strong></span>
-        <button class="toggle-details">Hiển thị chi tiết</button>
-      </div>
-      <div class="order-details" id="order-details-${startIndex + index}" style="display: none;">
-        <!-- Nội dung chi tiết sẽ được thêm ở đây -->
-      </div>
-    `;
+            <div class="order-header" data-index="${index}">
+                <span><strong>Đơn hàng #${index + 1}</strong></span>
+                <span>Ngày đặt: ${new Date(
+                  orderStatus.orderDate
+                ).toLocaleDateString()} ${new Date(
+      orderStatus.orderDate
+    ).toLocaleTimeString()}</span>
+                <span>Email: <strong>${orderStatus.email}</strong></span>
+                <span>Tình trạng: <strong>${
+                  orderStatus.orderStatus
+                }</strong></span>
+                <button class="toggle-details">Hiển thị chi tiết</button>
+            </div>
+            <div class="order-details" id="order-details-${index}" style="display: none;">
+                <!-- Nội dung chi tiết sẽ được thêm ở đây -->
+            </div>
+        `;
 
     orderDetailsContainer.appendChild(orderContainer);
 
     // Nút "Hiển thị chi tiết"
     let toggleBtn = orderContainer.querySelector(".toggle-details");
     toggleBtn.addEventListener("click", () =>
-      toggleOrderDetails(startIndex + index, cart, orderStatus)
+      toggleOrderDetails(index, cart, orderStatus)
     );
   });
-
-  // Hiển thị nút phân trang
-  displayPagination(totalPages);
 }
 
 // Hàm bảo vệ an toàn HTML
@@ -92,14 +79,16 @@ function toggleOrderDetails(index, cart, orderStatus) {
     let productListHTML = "<ul>";
     cart.slice(1).forEach((item) => {
       productListHTML += `
-        <li>
-          <strong>${item.product_name}</strong> - ${item.product_price} VND
-          x ${item.soluong} = ${(
-            parseInt(item.product_price.replace(/\./g, "").replace("VND", "")) *
-            item.soluong
-          ).toLocaleString()} VND
-        </li>
-      `;
+                <li>
+                    <strong>${item.product_name}</strong> - ${
+        item.product_price
+      } VND
+                    x ${item.soluong} = ${(
+        parseInt(item.product_price.replace(/\./g, "").replace("VND", "")) *
+        item.soluong
+      ).toLocaleString()} VND
+                </li>
+            `;
     });
     productListHTML += "</ul>";
 
@@ -124,62 +113,25 @@ function toggleOrderDetails(index, cart, orderStatus) {
 
     // Hiển thị các thông tin chi tiết của đơn hàng
     detailsElement.innerHTML = `
-      <p><strong>Sản phẩm:</strong></p>
-      ${productListHTML}
-      <p><strong>Địa chỉ nhận hàng:</strong> ${orderStatus.deliveryAddress}</p>
-      <p><strong>Phương thức thanh toán:</strong> ${orderStatus.paymentMethod}</p>
-      ${notesHTML}
-      ${orderDateHTML}
-      <p><strong>Tổng tiền:</strong> ${totalPrice.toLocaleString()} VND</p>
-    `;
+            <p><strong>Sản phẩm:</strong></p>
+            ${productListHTML}
+            <p><strong>Địa chỉ nhận hàng:</strong> ${
+              orderStatus.deliveryAddress
+            }</p>
+            <p><strong>Phương thức thanh toán:</strong> ${
+              orderStatus.paymentMethod
+            }</p>
+            ${notesHTML}
+            ${orderDateHTML} <!-- Thêm ngày giờ đặt hàng -->
+            <p><strong>Tổng tiền:</strong> ${totalPrice.toLocaleString()} VND</p>
+        `;
     detailsElement.style.display = "block";
-  }
-}
-
-// Hàm hiển thị nút phân trang
-function displayPagination(totalPages) {
-  let paginationContainer = document.getElementById("pagination");
-  paginationContainer.innerHTML = ""; // Xóa nội dung cũ
-
-  // Nút "Trang trước"
-  if (currentPage > 1) {
-    let prevButton = document.createElement("button");
-    prevButton.textContent = "Trang trước";
-    prevButton.addEventListener("click", () => {
-      currentPage--;
-      displayOrderDetails();
-    });
-    paginationContainer.appendChild(prevButton);
-  }
-
-  // Hiển thị số trang
-  for (let i = 1; i <= totalPages; i++) {
-    let pageButton = document.createElement("button");
-    pageButton.textContent = i;
-    if (i === currentPage) {
-      pageButton.classList.add("active"); // Đánh dấu trang hiện tại
-    }
-    pageButton.addEventListener("click", () => {
-      currentPage = i;
-      displayOrderDetails();
-    });
-    paginationContainer.appendChild(pageButton);
-  }
-
-  // Nút "Trang sau"
-  if (currentPage < totalPages) {
-    let nextButton = document.createElement("button");
-    nextButton.textContent = "Trang sau";
-    nextButton.addEventListener("click", () => {
-      currentPage++;
-      displayOrderDetails();
-    });
-    paginationContainer.appendChild(nextButton);
   }
 }
 
 // Hàm lọc đơn hàng theo email
 function filterOrders() {
+  // Lấy thông tin người dùng đăng nhập
   const loginUser = JSON.parse(localStorage.getItem("LoginUser"));
   if (!loginUser || !loginUser.email) {
     alert("Bạn cần đăng nhập để xem đơn hàng.");
@@ -187,16 +139,63 @@ function filterOrders() {
   }
   const userEmail = loginUser.email;
 
+  // Lấy danh sách hóa đơn từ localStorage
   let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+
+  // Lọc hóa đơn theo email
   let filteredOrders = hoaDon.filter((donHang) => {
+    // Kiểm tra xem `orderStatus` có chứa email người dùng không
     let orderInfo = donHang[1];
-    return orderInfo.email === userEmail;
+    return orderInfo.email === userEmail; // Kiểm tra email khớp
   });
 
+  // Hiển thị đơn hàng đã lọc
+  displayOrderDetails(filteredOrders);
+}
+
+// Hàm lọc đơn hàng với bộ lọc theo trạng thái và ngày
+function filterOrdersWithFilters(statusFilter, dateFilter) {
+  // Lấy thông tin người dùng đăng nhập
+  const loginUser = JSON.parse(localStorage.getItem("LoginUser"));
+  if (!loginUser || !loginUser.email) {
+    alert("Bạn cần đăng nhập để xem đơn hàng.");
+    return;
+  }
+  const userEmail = loginUser.email;
+
+  // Lấy danh sách hóa đơn từ localStorage
+  let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+
+  // Lọc hóa đơn theo email, trạng thái và ngày
+  let filteredOrders = hoaDon.filter((donHang) => {
+    let orderInfo = donHang[1];
+    let isEmailMatch = orderInfo.email === userEmail;
+    let isStatusMatch = !statusFilter || orderInfo.orderStatus === statusFilter;
+    let isDateMatch =
+      !dateFilter ||
+      new Date(orderInfo.orderDate).toLocaleDateString() ===
+        new Date(dateFilter).toLocaleDateString();
+
+    return isEmailMatch && isStatusMatch && isDateMatch;
+  });
+
+  // Hiển thị đơn hàng đã lọc
   displayOrderDetails(filteredOrders);
 }
 
 // Lắng nghe sự kiện khi trang tải
 document.addEventListener("DOMContentLoaded", () => {
-  filterOrders();
+  filterOrders(); // Tự động lọc đơn hàng theo email khi tải trang
+
+  // Thêm sự kiện cho nút lọc nếu người dùng muốn lọc thêm theo trạng thái hoặc ngày
+  document.getElementById("filter-btn").addEventListener("click", () => {
+    let statusFilter = document.getElementById("status-filter").value;
+    let dateFilter = document.getElementById("date-filter").value;
+
+    // Gọi lại hàm `filterOrdersWithFilters` với trạng thái và ngày
+    filterOrdersWithFilters(statusFilter, dateFilter);
+  });
 });
+
+
+
