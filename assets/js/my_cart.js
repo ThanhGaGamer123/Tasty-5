@@ -196,6 +196,3 @@ document.addEventListener("DOMContentLoaded", () => {
     filterOrdersWithFilters(statusFilter, dateFilter);
   });
 });
-
-
-

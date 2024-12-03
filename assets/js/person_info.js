@@ -110,15 +110,47 @@ document.addEventListener("DOMContentLoaded", () => {
   //Kiểm tra address
   const address = document.querySelector("#address");
   const form_address = document.querySelector(".form__address");
+  let condition_2 = true;
+  // Hàm kiểm tra định dạng địa chỉ
+  function isValidAddress(address) {
+    const parts = address.split(",").map((part) => part.trim());
+    if (parts.length !== 5) {
+      return false;
+    }
+
+    return parts.every((part) => part !== "");
+  }
+
+  // Hàm xử lý sự kiện khi nhập địa chỉ
   address.addEventListener("input", (e) => {
+    // Kiểm tra độ dài tối đa
     if (address.value.length > 150) {
       address.value = address.value.slice(0, 150);
-      wrongValue.textContent = "";
+    }
+
+    // Kiểm tra định dạng địa chỉ
+    if (!isValidAddress(address.value)) {
+      wrongValue.textContent =
+        "Địa chỉ phải có định dạng: Số nhà, Đường, Phường, Quận, Tỉnh/Thành phố.";
       if (!form_address.contains(wrongValue)) {
         form_address.appendChild(wrongValue);
         address.classList.add("form__wrong");
+        condition_2 = false;
       }
     } else {
+      // Xóa thông báo lỗi nếu địa chỉ hợp lệ
+      if (form_address.contains(wrongValue)) {
+        form_address.removeChild(wrongValue);
+        address.classList.remove("form__wrong");
+        condition_2 = true;
+      }
+    }
+  });
+
+  address.addEventListener("blur", (e) => {
+    //click ra ngoài thẻ input
+    if (address.value.trim() === "") {
+      //thẻ input rỗng
       if (form_address.contains(wrongValue)) {
         form_address.removeChild(wrongValue);
         address.classList.remove("form__wrong");
@@ -130,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form__info = document.querySelector(".form__info");
   form__info.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (!condition || !condition_3) {
+    if (!condition || !condition_3 || !condition_2) {
       alert("Thông tin không hợp lệ.");
       return;
     } else {

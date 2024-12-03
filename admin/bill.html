@@ -277,7 +277,8 @@
         </div>
       </div>
     </nav>
-
+    <!-- Main -->
+     
     <!-- fake navbar -->
     <div class="fake-navbar"></div>
 
@@ -287,11 +288,40 @@
 
 <!-- Modal for Order Details -->
 <div id="order-details-modal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeOrderDetails()">&times;</span>
-        <div id="order-details-container"></div>
-    </div>
+  <div class="modal-content">
+      <span class="close" onclick="closeOrderDetails()">&times;</span>
+      <div id="order-details-container"></div>
+  </div>
 </div>
+
+<!-- Chức năng Lọc Đơn Hàng -->
+<div id="filter-container">
+  <div>
+      <label for="start-date">Từ ngày:</label>
+      <input type="date" id="start-date" name="start-date" />
+
+      <label for="end-date">Đến ngày:</label>
+      <input type="date" id="end-date" name="end-date" />
+
+      <button onclick="applyDateFilter()">Lọc theo ngày</button>
+  </div>
+
+  <div>
+    <label for="status-filter">Tình trạng:</label>
+    <select id="status-filter">
+        <option value="">Tất cả</option>
+        <option value="Chưa xử lý">Chưa xử lý</option>
+        <option value="Đã xác nhận">Đã xác nhận</option>
+        <option value="Đã giao">Đã giao</option>
+        <option value="Đã huỷ">Đã huỷ</option>
+    </select>
+
+      <button onclick="applyFilters()">Lọc nâng cao</button>
+  </div>
+</div>
+
+<!-- Danh sách đơn hàng -->
+<div id="orders-list"></div>
 
 
 
@@ -300,9 +330,8 @@
   
 
     <!-- javascript -->
-    <link rel="stylesheet" href="bill.css">
     <script src="./assets/js/navbar.js"></script>
     <script src="./assets/js/navbar_responsive.js"></script>
-    <script src="./assets/js/cart.js"></script>
+    <script src="./assets/js/bill.js"></script>
   </body>
 </html>
