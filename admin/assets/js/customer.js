@@ -367,15 +367,47 @@ function handleControlClick(e, img, singleArray) {
     const setting__block_address = document.querySelector(
       ".setting__block-address"
     );
+    let condition_2 = false;
+    // Hàm kiểm tra định dạng địa chỉ
+    function isValidAddress(address) {
+      const parts = address.split(",").map((part) => part.trim());
+      if (parts.length !== 5) {
+        return false;
+      }
+
+      return parts.every((part) => part !== "");
+    }
+
+    // Hàm xử lý sự kiện khi nhập địa chỉ
     setting__address.addEventListener("input", (e) => {
+      // Kiểm tra độ dài tối đa
       if (setting__address.value.length > 150) {
         setting__address.value = setting__address.value.slice(0, 150);
-        wrongValue.textContent = "";
+      }
+
+      // Kiểm tra định dạng địa chỉ
+      if (!isValidAddress(setting__address.value)) {
+        wrongValue.textContent =
+          "Địa chỉ phải có định dạng: Số nhà, Đường, Phường, Quận, Tỉnh/Thành phố.";
         if (!setting__block_address.contains(wrongValue)) {
           setting__block_address.appendChild(wrongValue);
           setting__address.classList.add("form__wrong");
+          condition_2 = false;
         }
       } else {
+        // Xóa thông báo lỗi nếu địa chỉ hợp lệ
+        if (setting__block_address.contains(wrongValue)) {
+          setting__block_address.removeChild(wrongValue);
+          setting__address.classList.remove("form__wrong");
+          condition_2 = true;
+        }
+      }
+    });
+
+    setting__address.addEventListener("blur", (e) => {
+      //click ra ngoài thẻ input
+      if (setting__address.value.trim() === "") {
+        //thẻ input rỗng
         if (setting__block_address.contains(wrongValue)) {
           setting__block_address.removeChild(wrongValue);
           setting__address.classList.remove("form__wrong");
@@ -423,7 +455,7 @@ function handleControlClick(e, img, singleArray) {
     //Cập nhật lại dữ liệu info
     setting.addEventListener("submit", (e) => {
       e.preventDefault();
-      if (!condition || !condition_3) {
+      if (!condition || !condition_3 || !condition_2) {
         alert("Thông tin thay đổi không hợp lệ.");
         return;
       } else {
@@ -604,15 +636,47 @@ add.addEventListener("click", (e) => {
   //Kiểm tra address
   const page__address = document.querySelector("#page__address");
   const page__block_address = document.querySelector(".page__block-address");
+  let conditioN_2 = true;
+  // Hàm kiểm tra định dạng địa chỉ
+  function isValidAddress(address) {
+    const parts = address.split(",").map((part) => part.trim());
+    if (parts.length !== 5) {
+      return false;
+    }
+
+    return parts.every((part) => part !== "");
+  }
+
+  // Hàm xử lý sự kiện khi nhập địa chỉ
   page__address.addEventListener("input", (e) => {
+    // Kiểm tra độ dài tối đa
     if (page__address.value.length > 150) {
       page__address.value = page__address.value.slice(0, 150);
-      wrongValue2.textContent = "";
+    }
+
+    // Kiểm tra định dạng địa chỉ
+    if (!isValidAddress(page__address.value)) {
+      wrongValue2.textContent =
+        "Địa chỉ phải có định dạng: Số nhà, Đường, Phường, Quận, Tỉnh/Thành phố.";
       if (!page__block_address.contains(wrongValue2)) {
         page__block_address.appendChild(wrongValue2);
         page__address.classList.add("form__wrong");
+        conditioN_2 = false;
       }
     } else {
+      // Xóa thông báo lỗi nếu địa chỉ hợp lệ
+      if (page__block_address.contains(wrongValue2)) {
+        page__block_address.removeChild(wrongValue2);
+        page__address.classList.remove("form__wrong");
+        conditioN_2 = true;
+      }
+    }
+  });
+
+  page__address.addEventListener("blur", (e) => {
+    //click ra ngoài thẻ input
+    if (page__address.value.trim() === "") {
+      //thẻ input rỗng
       if (page__block_address.contains(wrongValue2)) {
         page__block_address.removeChild(wrongValue2);
         page__address.classList.remove("form__wrong");
@@ -657,7 +721,7 @@ add.addEventListener("click", (e) => {
     e.preventDefault();
     console.log("click");
 
-    if (!conditioN || !conditioN_3 || !conditioN_4) {
+    if (!conditioN || !conditioN_3 || !conditioN_4 || !conditioN_2) {
       alert("Thông tin không hợp lệ.");
     } else {
       //Khởi tạo lớp tài khoản
