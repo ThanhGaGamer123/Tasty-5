@@ -1,0 +1,69 @@
+.statistic {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .statistic__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .statistic__filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .statistic__filter input[type="date"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .filter-btn {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .filter-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .statistic__section {
+    margin-bottom: 30px;
+  }
+  
+  .statistic__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .statistic__table th, .statistic__table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .statistic__table th {
+    background-color: #f2f2f2;
+  }
+  
+  .statistic__summary p {
+    margin: 5px 0;
+  }
+  
+  .statistic__summary ul {
+    padding-left: 20px;
+  }
+  
+  .statistic__summary ul li {
+    list-style: disc;
+  }
+  

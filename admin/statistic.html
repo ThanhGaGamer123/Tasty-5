@@ -277,11 +277,72 @@
         </div>
       </div>
     </nav>
+    <!-- Main -->
+    <!-- Main -->
+<section class="statistic">
+  <div class="statistic__header">
+    <h1>Thống kê tình hình kinh doanh</h1>
+    <div class="statistic__filter">
+      <label for="time-range">Khoảng thời gian:</label>
+      <input type="date" id="start-date" name="start-date" />
+      <span>đến</span>
+      <input type="date" id="end-date" name="end-date" />
+      <button class="filter-btn">Lọc</button>
+    </div>
+  </div>
+
+  <!-- Thống kê mặt hàng -->
+  <div class="statistic__section">
+    <h2>Thống kê mặt hàng</h2>
+    <table class="statistic__table">
+      <thead>
+        <tr>
+          <th>Mặt hàng</th>
+          <th>Số lượng bán ra</th>
+          <th>Tổng tiền thu được</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody id="product-stats">
+        <!-- Dữ liệu sẽ được thêm vào sau -->
+      </tbody>
+    </table>
+    <div class="statistic__summary">
+      <p><strong>Tổng thu:</strong> <span id="total-revenue"></span></p>
+      <p><strong>Mặt hàng bán chạy nhất:</strong> <span id="best-seller"></span></p>
+      <p><strong>Mặt hàng ế nhất:</strong> <span id="least-seller"></span></p>
+    </div>
+  </div>
+
+  <!-- Thống kê khách hàng -->
+  <div class="statistic__section">
+    <h2>Thống kê khách hàng</h2>
+    <table class="statistic__table">
+      <thead>
+        <tr>
+          <th>Khách hàng</th>
+          <th>Doanh thu</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody id="customer-stats">
+        <!-- Dữ liệu sẽ được thêm vào sau -->
+      </tbody>
+    </table>
+    <div class="statistic__summary">
+      <p><strong>Top 5 khách hàng phát sinh doanh thu cao nhất:</strong></p>
+      <ul id="top-customers">
+        <!-- Dữ liệu sẽ được thêm vào sau -->
+      </ul>
+    </div>
+  </div>
+</section>
 
     <!-- fake navbar -->
     <div class="fake-navbar"></div>
 
     <!-- javascript -->
+    <script src="./assets//js/statistic.js"></script>
     <script src="./assets/js/navbar.js"></script>
     <script src="./assets/js/navbar_responsive.js"></script>
   </body>
