@@ -293,7 +293,32 @@
         <div id="order-details-container"></div>
     </div>
 </div>
+<!-- Chức -->
+<div id="filter-container">
+  <label for="start-date">Từ ngày:</label>
+  <input type="date" id="start-date" name="start-date" />
 
+  <label for="end-date">Đến ngày:</label>
+  <input type="date" id="end-date" name="end-date" />
+
+  <label for="status-filter">Tình trạng:</label>
+  <select id="status-filter">
+    <option value="">Tất cả</option>
+    <option value="processed">Đã xử lý</option>
+    <option value="pending">Chưa xử lý</option>
+    <option value="canceled">Đã hủy</option>
+  </select>
+
+  <label for="district-filter">Quận:</label>
+  <select id="district-filter">
+    <option value="">Tất cả</option>
+    <option value="district-1">Quận 1</option>
+    <option value="district-2">Quận 2</option>
+    <option value="district-7">Quận 7</option>
+  </select>
+
+  <button onclick="applyFilters()">Lọc</button>
+</div>
 
 
 

@@ -1,7 +1,6 @@
 /* Common */
 * {
   box-sizing: inherit;
-  font-size: 1.4rem;
 }
 
 :root {
@@ -28,49 +27,12 @@ html {
   font-weight: bold;
   font-style: normal;
 }
-@media (min-width: 768px) {
-  .main {
-    display: flex;
-    gap: 20px;
-  }
 
-  .cart-container {
-    flex: 2;
-    max-width: 65%;
-  }
-
-  .customer-summary-container {
-    flex: 1;
-  }
-
-  #checkout-details {
-    max-width: 80%; /* Giới hạn chiều rộng ở mức 80% */
-    margin: 0 auto;
-  }
-}
-
-/* Đối với màn hình lớn hơn 1024px (máy tính để bàn) */
-@media (min-width: 1024px) {
-  body {
-    font-size: 1.6rem;
-  }
-
-  .cart-container {
-    flex: 3;
-  }
-
-  .customer-summary-container {
-    flex: 1;
-  }
-
-  #checkout-details {
-    max-width: 60%; /* Thu hẹp chiều rộng trên màn hình lớn */
-    margin: 0 auto;
-  }
-}
 body {
   font-size: 1.6rem;
   font-family: "Open Sans", sans-serif;
+  overflow-x: hidden;
+  user-select: none;
 }
 
 .container {
@@ -81,7 +43,43 @@ body {
 a {
   text-decoration: none;
 }
-/* Footer */
+
+.section-heading {
+  font-size: 6.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #000;
+  cursor: default;
+  user-select: none;
+}
+
+.section-desc {
+  font-size: 2.4rem;
+  font-weight: 400;
+  line-height: 1.3;
+  cursor: default;
+  user-select: none;
+}
+
+.btn {
+  padding: 10px 50px;
+  border-radius: 50px;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.67;
+  background: var(--primary-color);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+}
+
+/* header */
+
 /* navbar */
 .navbar {
   height: 100px;
@@ -89,9 +87,7 @@ a {
   position: fixed;
   right: 0;
   left: 0;
-  top: 0;
-  z-index: 999;
-  height:1 100px;
+  z-index: 9999;
 }
 
 .navbar__row {
@@ -142,13 +138,7 @@ a {
   font-weight: 500;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-/* Footer */
-
+/* javascript */
 
 /* log in navbar */
 .navbar__item-desc-active {
@@ -241,15 +231,130 @@ a {
   margin-top: 8px;
   margin-left: 4px;
 }
+
+/* footer */
+
+/* media */
+.media {
+  padding: 100px 0;
+  background: var(--primary-color);
+}
+
+.media-row {
+  display: grid;
+  grid-template-columns: 4fr 2.5fr 0.5fr;
+  column-gap: 50px;
+  align-items: start;
+  justify-content: center;
+}
+
+.media__heading {
+  margin-bottom: 24px;
+  color: #fff;
+}
+
+.media__desc {
+  color: #fff;
+}
+
+.media-contact__heading {
+  font-size: 3.6rem;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+.media__desc {
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.media-group {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+.media-icon {
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.media-icon:hover {
+  transform: scale(1.1);
+}
+
+/* copyright */
+.copyright {
+  background: #333;
+}
+
+.copyright__desc {
+  color: #fff;
+  padding: 24px 0;
+  font-size: 2rem;
+  text-align: center;
+}
+
+/* button */
+.button {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+}
+
+@keyframes jumpUp {
+  0% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(5px);
+  }
+  50% {
+    transform: translateY(0px);
+  }
+  75% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.button__img {
+  width: 46px;
+  height: 46px;
+  color: var(--primary-color);
+  filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
+  transition: 0.3s;
+  animation: jumpUp 1.5s linear infinite;
+}
+
+.button__img:hover {
+  transform: scale(1.1);
+  animation: none;
+}
+
 /* Phần thêm */
-/* Phần thêm */
+p,
+h3 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+input {
+  font-size: 1.8rem;
+}
 
 .main {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-top: 100px; /* Đẩy nội dung xuống dưới thanh navbar */
-  padding: 0 24px; /* Thêm khoảng cách hai bên */
+  padding: 150px 24px 0px; /* Thêm khoảng cách hai bên */
   gap: 16px;
   flex-wrap: wrap;
 }
@@ -282,7 +387,7 @@ a {
 /* Bảng nhỏ chứa thông tin khách hàng và tóm tắt */
 .customer-summary-container h3 {
   margin-bottom: 16px;
-  font-size: 1.8rem;
+  font-size: 3rem;
   font-weight: bold;
   text-align: center;
 }
@@ -298,7 +403,7 @@ a {
   text-align: left;
   padding: 8px;
   border-bottom: 1px solid #ccc;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
 }
 
 .customer-summary-container th {
@@ -314,12 +419,10 @@ a {
 
 /* Điều chỉnh ảnh sản phẩm và chức năng */
 .cart-item-image img {
-  max-width: 100%;
-  max-height: 100px;
+  width: 150px;
   object-fit: cover;
   border-radius: 8px;
   margin-right: 16px;
-  height:auto;
 }
 
 /* Điều chỉnh giỏ hàng */
@@ -338,13 +441,13 @@ a {
 }
 
 .cart-item-name {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 8px;
 }
 
 .cart-item-price {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   color: #333;
   margin-bottom: 8px;
 }
@@ -352,6 +455,7 @@ a {
 .cart-item-quantity {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .quantity-btn {
@@ -374,7 +478,7 @@ a {
   background-color: #e92526;
   color: #fff;
   padding: 8px 16px;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -391,8 +495,8 @@ a {
   background-color: var(--secondary-color);
   color: #fff;
   border: none;
-  padding: 12px;
-  font-size: 1.4rem;
+  padding: 12px 0px;
+  font-size: 2rem;
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
@@ -406,30 +510,30 @@ a {
 /* sau khi ấn nút thanh toán */
 
 #checkout-details {
-  display: block; 
+  display: block;
   padding: 16px;
   margin-top: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: #f9f9f9; 
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px; 
-  max-width: 100%; 
+  background-color: #f9f9f9;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+  max-width: 100%;
   margin-left: auto;
-  margin-right: auto; 
-  margin:0;
+  margin-right: auto;
+  margin: 0;
 }
 
 #checkout-details h3 {
-  font-size: 1.8rem;
+  font-size: 3rem;
   font-weight: bold;
-  text-align: center;
+  /* text-align: center; */
   margin-bottom: 16px;
   color: var(--primary-color); /* Màu chủ đạo */
 }
 
 #checkout-details label {
-  display: block; 
-  font-size: 1.4rem;
+  display: block;
+  font-size: 1.8rem;
   font-weight: 500;
   margin-bottom: 8px;
   color: #333;
@@ -438,11 +542,11 @@ a {
 #checkout-details input[type="text"],
 #checkout-details select,
 #checkout-details textarea {
-  width: 100%; 
+  width: 100%;
   padding: 8px;
-  font-size: 1.4rem;
-  border: 1px solid #ccc; 
-  border-radius: 4px; 
+  font-size: 1.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   margin-bottom: 16px;
   box-sizing: border-box;
 }
@@ -451,13 +555,13 @@ a {
 #checkout-details select:focus,
 #checkout-details textarea:focus {
   outline: none;
-  border-color: var(--primary-color); 
-  box-shadow: 0 0 4px var(--primary-color); 
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px var(--primary-color);
 }
 
 #checkout-details textarea {
-  resize: none; 
-  height: 100px; 
+  resize: none;
+  height: 100px;
 }
 
 #checkout-details .payment-methods {
@@ -475,17 +579,18 @@ a {
 }
 
 #checkout-details .payment-methods input[type="radio"] {
-  margin-right: 8px; 
+  margin-right: 8px;
 }
 
-#checkout-details #final-checkout-btn {
+#checkout-details #final-checkout-btn,
+.final-checkout-btn {
   display: block;
   width: 100%;
   background-color: var(--primary-color);
   color: #fff;
   border: none;
-  padding: 12px;
-  font-size: 1.6rem;
+  padding: 12px 0px;
+  font-size: 2rem;
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
@@ -493,26 +598,27 @@ a {
   margin-top: 16px;
 }
 
-#checkout-details #final-checkout-btn:hover {
-  background-color: #b71b1c; 
+#checkout-details #final-checkout-btn:hover,
+.final-checkout-btn:hover {
+  background-color: #b71b1c;
 }
 
 #checkout-details {
-  display: block; 
-  padding: 16px;
+  display: block;
+  padding: 50px 16px;
   margin-top: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: #f9f9f9; 
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px; 
-  max-width: 100%; 
-  margin: 0; 
+  background-color: #f9f9f9;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
+  max-width: 100%;
+  margin: 0;
 }
 
 #checkout-details textarea {
-  resize: none; 
-  height: 100px; 
-  width: 100%; 
+  resize: none;
+  height: 100px;
+  width: 100%;
 }
 /* Hiệu ứng css */
 /* Hiệu ứng css */
@@ -529,7 +635,7 @@ a {
 .remove-cart-item-btn:hover,
 .cart-total .checkout-btn:hover,
 #checkout-details #final-checkout-btn:hover {
-  transform: scale(1.05);
+  transform: scale(1.01);
 }
 
 /* Hiệu ứng box-shadow khi di chuột qua các item trong giỏ hàng */
@@ -596,33 +702,33 @@ a {
 }
 /* CSS cho phần ghi chú */
 .checkout-note {
-margin-top: 20px; /* Tạo khoảng cách giữa phần tổng tiền và ghi chú */
-padding: 16px;
-border-top: 1px solid #ccc; /* Tạo đường phân cách phía trên */
+  margin-top: 20px; /* Tạo khoảng cách giữa phần tổng tiền và ghi chú */
+  padding: 16px;
+  border-top: 1px solid #ccc; /* Tạo đường phân cách phía trên */
 }
 
 .checkout-note label {
-display: block;
-font-size: 1.6rem;
-font-weight: bold;
-margin-bottom: 8px;
+  display: block;
+  font-size: 2.4rem;
+  font-weight: bold;
+  margin-bottom: 8px;
 }
 
 .checkout-note textarea {
-width: 100%; /* Đảm bảo chiếm hết chiều rộng phần chứa */
-min-height: 80px; /* Chiều cao tối thiểu */
-max-height: none; /* Không giới hạn chiều cao tối đa */
-resize: vertical; /* Cho phép người dùng thay đổi kích thước theo chiều dọc */
-font-size: 1.6rem;
-font-family: inherit;
-padding: 8px;
-border: 1px solid #ccc;
-border-radius: 8px;
-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Đảm bảo chiếm hết chiều rộng phần chứa */
+  min-height: 80px; /* Chiều cao tối thiểu */
+  max-height: none; /* Không giới hạn chiều cao tối đa */
+  resize: vertical; /* Cho phép người dùng thay đổi kích thước theo chiều dọc */
+  font-size: 1.8rem;
+  font-family: inherit;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .checkout-note textarea:focus {
-border-color: var(--primary-color);
-outline: none;
-box-shadow: 0 0 5px rgba(233, 37, 38, 0.5);
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 5px rgba(233, 37, 38, 0.5);
 }
