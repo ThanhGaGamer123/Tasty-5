@@ -229,21 +229,21 @@ function autofillDeliveryAddress() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   // Kiểm tra nếu cart có dữ liệu và phần tử đầu tiên có thông tin cần thiết
-  if (cart.length > 0 && cart[0].deliveryAddress) {
+  if (cart.length > 0 && cart[0].address) {
     // Tự động điền địa chỉ vào trường nhập liệu
-    document.getElementById("delivery-address").value = cart[0].deliveryAddress;
+    document.getElementById("delivery-address").value = cart[0].address;
   }
 
   // Kiểm tra nếu cart có dữ liệu và phần tử đầu tiên có thông tin người nhận
-  if (cart.length > 0 && cart[0].receiverName) {
+  if (cart.length > 0 && cart[0].name) {
     // Tự động điền tên người nhận vào trường nhập liệu
-    document.getElementById("receiver-name").value = cart[0].receiverName;
+    document.getElementById("receiver-name").value = cart[0].name;
   }
 
   // Kiểm tra nếu cart có dữ liệu và phần tử đầu tiên có thông tin số điện thoại
-  if (cart.length > 0 && cart[0].receiverPhone) {
+  if (cart.length > 0 && cart[0].phone) {
     // Tự động điền số điện thoại vào trường nhập liệu
-    document.getElementById("receiver-phone").value = cart[0].receiverPhone;
+    document.getElementById("receiver-phone").value = cart[0].phone;
   }
 }
 
@@ -279,7 +279,6 @@ const provinces = [
       "Huyện Nhà Bè",
     ],
   },
-
   // Thêm các tỉnh thành khác vào đây
 ];
 
@@ -297,7 +296,9 @@ function populateCities() {
 // Hàm để điền các quận vào dropdown khi thành phố được chọn
 function populateDistricts(cityName) {
   let districtSelect = document.getElementById("district");
-  let city = provinces.find((province) => province.name === cityName);
+  let city = provinces.find(
+    (province) => province.name.toLowerCase() === cityName.toLowerCase()
+  );
   districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>'; // Xóa các quận cũ
   if (city) {
     city.districts.forEach((district) => {
@@ -309,6 +310,60 @@ function populateDistricts(cityName) {
   }
 }
 
+// Hàm để tự động điền thông tin địa chỉ
+function fillAddressFromString(address) {
+  const parts = address.split(",").map((part) => part.trim());
+
+  const houseNumberAndStreet = parts[0] + ", " + parts[1]; // Kết hợp Số nhà và Đường
+  const ward = parts[2]; // Phường
+  const districtName = parts[3]; // Quận
+  const cityName = parts[4]; // Tỉnh/Thành phố
+
+  // Kiểm tra tính hợp lệ của tỉnh
+  const citySelect = document.getElementById("city");
+  const validCity = provinces.some(
+    (province) => province.name.toLowerCase() === cityName.toLowerCase()
+  );
+
+  if (validCity) {
+    citySelect.value = cityName; // Cập nhật dropdown tỉnh
+
+    // Cập nhật quận sau khi chọn tỉnh
+    populateDistricts(cityName);
+
+    // Kiểm tra tính hợp lệ của quận
+    const districtSelect = document.getElementById("district");
+    const validDistrict = districtSelect.querySelector(
+      `option[value="${districtName}"]`
+    );
+    if (validDistrict) {
+      districtSelect.value = districtName; // Cập nhật quận nếu tồn tại
+    } else {
+      resetAddressFields();
+    }
+  } else {
+    resetAddressFields(); // Nếu tỉnh không hợp lệ, reset tất cả
+  }
+
+  // Gán số nhà, đường và phường vào ô nhập liệu
+  document.getElementById("street").value = houseNumberAndStreet + ", " + ward;
+}
+
+// Hàm reset các trường địa chỉ
+function resetAddressFields() {
+  document.getElementById("city").innerHTML =
+    '<option value="">Chọn Tỉnh/Thành phố</option>';
+  document.getElementById("district").innerHTML =
+    '<option value="">Chọn Quận/Huyện</option>'; // Reset quận
+  // document.getElementById("street").value = ""; // Reset ô nhập liệu nếu cần
+
+  populateCities();
+  // Lắng nghe sự kiện thay đổi thành phố và cập nhật quận
+  document.getElementById("city").addEventListener("change", (e) => {
+    populateDistricts(e.target.value);
+  });
+}
+
 // Gọi hàm populateCities khi trang tải
 window.addEventListener("load", () => {
   populateCities();
@@ -317,6 +372,10 @@ window.addEventListener("load", () => {
   document.getElementById("city").addEventListener("change", (e) => {
     populateDistricts(e.target.value);
   });
+
+  // Giả sử có địa chỉ từ cart
+  const cart = JSON.parse(localStorage.getItem("cart"));
+  fillAddressFromString(cart[0].address); // Gọi hàm để điền địa chỉ
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
