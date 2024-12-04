@@ -492,7 +492,7 @@ input {
 .cart-total .checkout-btn {
   display: block;
   width: 100%;
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   color: #fff;
   border: none;
   padding: 12px 0px;
