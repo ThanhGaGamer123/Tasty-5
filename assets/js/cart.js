@@ -156,7 +156,6 @@ function updateCartQuantity(productId, action, newQuantity = null) {
   displayCartSummary();
 }
 
-
 // Gọi hàm hiển thị giỏ hàng khi tải trang
 document.addEventListener("DOMContentLoaded", displayCart);
 
@@ -313,6 +312,7 @@ function populateDistricts(cityName) {
 
 // Hàm để tự động điền thông tin địa chỉ
 function fillAddressFromString(address) {
+  let flag = false;
   const parts = address.split(",").map((part) => part.trim());
 
   const houseNumberAndStreet = parts[0] + ", " + parts[1]; // Kết hợp Số nhà và Đường
@@ -339,15 +339,19 @@ function fillAddressFromString(address) {
     );
     if (validDistrict) {
       districtSelect.value = districtName; // Cập nhật quận nếu tồn tại
+      flag = true;
     } else {
       resetAddressFields();
+      flag = false;
     }
   } else {
     resetAddressFields(); // Nếu tỉnh không hợp lệ, reset tất cả
+    flag = false;
   }
 
   // Gán số nhà, đường và phường vào ô nhập liệu
   document.getElementById("street").value = houseNumberAndStreet + ", " + ward;
+  return flag;
 }
 
 // Hàm reset các trường địa chỉ
@@ -447,44 +451,36 @@ function displayCartSummary() {
       `;
   tbody.appendChild(totalRow);
 
-  // Lấy thông tin đơn hàng từ localStorage
-  let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
-  if (hoaDon.length > 0) {
-    // Lấy thông tin đơn hàng (đơn hàng cuối cùng)
-    let donHang = hoaDon[hoaDon.length - 1];
-    let orderInfo = donHang[1]; // Đơn hàng đầu tiên có thông tin thanh toán
+  // Tạo div chứa thông tin tóm tắt đơn hàng
+  let summaryDiv = document.createElement("div");
 
-    // Tạo div chứa thông tin tóm tắt đơn hàng
-    let summaryDiv = document.createElement("div");
-
-    // Kiểm tra tính hợp lệ của địa chỉ (đảm bảo có đầy đủ thành phố, quận/huyện, và đường)
-    if (orderInfo.deliveryAddress && orderInfo.deliveryAddress.trim() !== "") {
-      summaryDiv.innerHTML += `
-                  <p><strong>Địa chỉ giao hàng:</strong> ${orderInfo.deliveryAddress}</p>
-              `;
-    } else {
-      summaryDiv.innerHTML += `
-                  <p><strong>Địa chỉ giao hàng:</strong> Chưa có địa chỉ hợp lệ</p>
-              `;
-    }
-
-    // Kiểm tra và hiển thị thông tin phương thức thanh toán nếu có
-    if (orderInfo.paymentMethod) {
-      summaryDiv.innerHTML += `
-                  <p><strong>Phương thức thanh toán:</strong> ${orderInfo.paymentMethod}</p>
-              `;
-    }
-
-    // Thêm thông tin ghi chú vào phần tóm tắt, luôn hiển thị mặc định nếu không có
+  // Kiểm tra tính hợp lệ của địa chỉ (đảm bảo có đầy đủ thành phố, quận/huyện, và đường)
+  if (getAddress() && getAddress().trim() !== "") {
     summaryDiv.innerHTML += `
-              <p><strong>Ghi chú:</strong> ${
-                orderInfo.note || "Không có ghi chú"
-              }</p>
-          `;
-
-    // Thêm div vào phần tóm tắt
-    summaryContainer.appendChild(summaryDiv);
+                <p><strong>Địa chỉ giao hàng:</strong> ${getAddress()}</p>
+            `;
+  } else {
+    summaryDiv.innerHTML += `
+                <p><strong>Địa chỉ giao hàng:</strong> Chưa có địa chỉ hợp lệ</p>
+            `;
   }
+
+  // Kiểm tra và hiển thị thông tin phương thức thanh toán nếu có
+  if (getPaymentMethod()) {
+    summaryDiv.innerHTML += `
+                <p><strong>Phương thức thanh toán:</strong> ${getPaymentMethod()}</p>
+            `;
+  }
+
+  // Thêm thông tin ghi chú vào phần tóm tắt, luôn hiển thị mặc định nếu không có
+  summaryDiv.innerHTML += `
+            <p><strong>Ghi chú:</strong> ${
+              getOrderNote() || "Không có ghi chú"
+            }</p>
+        `;
+
+  // Thêm div vào phần tóm tắt
+  summaryContainer.appendChild(summaryDiv);
 
   // Gắn bảng vào container
   summaryContainer.appendChild(table);
@@ -515,6 +511,25 @@ function updateAddress() {
   }
 }
 
+// Hàm lấy địa chỉ từ dropdown
+function getAddress() {
+  let city = document.getElementById("city").value.trim();
+  let district = document.getElementById("district").value.trim();
+  let street = document.getElementById("street").value.trim();
+
+  // Nếu địa chỉ hợp lệ, tạo chuỗi địa chỉ đầy đủ và lưu vào localStorage
+  if (city && district && street) {
+    let deliveryAddress = `${street}, ${district}, ${city}`;
+    return deliveryAddress;
+  }
+
+  const cart = JSON.parse(localStorage.getItem("cart"));
+  if (fillAddressFromString(cart[0].address)) {
+    return cart[0].address;
+  }
+  return "";
+}
+
 // Hàm cập nhật phương thức thanh toán
 function updatePaymentMethod() {
   let paymentMethod = document.querySelector(
@@ -535,6 +550,15 @@ function updatePaymentMethod() {
   displayCartSummary();
 }
 
+// Hàm lấy thông tin thanh toán
+function getPaymentMethod() {
+  let paymentMethod = document.querySelector(
+    'input[name="payment-method"]:checked'
+  ).value;
+
+  return paymentMethod;
+}
+
 // Hàm cập nhật ghi chú
 function updateOrderNote() {
   let orderNote = document.getElementById("order-note").value.trim();
@@ -551,6 +575,13 @@ function updateOrderNote() {
 
   // Cập nhật lại tóm tắt giỏ hàng
   displayCartSummary();
+}
+
+// Hàm lấy thông tin ghi chú
+function getOrderNote() {
+  let orderNote = document.getElementById("order-note").value.trim();
+
+  return orderNote;
 }
 
 // Lắng nghe sự thay đổi của các trường nhập liệu và tự động cập nhật
