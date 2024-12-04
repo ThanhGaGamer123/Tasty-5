@@ -46,14 +46,26 @@ function displayOrders(startDate = null, endDate = null) {
 // Cập nhật tình trạng đơn hàng khi chọn từ dropdown
 function updateOrderStatus(orderIndex, newStatus) {
     let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+
     if (hoaDon[orderIndex]) {
-        hoaDon[orderIndex][1].orderStatus = newStatus; // Cập nhật tình trạng đơn hàng
+        let currentStatus = hoaDon[orderIndex][1].orderStatus; // Lấy trạng thái hiện tại
+
+        // Nếu trạng thái hiện tại là "Đã hủy", không cho phép thay đổi
+        if (currentStatus === "Đã huỷ") {
+            alert("Không thể thay đổi tình trạng của đơn hàng đã hủy.");
+            applyFilters(); // Reset lại dropdown để hiển thị đúng trạng thái hiện tại
+            return;
+        }
+
+        // Cập nhật tình trạng đơn hàng
+        hoaDon[orderIndex][1].orderStatus = newStatus;
         localStorage.setItem("hoaDon", JSON.stringify(hoaDon)); // Lưu lại vào localStorage
 
         alert("Tình trạng đơn hàng đã được cập nhật.");
         applyFilters(); // Hiển thị lại danh sách theo bộ lọc hiện tại
     }
 }
+
 
 // Hiển thị chi tiết đơn hàng trong modal
 function viewOrderDetails(originalIndex) {
