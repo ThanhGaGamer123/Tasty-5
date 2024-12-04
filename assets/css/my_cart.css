@@ -403,6 +403,7 @@ p {
   border-radius: 8px;
   margin-bottom: 20px;
   align-items: center;
+  justify-content: center;
   /* margin-top: 50px; */
 }
 

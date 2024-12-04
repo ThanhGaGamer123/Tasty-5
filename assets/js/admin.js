@@ -7,6 +7,7 @@ class Account {
     this.role = role;
     this.phone = phone;
     this.address = address;
+    this.profit = 0;
   }
 }
 

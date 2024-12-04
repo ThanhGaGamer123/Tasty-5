@@ -420,14 +420,18 @@ function chiTietSanPham(productId) {
                             <div class="product-detail">
                                 <img id="detail-product-image" src="${product.product_image}" alt="${product.product_name}">
                                 <h2 id="detail-product-name">${product.product_name}</h2>
-                                <p id="detail-product-price">${product.product_price} VND</p>
-                                <p id="detail-product-desc">${product.desc}</p>
-                                <div class="quantity-control">
-                                    <button class="btnDescAdd-Sub" onclick="nhapSoluongSp(${productId}, 'decrease')">-</button>
-                                    <input id="detail-product-quantity" type="number" value="1" min="1" onchange="nhapSoluongSp(${productId}, 'input')">
-                                    <button class="btnDescAdd-Sub" onclick="nhapSoluongSp(${productId}, 'increase')">+</button>
+
+                                <div class="abcdefg">
+                                  <p id="detail-product-price">${product.product_price} VND</p>
+                                  <div class="quantity-control">
+                                      <button class="btnDescAdd-Sub" onclick="nhapSoluongSp(${productId}, 'decrease')">-</button>
+                                      <input id="detail-product-quantity" type="number" value="1" min="1" onchange="nhapSoluongSp(${productId}, 'input')">
+                                      <button class="btnDescAdd-Sub" onclick="nhapSoluongSp(${productId}, 'increase')">+</button>
+                                  </div>
                                 </div>
-                                <button id="add-to-cart-detail-btn">Thêm vào giỏ theo số lượng này ~~</button>
+                                <p id="detail-product-desc">${product.desc}</p>
+                                
+                                <button id="add-to-cart-detail-btn">Thêm vào giỏ theo số lượng này</button>
                             </div>
                         </div>
                     `;
@@ -566,7 +570,7 @@ function updateCartButton(productId) {
     const isInCart = cart.some((item) => item.id === productId);
 
     if (isInCart) {
-      button.innerText = "Đã thêm vào giỏ~~~";
+      button.innerText = "Đã thêm vào giỏ";
       button.classList.add("in-cart"); // Thêm class để tùy chỉnh giao diện
     } else {
       button.innerText = "Thêm vào giỏ hàng";
