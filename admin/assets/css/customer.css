@@ -252,7 +252,7 @@ a {
   gap: 12px;
   width: 100%;
   height: 72px;
-  background: var(--secondary-color);
+  background: var(--primary-color);
   color: #fff;
   border-radius: 12px;
   cursor: pointer;
@@ -260,7 +260,7 @@ a {
 }
 
 .add:hover {
-  background: var(--primary-color);
+  background: #27ae60;
 }
 
 .add__icon {
@@ -282,7 +282,7 @@ a {
 .control-list {
   margin-top: 50px;
   padding: 50px 0 26px;
-  background: var(--secondary-color);
+  background: var(--primary-color);
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
