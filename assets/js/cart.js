@@ -686,7 +686,12 @@ function checkout() {
   let orderDate = new Date().toISOString(); // Lấy ngày hiện tại ở định dạng ISO
 
   // Tính tổng tiền hóa đơn
-  let totalAmount = cart.reduce((sum, item) => sum + item.soluong * item.product_price, 0);
+  let totalAmount = cart.reduce((total, item) => {
+    if (item && item.soluong && item.product_price) {
+        return total + item.soluong * item.product_price * 1000; // Nhân thêm 1000 nếu giá đang tính theo nghìn
+    }
+    return total;
+}, 0);
 
   // Tạo đối tượng thông tin khách hàng
   let customerInfo = {

@@ -35,6 +35,7 @@ function displayOrders(startDate = null, endDate = null) {
                     <option value="Đã huỷ" ${orderInfo.orderStatus === 'Đã huỷ' ? 'selected' : ''}>Đã huỷ</option>
                 </select>
             </p>
+            <p><strong>Tổng tiền:</strong> ${orderInfo.totalAmount ? orderInfo.totalAmount.toLocaleString() + ' VND' : 'Chưa tính'}</p>
             <p><strong>Ghi chú:</strong> ${orderInfo.note}</p>
             <p><strong>Email:</strong> ${orderInfo.email}</p>
             <button onclick="viewOrderDetails(${index})">Hiển thị chi tiết</button>
@@ -42,6 +43,7 @@ function displayOrders(startDate = null, endDate = null) {
         ordersList.appendChild(orderElement);
     });
 }
+
 
 // Cập nhật tình trạng đơn hàng khi chọn từ dropdown
 function updateOrderStatus(orderIndex, newStatus) {
@@ -84,6 +86,7 @@ function viewOrderDetails(originalIndex) {
             <p><strong>Ngày đặt hàng:</strong> ${new Date(orderInfo.orderDate).toLocaleString()}</p>
             <p><strong>Địa chỉ nhận hàng:</strong> ${orderInfo.deliveryAddress}</p>
             <p><strong>Trạng thái đơn hàng:</strong> ${orderInfo.orderStatus}</p>
+            <p><strong>Tổng tiền:</strong> ${orderInfo.totalAmount ? orderInfo.totalAmount.toLocaleString() + ' VND' : 'Chưa tính'}</p>
             <p><strong>Ghi chú:</strong> ${orderInfo.note}</p>
             <p><strong>Email:</strong> ${orderInfo.email}</p>
             <h3>Sản phẩm trong giỏ hàng:</h3>
@@ -93,7 +96,7 @@ function viewOrderDetails(originalIndex) {
         cart.forEach(item => {
             if (item && item.product_name && item.soluong && item.product_price) {
                 detailsHTML += `
-                    <li>${item.product_name} - Số lượng: ${item.soluong} - Đơn giá: ${item.product_price}</li>
+                    <li>${item.product_name} - Số lượng: ${item.soluong} - Đơn giá: ${item.product_price.toLocaleString()} VND</li>
                 `;
             }
         });
@@ -106,6 +109,7 @@ function viewOrderDetails(originalIndex) {
         document.getElementById("order-details-modal").style.display = 'block';
     }
 }
+
 
 // Đóng cửa sổ modal
 function closeOrderDetails() {
