@@ -107,7 +107,7 @@ function viewProductOrders(productName) {
             <div class="order-item">
                 <p><strong>Ngày đặt hàng:</strong> ${new Date(orderInfo.orderDate).toLocaleString()}</p>
                 <p><strong>Địa chỉ nhận hàng:</strong> ${orderInfo.deliveryAddress}</p>
-                <p><strong>Tổng tiền:</strong> ${orderInfo.totalAmount.toLocaleString()} NGHÌN VND</p>
+                <p><strong>Tổng tiền:</strong> ${orderInfo.totalAmount.toLocaleString()} VND</p>
                 <ul>
         `;
 
