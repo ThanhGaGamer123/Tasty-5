@@ -1,68 +1,74 @@
-@media(max-width:1024px){
-    .block {
-        padding: 24px 40px;
-    }
+:root {
+  --primary-color: #e92526;
+  --secondary-color: #df6b00;
+  --text-color: #000;
 }
 
-@media(max-width:977.98px){
-    .filter-container button {
-        width: 95%;
-    }
+.order-header {
+  gap: 2px;
 }
-@media(max-width:902.98px){
-    .filter-container {
-        flex-direction: column;
-    }
-    .filter-container select, .filter-container input[type="date"] {
-        width: 96%;
-    }
-}
-@media(max-width:944.98px){
-    .order-header {
-        flex-direction: column;
-    }
-}
-@media(max-width:653.98px){
-    .order-container {
-        padding-top: 15px;
-        padding-bottom: 15px;
-        padding-left: 0px;
-        padding-right: 0px;
-    }
-}
-@media(max-width:624.98px){
-    .block {
-        padding: 24px 25px;
-    }
-}
-@media(max-width:573.98px){
-    .container {
-        max-width: calc(100% - 65px);
-    }
-}
-@media(max-width:499.98px){
-    .container {
-        max-width: 100%;
-    }
-}
-@media (max-width: 433.98px) {
-    .block {
-        padding: 24px 21px;
-    }
-}
-@media (max-width: 425.98px) {
-    .block {
-        padding: 24px 0px;
-    }
-    .filter-container label {
-        font-size: 1.6rem;
-    }
-    strong, span, p {
-        font-size: 1.4rem;
-    }
-    .order-container button {
 
-        font-size: 1.6rem;
+.order-container {
+  line-height: 1.42;
+}
 
-    }
+/* PC */
+@media (min-width: 1200px) {
+}
+
+/* Tablet & Mobile */
+@media (max-width: 1199.98px) {
+  .filter-container {
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+  .order-header {
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+  }
+
+  .order-details {
+    margin-top: 24px;
+  }
+
+  .filter-container {
+    flex-direction: column;
+  }
+
+  .filter-block {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 499.98px) {
+  .container {
+    max-width: 100%;
+  }
+
+  .block {
+    padding: 24px 0;
+  }
+
+  .filter-block {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .filter-container select,
+  .filter-container input[type="date"] {
+    width: 100%;
+  }
 }

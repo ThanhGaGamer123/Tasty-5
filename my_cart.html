@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/css/my_cart.css" />
     <link rel="stylesheet" href="./assets/css/navbar_responsive.css" />
     <link rel="stylesheet" href="./assets/css/footer_responsive.css" />
-    <link rel="stylesheet" href="./assets/css/my_cart_responsive.css">
+    <link rel="stylesheet" href="./assets/css/my_cart_responsive.css" />
     <!-- embed font -->
     <link
       rel="stylesheet"
@@ -385,19 +385,23 @@
       <div class="container">
         <div class="block">
           <div class="filter-container">
-            <label for="status-filter">Tình trạng:</label>
-            <select id="status-filter">
-              <option value="">Tất cả</option>
-              <option value="Chưa xử lý">Chưa xử lý</option>
-              <option value="Đã xác nhận">Đã xác nhận</option>
-              <option value="Đã giao thành công">Đã giao thành công</option>
-              <option value="Đã hủy">Đã hủy</option>
-            </select>
+            <div class="filter-block">
+              <label for="status-filter">Tình trạng:</label>
+              <select id="status-filter">
+                <option value="">Tất cả</option>
+                <option value="Chưa xử lý">Chưa xử lý</option>
+                <option value="Đã xác nhận">Đã xác nhận</option>
+                <option value="Đã giao thành công">Đã giao thành công</option>
+                <option value="Đã hủy">Đã hủy</option>
+              </select>
+            </div>
 
-            <label for="date-filter">Ngày đặt hàng:</label>
-            <input type="date" id="date-filter" />
+            <div class="filter-block">
+              <label for="date-filter">Ngày đặt hàng:</label>
+              <input type="date" id="date-filter" />
+            </div>
 
-            <button id="filter-btn">Lọc</button>
+            <div class="filter-block"><button id="filter-btn">Lọc</button></div>
           </div>
 
           <div id="order-details"></div>
