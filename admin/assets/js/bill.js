@@ -44,13 +44,12 @@ function displayOrders(startDate = null, endDate = null) {
     });
 }
 
-
-// Cập nhật tình trạng đơn hàng khi chọn từ dropdown
+// Cập nhật trạng thái đơn hàng
 function updateOrderStatus(orderIndex, newStatus) {
     let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
 
     if (hoaDon[orderIndex]) {
-        let currentStatus = hoaDon[orderIndex][1].orderStatus; // Lấy trạng thái hiện tại
+        let currentStatus = hoaDon[orderIndex][1].orderStatus; // Lấy trạng thái hiện tại của đơn hàng
 
         // Nếu trạng thái hiện tại là "Đã hủy", không cho phép thay đổi
         if (currentStatus === "Đã huỷ") {
@@ -67,7 +66,6 @@ function updateOrderStatus(orderIndex, newStatus) {
         applyFilters(); // Hiển thị lại danh sách theo bộ lọc hiện tại
     }
 }
-
 
 // Hiển thị chi tiết đơn hàng trong modal
 function viewOrderDetails(originalIndex) {
@@ -109,7 +107,6 @@ function viewOrderDetails(originalIndex) {
         document.getElementById("order-details-modal").style.display = 'block';
     }
 }
-
 
 // Đóng cửa sổ modal
 function closeOrderDetails() {
@@ -176,14 +173,58 @@ function displayFilteredOrders(filteredOrders) {
     if (filteredOrders.length === 0) {
         ordersList.innerHTML = '<p>Không có đơn hàng nào phù hợp với tiêu chí lọc.</p>';
     }
+}   
+
+
+
+// Lọc theo quận/huyện
+function filterByDistrict(hoaDon, districtFilter) {
+    return hoaDon.filter(order => {
+        let orderInfo = order[1];
+        let deliveryAddress = orderInfo.deliveryAddress;
+
+        // Nếu không chọn quận/huyện, trả về tất cả
+        if (districtFilter === "all") return true;
+
+        // Xác định tên quận/huyện từ bộ lọc
+        let districtName = "";
+        switch (districtFilter) {
+            case "Quận 1": districtName = "Quận 1"; break;
+            case "Quận 2": districtName = "Quận 2"; break;
+            case "Quận 3": districtName = "Quận 3"; break;
+            case "Quận 4": districtName = "Quận 4"; break;
+            case "Quận 5": districtName = "Quận 5"; break;
+            case "Quận 6": districtName = "Quận 6"; break;
+            case "Quận 7": districtName = "Quận 7"; break;
+            case "Quận 8": districtName = "Quận 8"; break;
+            case "Quận 9": districtName = "Quận 9"; break;
+            case "Quận 10": districtName = "Quận 10"; break;
+            case "Quận 11": districtName = "Quận 11"; break;
+            case "Quận 12": districtName = "Quận 12"; break;
+            case "Quận Gò Vấp": districtName = "Gò Vấp"; break;
+            case "Quận Bình Tân": districtName = "Bình Tân"; break;
+            case "Quận Bình Thạnh": districtName = "Bình Thạnh"; break;
+            case "Quận Phú Nhuận": districtName = "Phú Nhuận"; break;
+            case "Quận Thủ Đức": districtName = "Thủ Đức"; break;
+            case "Huyện Chủ Chi": districtName = "Củ Chi"; break;
+            case "Huyện Cần Giờ": districtName = "Cần Giờ"; break;
+            case "Huyện Hóc Môn": districtName = "Hóc Môn"; break;
+            case "Huyện Nhà Bè": districtName = "Nhà Bè"; break;
+            // Thêm các trường hợp khác nếu cần
+        }
+
+        // Kiểm tra xem địa chỉ có chứa tên quận/huyện không
+        return deliveryAddress.includes(districtName);
+    });
 }
 
-// Kết hợp lọc theo ngày và trạng thái
+// Kết hợp lọc theo ngày, trạng thái, và địa chỉ
 function applyFilters() {
     let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
     let startDate = document.getElementById("start-date").value;
     let endDate = document.getElementById("end-date").value;
     let statusFilter = document.getElementById("status-filter").value;
+    let districtFilter = document.getElementById("district-filter").value;
 
     if (startDate) startDate = new Date(startDate);
     if (endDate) endDate = new Date(endDate);
@@ -202,5 +243,9 @@ function applyFilters() {
         return null;
     }).filter(order => order !== null);
 
+    // Lọc tiếp theo địa chỉ (quận/huyện)
+    filteredOrders = filterByDistrict(filteredOrders, districtFilter);
+
+    // Hiển thị danh sách đã lọc
     displayFilteredOrders(filteredOrders);
 }
