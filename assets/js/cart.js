@@ -585,16 +585,18 @@ function getOrderNote() {
 }
 
 // Lắng nghe sự thay đổi của các trường nhập liệu và tự động cập nhật
-document.getElementById("city").addEventListener("input", updateAddress);
-document.getElementById("district").addEventListener("input", updateAddress);
-document.getElementById("street").addEventListener("input", updateAddress);
+document.getElementById("city").addEventListener("input", displayCartSummary);
+document
+  .getElementById("district")
+  .addEventListener("input", displayCartSummary);
+document.getElementById("street").addEventListener("input", displayCartSummary);
 document
   .getElementById("order-note")
-  .addEventListener("input", updateOrderNote);
+  .addEventListener("input", displayCartSummary);
 
 // Lắng nghe sự thay đổi của phương thức thanh toán
 document.querySelectorAll('input[name="payment-method"]').forEach((radio) => {
-  radio.addEventListener("change", updatePaymentMethod);
+  radio.addEventListener("change", displayCartSummary);
 });
 
 // Gọi hàm hiển thị tóm tắt khi trang tải
