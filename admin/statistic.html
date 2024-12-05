@@ -281,7 +281,61 @@
     <!-- main -->
     <main class="main">
       <div class="container">
-        <div class="test-block"></div>
+        <div id="filter-container">
+          <div>
+              <label for="start-date">Từ ngày:</label>
+              <input type="date" id="start-date" name="start-date" />
+        
+              <label for="end-date">Đến ngày:</label>
+              <input type="date" id="end-date" name="end-date" />
+        
+              <button onclick="applyDateFilter()">Lọc theo ngày</button>
+          </div>
+          <div>
+              <label for="status-filter">Loại món ăn:</label>
+              <select id="status-filter">
+                <option value="">Tất cả</option>
+                <option value="Chưa xử lý">Chưa xử lý</option>
+                <option value="Đã xác nhận">Đã xác nhận</option>
+                <option value="Đã giao">Đã giao</option>
+                <option value="Đã huỷ">Đã huỷ</option>
+              </select>
+              <input type="text" class="search-filter__input" placeholder="Tìm kiếm tên món ăn...">
+              <button onclick="">Lọc nâng cao</button>
+          </div>
+        </div>
+
+
+        <div class="table">
+          <table width="100%">
+              <thead>
+                  <tr>
+                      <td>STT</td>
+                      <td>Tên món</td>
+                      <td>Số lượng bán</td>
+                      <td>Doanh thu</td>
+                      <td></td>
+                  </tr>
+              </thead>
+              <tbody id="showTk">
+                <tr>
+                  <td>1</td>
+                  <td><div class="prod-img-title"><img class="prd-img-tbl" src="./assets/img/shopping/bachicuonnamkimcham.jpg" alt=""><p>Rau xào ngũ sắc</p></div></td>
+                  <td>1</td>
+                  <td>180.000&nbsp;₫</td>
+                  <td><button class="btn-detail product-order-detail" data-id="2"><i class="fa-regular fa-eye"></i> Chi tiết</button></td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td><div class="prod-img-title"><img class="prd-img-tbl" src="./assets/img/shopping/bachicuonnamkimcham.jpg" alt=""><p>Rau xào ngũ sắc</p></div></td>
+                  <td>1</td>
+                  <td>180.000&nbsp;₫</td>
+                  <td><button class="btn-detail product-order-detail" data-id="2"><i class="fa-regular fa-eye"></i> Chi tiết</button></td>
+                </tr>
+              </tbody>
+          </table>
+        </div>
+
       </div>
     </main>
 

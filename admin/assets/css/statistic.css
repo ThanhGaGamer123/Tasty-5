@@ -99,9 +99,112 @@ a {
   z-index: 9999;
 }
 
-/* test block (xóa sau khi thay main vào) */
-.test-block {
+
+
+body {
+  padding: 20px; /* Padding cho toàn bộ body */
+}
+
+#filter-container {
+  background-color: #fff; /* Nền trắng cho container */
+  border-radius: 8px; /* Bo góc cho container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+  padding: 20px; /* Padding bên trong container */
+  width: 97%; /* Chiều rộng tối đa */
+  margin: auto; /* Căn giữa */
+  display: flex;
+  flex-direction: column;
+}
+label{
+  align-content: center;
   width: 100px;
-  height: 100px;
-  background: var(--primary-color);
+}
+#filter-container div {
+  display: flex; /* Sử dụng flexbox */
+  justify-content: space-between;
+  align-items: center;
+}
+input[type="date"],
+select {
+  padding: 10px; /* Padding cho input và select */
+  border: 1px solid #ccc; /* Đường viền */
+  border-radius: 4px; /* Bo góc */
+  width: 350px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ bên trong */
+  height: 30px;
+  margin-right: 10px;
+}
+
+button {
+  background-color: var(--primary-color); /* Màu nền cho nút */
+  color: white; /* Màu chữ */
+  border: none; /* Bỏ đường viền */
+  border-radius: 4px; /* Bo góc */
+  padding: 10px 15px; /* Padding cho nút */
+  cursor: pointer; /* Hiệu ứng con trỏ */
+  transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+  height: 30px;
+  width: 100px;
+}
+
+button:hover {
+  background-color: #0056b3; /* Màu nền khi hover */
+}
+
+
+.search-filter__input {
+  padding: 16px;
+  /* width: 30px; */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1.6rem;
+  transition: border-color 0.3s;
+  width: 432px;
+  margin-right: 10px;
+}
+
+.table {
+  width: 97%;
+  overflow: auto;
+  background: #fff;
+  border-radius: 7px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+table {
+  border-collapse: collapse;
+}
+tr {
+  border-bottom: 1px solid var(--lighter-gray);
+}
+thead td {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 500;
+  background: #fff;
+  padding: 15px;
+  text-align: center;
+  white-space: nowrap;
+}
+tr {
+  border-bottom: 1px solid var(--primary-color);
+}
+.prd-img-tbl {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 99px;
+}
+tbody tr td {
+  padding: 10px 15px;
+  text-align: center;
+  white-space: nowrap;
+  justify-items: center;
+  align-content: center;
+}
+.prod-img-title {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
 }

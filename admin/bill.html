@@ -281,12 +281,73 @@
     <!-- main -->
     <main class="main">
       <div class="container">
-        <div class="test-block"></div>
+        <div id="filter-container">
+          <div>
+              <label for="start-date">Từ ngày:</label>
+              <input type="date" id="start-date" name="start-date" />
+        
+              <label for="end-date">Đến ngày:</label>
+              <input type="date" id="end-date" name="end-date" />
+        
+              <button onclick="applyDateFilter()">Lọc theo ngày</button>
+          </div>
+          <div>
+              <label for="status-filter">Tình trạng:</label>
+              <select id="status-filter">
+                <option value="">Tất cả</option>
+                <option value="Chưa xử lý">Chưa xử lý</option>
+                <option value="Đã xác nhận">Đã xác nhận</option>
+                <option value="Đã giao">Đã giao</option>
+                <option value="Đã huỷ">Đã huỷ</option>
+              </select>
+              <label for="">Quận:</label>
+              <select name="" id="district-filter">
+                <option value="all">Tất cả quận</option>
+                <option value="Quận 1">Quận 1</option>
+                <option value="Quận 2">Quận 2</option>
+                <option value="Quận 3">Quận 3</option>
+                <option value="Quận 4">Quận 4</option>
+                <option value="Quận 5">Quận 5</option>
+                <option value="Quận 6">Quận 6</option>
+                <option value="Quận 7">Quận 7</option>
+                <option value="Quận 8">Quận 8</option>
+                <option value="Quận 9">Quận 9</option>
+                <option value="Quận 10">Quận 10</option>
+                <option value="Quận 11">Quận 11</option>
+                <option value="Quận 12">Quận 12</option>
+                <option value="Quận Bình Tân">Quận Bình Tân</option>
+                <option value="Quận Bình Thạnh">Quận Bình Thạnh</option>
+                <option value="Quận Gò Vấp">Quận Gò Vấp</option>
+                <option value="Quận Phú Nhuận">Quận Phú Nhuận</option>
+                <option value="Quận Phú Nhuận">Quận Tân Bình</option>
+                <option value="Quận Tân Phú">Quận Tân Phú</option>
+                <option value="Quận Thủ Đức">Quận Thủ Đức</option>
+                <option value="cg">Huyện Cần Giờ</option>
+                <option value="cc">Huyện Củ Chi</option>
+                <option value="hm">Huyện Hóc Môn</option>
+                <option value="nb">Huyện Nhà Bè</option>
+              </select>
+              <button onclick="applyFilters()">Lọc nâng cao</button>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div id="orders-list"></div>
       </div>
     </main>
+
+
+    <div id="order-details-modal" class="modal">
+      <div class="modal-content">
+          <h2>Chi Tiết Đơn Hàng</h2>
+          <span class="close" onclick="closeOrderDetails()">&times;</span>
+          <div id="order-details-container"></div>
+      </div>
+    </div>
 
     <!-- javascript -->
     <script src="./assets/js/navbar.js"></script>
     <script src="./assets/js/navbar_responsive.js"></script>
+    <script src="./assets/js/bill.js"></script>
   </body>
 </html>
