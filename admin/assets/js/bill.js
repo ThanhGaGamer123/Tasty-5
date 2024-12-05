@@ -1,4 +1,7 @@
-// Hiển thị danh sách đơn hàng
+let currentPage = 1; // Trang hiện tại
+const itemsPerPage = 3; // Số đơn hàng mỗi trang
+
+// Hiển thị danh sách đơn hàng với phân trang
 function displayOrders(startDate = null, endDate = null) {
     let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
     let ordersList = document.getElementById("orders-list");
@@ -16,19 +19,27 @@ function displayOrders(startDate = null, endDate = null) {
         });
     }
 
+    // Tính toán số trang
+    const totalPages = Math.ceil(hoaDon.length / itemsPerPage);
+
+    // Lấy các đơn hàng cho trang hiện tại
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentOrders = hoaDon.slice(startIndex, endIndex);
+
     // Hiển thị danh sách đơn hàng
-    hoaDon.forEach((order, index) => {
-        let orderInfo = order[1]; // Lấy thông tin đơn hàng (phần tử thứ 2)
+    currentOrders.forEach((order, index) => {
+        let orderInfo = order[1];
 
         let orderElement = document.createElement('div');
         orderElement.classList.add('order-item');
         orderElement.innerHTML = `
-            <h3>Đơn hàng #${index + 1}</h3>
+            <h3>Đơn hàng #${startIndex + index + 1}</h3>
             <p><strong>Phương thức thanh toán:</strong> ${orderInfo.paymentMethod}</p>
             <p><strong>Ngày đặt hàng:</strong> ${new Date(orderInfo.orderDate).toLocaleString()}</p>
             <p><strong>Địa chỉ nhận hàng:</strong> ${orderInfo.deliveryAddress}</p>
             <p><strong>Trạng thái đơn hàng:</strong> 
-                <select onchange="updateOrderStatus(${index}, this.value)">
+                <select onchange="updateOrderStatus(${startIndex + index}, this.value)">
                     <option value="Chưa xử lý" ${orderInfo.orderStatus === 'Chưa xử lý' ? 'selected' : ''}>Chưa xử lý</option>
                     <option value="Đã xác nhận" ${orderInfo.orderStatus === 'Đã xác nhận' ? 'selected' : ''}>Đã xác nhận</option>
                     <option value="Đã giao" ${orderInfo.orderStatus === 'Đã giao' ? 'selected' : ''}>Đã giao</option>
@@ -38,10 +49,56 @@ function displayOrders(startDate = null, endDate = null) {
             <p><strong>Tổng tiền:</strong> ${orderInfo.totalAmount ? orderInfo.totalAmount.toLocaleString() + ' VND' : 'Chưa tính'}</p>
             <p><strong>Ghi chú:</strong> ${orderInfo.note}</p>
             <p><strong>Email:</strong> ${orderInfo.email}</p>
-            <button onclick="viewOrderDetails(${index})">Hiển thị chi tiết</button>
+            <button onclick="viewOrderDetails(${startIndex + index})">Hiển thị chi tiết</button>
         `;
         ordersList.appendChild(orderElement);
     });
+
+    // Hiển thị nút phân trang
+    displayPagination(totalPages);
+}
+
+// Hiển thị các nút phân trang
+function displayPagination(totalPages) {
+    const paginationContainer = document.getElementById("pagination");
+    paginationContainer.innerHTML = ''; // Xóa nội dung hiện tại
+
+    // Nút trang trước
+    if (currentPage > 1) {
+        const prevButton = document.createElement("button");
+        prevButton.innerText = "<";
+        prevButton.onclick = () => {
+            currentPage--;
+            displayOrders(); // Hiển thị lại danh sách đơn hàng
+        };
+        paginationContainer.appendChild(prevButton);
+    }
+
+    // Nút số trang
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement("button");
+        pageButton.innerText = i;
+        pageButton.onclick = () => {
+            currentPage = i;
+            displayOrders(); // Hiển thị lại danh sách đơn hàng
+        };
+        if (i === currentPage) {
+            pageButton.disabled = true; // Vô hiệu hóa nút trang hiện tại
+            pageButton.style.fontWeight = "bold"; // Làm nổi bật nút
+        }
+        paginationContainer.appendChild(pageButton);
+    }
+
+    // Nút trang sau
+    if (currentPage < totalPages) {
+        const nextButton = document.createElement("button");
+        nextButton.innerText = ">";
+        nextButton.onclick = () => {
+            currentPage++;
+            displayOrders(); // Hiển thị lại danh sách đơn hàng
+        };
+        paginationContainer.appendChild(nextButton);
+    }
 }
 
 // Cập nhật trạng thái đơn hàng
@@ -54,7 +111,6 @@ function updateOrderStatus(orderIndex, newStatus) {
         // Nếu trạng thái hiện tại là "Đã hủy", không cho phép thay đổi
         if (currentStatus === "Đã huỷ") {
             alert("Không thể thay đổi tình trạng của đơn hàng đã hủy.");
-            applyFilters(); // Reset lại dropdown để hiển thị đúng trạng thái hiện tại
             return;
         }
 
@@ -173,9 +229,11 @@ function displayFilteredOrders(filteredOrders) {
     if (filteredOrders.length === 0) {
         ordersList.innerHTML = '<p>Không có đơn hàng nào phù hợp với tiêu chí lọc.</p>';
     }
-}   
 
-
+    // Cập nhật phân trang sau khi lọc
+    const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+    displayPagination(totalPages); // Hiển thị lại phân trang
+}
 
 // Lọc theo quận/huyện
 function filterByDistrict(hoaDon, districtFilter) {
@@ -206,7 +264,7 @@ function filterByDistrict(hoaDon, districtFilter) {
             case "Quận Bình Thạnh": districtName = "Bình Thạnh"; break;
             case "Quận Phú Nhuận": districtName = "Phú Nhuận"; break;
             case "Quận Thủ Đức": districtName = "Thủ Đức"; break;
-            case "Huyện Chủ Chi": districtName = "Củ Chi"; break;
+            case "Huyện Củ Chi": districtName = "Củ Chi"; break;
             case "Huyện Cần Giờ": districtName = "Cần Giờ"; break;
             case "Huyện Hóc Môn": districtName = "Hóc Môn"; break;
             case "Huyện Nhà Bè": districtName = "Nhà Bè"; break;
@@ -218,7 +276,7 @@ function filterByDistrict(hoaDon, districtFilter) {
     });
 }
 
-// Kết hợp lọc theo ngày, trạng thái, và địa chỉ
+// Áp dụng tất cả các bộ lọc
 function applyFilters() {
     let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
     let startDate = document.getElementById("start-date").value;
@@ -246,9 +304,7 @@ function applyFilters() {
     // Lọc tiếp theo địa chỉ (quận/huyện)
     filteredOrders = filterByDistrict(filteredOrders, districtFilter);
 
-    // Hiển thị danh sách đã lọc
-    displayFilteredOrders(filteredOrders);
-}  
-
-
-
+    // Cập nhật lại danh sách đơn hàng
+    currentPage = 1; // Reset về trang đầu
+    displayFilteredOrders(filteredOrders); // Hiển thị danh sách đã lọc
+}

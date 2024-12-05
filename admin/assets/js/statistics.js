@@ -18,7 +18,7 @@ function generateProductStatistics() {
             let { product_name, soluong, product_price } = item;
 
             if (!productStats[product_name]) {
-                productStats[product_name] = {
+                productStats[product_name] = {  
                     quantity: 0,
                     revenue: 0,
                     orders: [],
@@ -66,7 +66,7 @@ function generateProductStatistics() {
                     <th>Xem Hóa Đơn</th>
                 </tr>
             </thead>
-            <tbody id="product-stats-body">
+            
                 ${Object.keys(productStats).map(productName => {
                     let stats = productStats[productName];
                     return `
@@ -80,7 +80,7 @@ function generateProductStatistics() {
                         </tr>
                     `;
                 }).join('')}
-            </tbody>
+            
         </table>
     `;
 }

@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="./assets/css/reset.css" />
     <link rel="stylesheet" href="./assets/css/navbar.css" />
     <link rel="stylesheet" href="./assets/css/product.css" />
+    <link rel="stylesheet" href="./assets/css/navbar_responsive.css" />
+    <link rel="stylesheet" href="./assets/css/product_responsive.css" />
     <!-- embed font -->
     <link
       rel="stylesheet"
@@ -89,8 +91,29 @@
     <title>Trang chủ</title>
   </head>
   <body>
+    <!-- menu -->
+    <svg class="menu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+      <path
+        fill="currentColor"
+        d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"
+      />
+    </svg>
+
     <!-- navbar -->
+    <div class="overlay"></div>
     <nav class="navbar">
+      <!-- exit -->
+      <svg
+        class="navbar__close"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+      >
+        <path
+          fill="currentColor"
+          d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"
+        />
+      </svg>
+
       <!-- logo -->
       <div class="navbar__logo">
         <a href="./index.html" class="logo__link">
@@ -256,11 +279,15 @@
       </div>
     </nav>
 
-    <main>
-      <!-- phan tim kiem , loc san pham -->
-      <div class="search-filter">
-        <div class="containered">
-          <input type="text"     class="search-filter__input"   placeholder="Tìm kiếm tên món ăn..." >
+    <main class="main">
+      <!-- phần tìm kiếm , lọc sản phẩm -->
+      <div class="container">
+        <div class="csearch-filter">
+          <input
+            type="text"
+            class="search-filter__input"
+            placeholder="Tìm kiếm tên món ăn..."
+          />
 
           <select class="search-filter__select">
             <option value="">Các loại món ăn</option>
@@ -270,43 +297,242 @@
             <option value="Dê,cừu">Dê , cừu</option>
             <option value="Hải sản">Hải sản</option>
             <option value="Bánh nướng">Bánh nướng</option>
-            <option value="Rau">Rau ăn kèm </option>
+            <option value="Rau">Rau ăn kèm</option>
           </select>
 
           <button class="search-filter__button">
-            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              <path fill="#fdfcfc" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
-              Tìm kiếm
+            <svg
+              class="search-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="#fdfcfc"
+                d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+              />
+            </svg>
+            Tìm kiếm
           </button>
+
+          <button id="add-product-btn" type="button">Thêm sản phẩm</button>
         </div>
       </div>
 
+      <div class="container">
+        <div id="product-list"></div>
+      </div>
 
-      <!-- phan icon them , xoa , sua san pham -->
-       <div class="setting-products">
-        <div class="container-txs">
-            <button class="btn-option">
-              Thêm sản phẩm
-            </button>      
+      <div class="modal add-product" style="display: none">
+        <div class="modal-container">
+          <h3 class="modal-container-title add-product-e">THÊM MỚI SẢN PHẨM</h3>
+          <button class="modal-close product-form">X</button>
+          <div class="modal-content">
+            <form class="add-product-form">
+              <div class="modal-content-left">
+                <img
+                  src="../admin/assets/img/shopping/blank-image.png"
+                  alt=""
+                  class="upload-image-preview"
+                />
+                <div class="form-group file">
+                  <div class="warn-file">
+                    <u>(Kích thước ảnh tối đa 5MB.)</u>
+                  </div>
+                  <label for="up-hinh-anh" class="form-label-file"
+                    >Chọn hình ảnh</label
+                  >
+                  <input
+                    accept="image/jpeg, image/png, image/jpg"
+                    id="up-hinh-anh"
+                    name="up-hinh-anh"
+                    type="file"
+                    class="form-control"
+                    onchange="uploadImage(this)"
+                  />
+                </div>
+              </div>
+              <div class="modal-content-right">
+                <div class="form-group">
+                  <label for="ten-mon" class="form-label">Tên món</label>
+                  <input
+                    id="ten-mon"
+                    name="ten-mon"
+                    type="text"
+                    placeholder="Nhập tên món"
+                    class="form-control"
+                  />
+                  <span class="form-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="category" class="form-label">Chọn loại món</label>
+                  <select name="category" id="chon-mon">
+                    <option value="">Các loại món ăn</option>
+                    <option value="Bò">Thịt Bò</option>
+                    <option value="Heo">Thịt Heo</option>
+                    <option value="Gà">Gà</option>
+                    <option value="Dê,cừu">Dê , cừu</option>
+                    <option value="Hải sản">Hải sản</option>
+                    <option value="Bánh nướng">Bánh nướng</option>
+                    <option value="Rau">Rau ăn kèm</option>
+                  </select>
+                  <span class="form-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="gia-moi" class="form-label">Giá bán</label>
+                  <input
+                    id="gia-moi"
+                    name="gia-moi"
+                    type="text"
+                    placeholder="Nhập giá bán"
+                    class="form-control"
+                  />
+                  <span class="form-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="mo-ta" class="form-label">Mô tả</label>
+                  <textarea
+                    class="product-desc"
+                    id="mo-ta"
+                    placeholder="Nhập mô tả món ăn..."
+                  ></textarea>
+                  <span class="form-message"></span>
+                </div>
+                <button
+                  type="button"
+                  class="form-submit btn-add-product-form add-product-e"
+                  id="add-product-button"
+                >
+                  <span>THÊM MÓN</span>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-       </div>
+      </div>
 
-       <!-- phan hien thi san pham -->
-       <div class="container">
-        <div id="product-list">
-
+      <div class="modal edit-product" style="display: none">
+        <div class="modal-container">
+          <h3 class="modal-container-title edit-product-e">
+            CHỈNH SỬA SẢN PHẨM
+          </h3>
+          <button class="modal-close product-form" onclick="closeEditModal()">
+            X
+          </button>
+          <div class="modal-content">
+            <form id="edit-product-form" class="add-product-form">
+              <div class="modal-content-left">
+                <img
+                  src=""
+                  alt=""
+                  class="upload-image-preview"
+                  id="edit-image-preview"
+                />
+                <div class="form-group file">
+                  <div class="warn-file">
+                    <u>(Kích thước ảnh tối đa 5MB.)</u>
+                  </div>
+                  <label for="edit-up-hinh-anh" class="form-label-file"
+                    >Chọn hình ảnh</label
+                  >
+                  <input
+                    accept="image/jpeg, image/png, image/jpg"
+                    id="edit-up-hinh-anh"
+                    name="up-hinh-anh"
+                    type="file"
+                    class="form-control"
+                    onchange="uploadImageForEdit(this)"
+                  />
+                </div>
+              </div>
+              <div class="modal-content-right">
+                <div class="form-group">
+                  <label for="edit-ten-mon" class="form-label">Tên món</label>
+                  <input
+                    id="edit-ten-mon"
+                    name="ten-mon"
+                    type="text"
+                    placeholder="Nhập tên món"
+                    class="form-control"
+                    required
+                  />
+                  <span class="form-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="chon-mon" class="form-label">Chọn loại món</label>
+                  <select name="category" id="edit-chon-mon">
+                    <option value="">Các loại món ăn</option>
+                    <option value="Bò">Thịt Bò</option>
+                    <option value="Heo">Thịt Heo</option>
+                    <option value="Gà">Gà</option>
+                    <option value="Dê,cừu">Dê , cừu</option>
+                    <option value="Hải sản">Hải sản</option>
+                    <option value="Bánh nướng">Bánh nướng</option>
+                    <option value="Rau">Rau ăn kèm</option>
+                  </select>
+                  <span class="form-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="edit-gia" class="form-label">Giá bán</label>
+                  <input
+                    id="edit-gia"
+                    name="gia-moi"
+                    type="text"
+                    placeholder="Nhập giá bán"
+                    class="form-control"
+                    required
+                  />
+                  <span class="form-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="edit-mo-ta" class="form-label">Mô tả</label>
+                  <textarea
+                    class="product-desc"
+                    id="edit-mo-ta"
+                    placeholder="Nhập mô tả món ăn..."
+                    required
+                  ></textarea>
+                  <span class="form-message"></span>
+                </div>
+                <button
+                  type="submit"
+                  class="form-submit btn-add-product-form edit-product-e"
+                  id="edit-product-button"
+                >
+                  <span>CẬP NHẬT MÓN</span>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-    </div>
-
-    <div id="pagination" style="text-align: center; margin: 20px 0;height: 80px;">
-
-
-    </div>
-
+      </div>
+      <div
+        id="pagination"
+        style="
+          text-align: center;
+          margin-top: 20px;
+          height: 80px;
+          margin-left: 8px;
+        "
+      ></div>
     </main>
+
+    <!-- button -->
+    <a href="#" class="button">
+      <svg
+        class="button__img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+      >
+        <path
+          fill="currentColor"
+          d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm11.3-395.3l112 112c4.6 4.6 5.9 11.5 3.5 17.4s-8.3 9.9-14.8 9.9l-64 0 0 96c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-96-64 0c-6.5 0-12.3-3.9-14.8-9.9s-1.1-12.9 3.5-17.4l112-112c6.2-6.2 16.4-6.2 22.6 0z"
+        />
+      </svg>
+    </a>
 
     <!-- javascript -->
     <script src="./assets/js/navbar.js"></script>
     <script src="./assets/js/product.js"></script>
+    <script src="./assets/js/navbar_responsive.js"></script>
   </body>
 </html>
