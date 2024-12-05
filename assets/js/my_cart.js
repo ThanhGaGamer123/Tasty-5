@@ -1,4 +1,7 @@
 // Hàm hiển thị chi tiết đơn hàng
+let currentPage = 1;
+const soluongHoaDon = 4;
+
 function displayOrderDetails(filteredOrders = null) {
   // Lấy danh sách hóa đơn từ localStorage
   let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
@@ -13,14 +16,20 @@ function displayOrderDetails(filteredOrders = null) {
     document.getElementById("order-details").innerHTML = `
             <p>Hiện tại bạn chưa có đơn hàng nào.</p>
         `;
+    document.getElementById("pagination").style.display = "none"; // Ẩn thanh phân trang
     return;
   }
 
+  // Tính toán số lượng đơn hàng cần hiển thị
+  const startIndex = (currentPage - 1) * soluongHoaDon;
+  const endIndex = Math.min(startIndex + soluongHoaDon, hoaDon.length);
+  const ordersToDisplay = hoaDon.slice(startIndex, endIndex);
+  
   // Hiển thị danh sách đơn hàng
   let orderDetailsContainer = document.getElementById("order-details");
   orderDetailsContainer.innerHTML = ""; // Xóa nội dung cũ
 
-  hoaDon.forEach((donHang, index) => {
+  ordersToDisplay.forEach((donHang, index) => {
     let cart = donHang[0]; // Giỏ hàng
     let orderStatus = donHang[1]; // Trạng thái đơn hàng
 
@@ -30,8 +39,8 @@ function displayOrderDetails(filteredOrders = null) {
 
     // Phần hiển thị thu gọn
     orderContainer.innerHTML += `
-            <div class="order-header" data-index="${index}">
-                <span><strong>Đơn hàng #${index + 1}</strong></span>
+            <div class="order-header" data-index="${index + startIndex}">
+                <span><strong>Đơn hàng #${index + startIndex + 1}</strong></span>
                 <span>Ngày đặt: ${new Date(
                   orderStatus.orderDate
                 ).toLocaleDateString()} ${new Date(
@@ -43,7 +52,7 @@ function displayOrderDetails(filteredOrders = null) {
                 }</strong></span>
                 <button class="toggle-details">Hiển thị chi tiết</button>
             </div>
-            <div class="order-details" id="order-details-${index}" style="display: none;">
+            <div class="order-details" id="order-details-${index + startIndex}" style="display: none;">
                 <!-- Nội dung chi tiết sẽ được thêm ở đây -->
             </div>
         `;
@@ -53,9 +62,63 @@ function displayOrderDetails(filteredOrders = null) {
     // Nút "Hiển thị chi tiết"
     let toggleBtn = orderContainer.querySelector(".toggle-details");
     toggleBtn.addEventListener("click", () =>
-      toggleOrderDetails(index, cart, orderStatus)
+      toggleOrderDetails(index + startIndex, cart, orderStatus)
     );
   });
+
+  // Gọi hàm phân trang
+  Dieukhienpage(hoaDon.length);
+}
+
+// Phân trang
+function Dieukhienpage(totalProducts) {
+  const phanTrangSp = document.getElementById("pagination");
+  phanTrangSp.innerHTML = "";
+
+  const totalPages = Math.ceil(totalProducts / soluongHoaDon);
+
+  // Hiển thị thanh phân trang nếu có hơn 1 trang
+  if (totalPages > 1) {
+    phanTrangSp.style.display = "block"; // Hiển thị thanh phân trang
+
+    // trang trước
+    if (currentPage > 1) {
+      const prevButton = document.createElement("button");
+      prevButton.innerText = "<";
+      prevButton.onclick = () => {
+        currentPage--;
+        displayOrderDetails(); // Cập nhật lại danh sách đơn hàng
+      };
+      phanTrangSp.appendChild(prevButton);
+    }
+
+    // số trang
+    for (let i = 1; i <= totalPages; i++) {
+      const pageButton = document.createElement("button");
+      pageButton.innerText = i;
+      pageButton.onclick = () => {
+        currentPage = i;
+        displayOrderDetails(); // Cập nhật lại danh sách đơn hàng
+      };
+      if (i === currentPage) {
+        pageButton.disabled = true;
+      }
+      phanTrangSp.appendChild(pageButton);
+    }
+
+    // trang sau
+    if (currentPage < totalPages) {
+      const nextButton = document.createElement("button");
+      nextButton.innerText = ">";
+      nextButton.onclick = () => {
+        currentPage++;
+        displayOrderDetails(); // Cập nhật lại danh sách đơn hàng
+      };
+      phanTrangSp.appendChild(nextButton);
+    }
+  } else {
+    phanTrangSp.style.display = "none"; // Ẩn thanh phân trang nếu không có nhiều trang
+  }
 }
 
 // Hàm bảo vệ an toàn HTML
@@ -149,6 +212,9 @@ function filterOrders() {
     return orderInfo.email === userEmail; // Kiểm tra email khớp
   });
 
+  // Đặt lại trang hiện tại về 1 sau khi lọc
+  currentPage = 1;
+
   // Hiển thị đơn hàng đã lọc
   displayOrderDetails(filteredOrders);
 }
@@ -178,6 +244,9 @@ function filterOrdersWithFilters(statusFilter, dateFilter) {
 
     return isEmailMatch && isStatusMatch && isDateMatch;
   });
+
+  // Đặt lại trang hiện tại về 1 sau khi lọc
+  currentPage = 1;
 
   // Hiển thị đơn hàng đã lọc
   displayOrderDetails(filteredOrders);
