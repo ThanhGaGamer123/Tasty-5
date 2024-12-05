@@ -134,5 +134,109 @@ function closeOrderDetails() {
 
 document.addEventListener("DOMContentLoaded", function () {
     generateProductStatistics();
-});
+}); 
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Tính toán doanh thu của từng khách hàng
+// Tính toán doanh thu của từng khách hàng
+function calculateRevenue() {
+    let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+    let customerRevenue = {}; // Đối tượng chứa doanh thu của từng khách hàng
+
+    hoaDon.forEach(order => {
+        let customerInfo = order[1]; // Thông tin khách hàng
+        let orderInfo = order[1]; // Thông tin đơn hàng
+        let orderStatus = orderInfo.orderStatus; // Lấy trạng thái đơn hàng
+
+        // Chỉ tính doanh thu nếu đơn hàng có trạng thái "Đã giao"
+        if (orderStatus === "Đã giao") {
+            let totalAmount = orderInfo.totalAmount; // Tổng tiền đơn hàng
+
+            // Cộng dồn doanh thu cho khách hàng
+            if (customerRevenue[customerInfo.email]) {
+                customerRevenue[customerInfo.email] += totalAmount;
+            } else {
+                customerRevenue[customerInfo.email] = totalAmount;
+            }
+        }
+    });
+
+    return customerRevenue;
+}
+
+ 
+
+// Lấy ra 5 khách hàng phát sinh doanh thu nhiều nhất
+function getTop5Customers() {
+    let customerRevenue = calculateRevenue();
+
+    // Chuyển đối tượng thành mảng để có thể sắp xếp
+    let sortedCustomers = Object.keys(customerRevenue).map(email => ({
+        email: email,
+        revenue: customerRevenue[email]
+    }));
+
+    // Sắp xếp giảm dần theo doanh thu
+    sortedCustomers.sort((a, b) => b.revenue - a.revenue);
+
+    // Lấy 5 khách hàng đầu tiên
+    return sortedCustomers.slice(0, 5);
+}
+
+
+
+// Hiển thị thông tin của 5 khách hàng phát sinh doanh thu nhiều nhất
+// Hiển thị thông tin 5 khách hàng phát sinh doanh thu nhiều nhất
+function displayTop5Customers() {
+    let topCustomers = getTop5Customers();
+    let customerListContainer = document.getElementById("top-customers-list");
+    customerListContainer.innerHTML = ''; // Làm mới danh sách khách hàng
+
+    topCustomers.forEach(customer => {
+        let orderInfo = getOrderByCustomerEmail(customer.email); // Lấy thông tin đơn hàng
+
+        let customerElement = document.createElement('div');
+        customerElement.classList.add('customer-item');
+        customerElement.innerHTML = `
+            <h3>Email: ${customer.email}</h3>
+            <p>Doanh thu: ${customer.revenue.toLocaleString()} VND</p>
+            <button onclick="viewOrdersByCustomer('${customer.email}')">Xem hóa đơn</button>
+        `;
+
+        customerListContainer.appendChild(customerElement);
+    });
+}
+
+function getOrderByCustomerEmail(email) {
+    let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+    return hoaDon.find(order => order[1].email === email)[1]; // Trả về thông tin đơn hàng của khách hàng
+}
+
+// Hiển thị các đơn hàng của khách hàng
+function viewOrdersByCustomer(email) {
+    let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+    let ordersForCustomer = hoaDon.filter(order => order[1].email === email);
+
+    let orderDetailsContainer = document.getElementById("order-details-container");
+    orderDetailsContainer.innerHTML = ''; // Làm mới thông tin chi tiết
+
+    ordersForCustomer.forEach(order => {
+        let orderInfo = order[1];
+
+        let orderElement = document.createElement('div');
+        orderElement.classList.add('order-item');
+        orderElement.innerHTML = `
+            <h4>Đơn hàng ngày: ${new Date(orderInfo.orderDate).toLocaleDateString()}</h4>
+            <p><strong>Địa chỉ nhận hàng:</strong> ${orderInfo.deliveryAddress}</p>
+            <p><strong>Trạng thái:</strong> ${orderInfo.orderStatus}</p>
+        `;
+        orderDetailsContainer.appendChild(orderElement);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    displayTop5Customers();  // Hiển thị 5 khách hàng phát sinh doanh thu nhiều nhất
+});
