@@ -1,0 +1,85 @@
+:root {
+  --primary-color: #e92526;
+  --secondary-color: #df6b00;
+  --text-color: #000;
+}
+
+body {
+  font-size: 1.8rem;
+  line-height: 1.42;
+  padding: 0;
+}
+
+/* PC */
+@media (min-width: 1200px) {
+}
+
+/* Tablet & Mobile */
+@media (max-width: 1199.98px) {
+  .main {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  #order-details-modal,
+  #order-details-modal1 {
+    margin-left: 0;
+    width: 100%;
+    z-index: 9999;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+  .container {
+    max-width: 100%;
+  }
+
+  #filter-container {
+    margin-top: 80px;
+    padding: 20px 0;
+  }
+
+  #statistics-container {
+    padding: 40px 0;
+  }
+
+  tbody tr td {
+    white-space: wrap;
+  }
+
+  .modal-content {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 499.98px) {
+  .customer-item {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .customer-item button {
+    width: 150px;
+  }
+
+  #statistics-container {
+    width: 100%;
+  }
+
+  #statistics-container h2 {
+    align-self: center;
+  }
+
+  .heading {
+    text-align: center;
+  }
+
+  #statistics-container table tbody tr td {
+    padding: 0;
+  }
+}
