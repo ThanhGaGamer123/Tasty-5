@@ -282,65 +282,50 @@
     <main class="main">
       <div class="container">
         <div id="filter-container">
-          <div>
-              <label for="start-date">Từ ngày:</label>
-              <input type="date" id="start-date" name="start-date" />
-        
-              <label for="end-date">Đến ngày:</label>
-              <input type="date" id="end-date" name="end-date" />
-        
-              <button onclick="applyDateFilter()">Lọc theo ngày</button>
-          </div>
-          <div>
-              <label for="status-filter">Loại món ăn:</label>
-              <select id="status-filter">
-                <option value="">Tất cả</option>
-                <option value="Chưa xử lý">Chưa xử lý</option>
-                <option value="Đã xác nhận">Đã xác nhận</option>
-                <option value="Đã giao">Đã giao</option>
-                <option value="Đã huỷ">Đã huỷ</option>
-              </select>
-              <input type="text" class="search-filter__input" placeholder="Tìm kiếm tên món ăn...">
-              <button onclick="">Lọc nâng cao</button>
-          </div>
+          <div class="container" id="top-customers-list"></div>
         </div>
 
+        
 
-        <div class="table">
-          <table width="100%">
-              <thead>
-                  <tr>
-                      <td>STT</td>
-                      <td>Tên món</td>
-                      <td>Số lượng bán</td>
-                      <td>Doanh thu</td>
-                      <td></td>
-                  </tr>
-              </thead>
-              <tbody id="showTk">
-                <tr>
-                  <td>1</td>
-                  <td><div class="prod-img-title"><img class="prd-img-tbl" src="./assets/img/shopping/bachicuonnamkimcham.jpg" alt=""><p>Rau xào ngũ sắc</p></div></td>
-                  <td>1</td>
-                  <td>180.000&nbsp;₫</td>
-                  <td><button class="btn-detail product-order-detail" data-id="2"><i class="fa-regular fa-eye"></i> Chi tiết</button></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td><div class="prod-img-title"><img class="prd-img-tbl" src="./assets/img/shopping/bachicuonnamkimcham.jpg" alt=""><p>Rau xào ngũ sắc</p></div></td>
-                  <td>1</td>
-                  <td>180.000&nbsp;₫</td>
-                  <td><button class="btn-detail product-order-detail" data-id="2"><i class="fa-regular fa-eye"></i> Chi tiết</button></td>
-                </tr>
-              </tbody>
-          </table>
+        <div id="statistics-container">
         </div>
 
       </div>
+      <!-- Modal hiển thị chi tiết đơn hàng -->
+      <div class="modal" id="order-details-modal" style="display:none;">
+        <div class="container">
+          <div class="modal-container">
+            <div class="modal-content">
+              <div id="order-details-container"></div>
+              <button onclick="closeOrderDetails()">Đóng</button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!--modal khach hang-->
+      
+
+
+
+      <div class="modal" id="order-details-modal1" style="display:none;">
+        <div class="container">
+          <div class="modal-container">
+            <div class="modal-content">
+              <div id="order-details-container1"></div>
+              <button onclick="closeOrderDetails1()">Đóng</button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
     </main>
 
     <!-- javascript -->
     <script src="./assets/js/navbar.js"></script>
     <script src="./assets/js/navbar_responsive.js"></script>
+    <script src="./assets/js/statistics.js"></script>
   </body>
 </html>

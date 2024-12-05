@@ -1,0 +1,115 @@
+:root {
+  --primary-color: #e92526;
+  --secondary-color: #df6b00;
+  --text-color: #000;
+}
+
+body {
+  padding: 0;
+}
+
+#pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 50px;
+}
+
+#orders-list {
+  padding: 0 0 30px;
+}
+
+#pagination button {
+  border-radius: 9999px;
+  width: 4px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+#order-details-container ul li {
+  font-size: 1.8rem;
+}
+
+/* PC */
+@media (min-width: 1200px) {
+}
+
+/* Tablet & Mobile */
+@media (max-width: 1199.98px) {
+  .main {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  #order-details-modal {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+  #filter-container {
+    gap: 24px;
+  }
+
+  #filter-container div {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  #filter-container div label {
+    align-self: start;
+  }
+
+  input[type="date"],
+  select {
+    width: 100%;
+    padding: 10px 4px;
+    align-self: center;
+    margin-right: 0;
+  }
+
+  #filter-container div button {
+    width: 20%;
+    white-space: wrap;
+  }
+
+  .modal-content {
+    width: 100%;
+    padding: 50px 10px;
+  }
+
+  #order-details-container ul {
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 499.98px) {
+  .container {
+    max-width: 100%;
+  }
+
+  #filter-container {
+    margin-top: 100px;
+    padding: 20px 0;
+  }
+
+  input[type="date"],
+  select {
+    width: 97%;
+  }
+
+  .order-item {
+    padding: 20px 0;
+  }
+}

@@ -598,7 +598,6 @@ document
 document.querySelectorAll('input[name="payment-method"]').forEach((radio) => {
   radio.addEventListener("change", displayCartSummary);
 });
-
 // Gọi hàm hiển thị tóm tắt khi trang tải
 document.addEventListener("DOMContentLoaded", displayCartSummary);
 
@@ -687,6 +686,14 @@ function checkout() {
   // Lấy ngày đặt hàng
   let orderDate = new Date().toISOString(); // Lấy ngày hiện tại ở định dạng ISO
 
+  // Tính tổng tiền hóa đơn
+  let totalAmount = cart.reduce((total, item) => {
+    if (item && item.soluong && item.product_price) {
+        return total + item.soluong * item.product_price * 1000; // Nhân thêm 1000 nếu giá đang tính theo nghìn
+    }
+    return total;
+}, 0);
+
   // Tạo đối tượng thông tin khách hàng
   let customerInfo = {
     name: loginUser.name, // Lấy tên từ LoginUser
@@ -710,6 +717,7 @@ function checkout() {
     note: orderNote, // Ghi chú đơn hàng
     paymentDetails: paymentDetails, // Thêm thông tin thanh toán vào
     email: loginUser.email, // Đảm bảo email của người dùng được lưu chính xác
+    totalAmount: totalAmount, // Tổng tiền hóa đơn
   });
 
   // Kiểm tra xem mảng hoaDon đã có trong localStorage chưa, nếu chưa thì khởi tạo mảng rỗng
@@ -738,6 +746,7 @@ function checkout() {
   // Ẩn phần nhập thông tin
   document.getElementById("checkout-details").style.display = "none";
 }
+
 
 // Lắng nghe sự kiện thay đổi phương thức thanh toán
 document.querySelectorAll('input[name="payment-method"]').forEach((input) => {

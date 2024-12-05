@@ -4,6 +4,10 @@
   --text-color: #000;
 }
 
+#pagination {
+  margin-left: 25%;
+}
+
 /* PC */
 @media (min-width: 1200px) {
 }
