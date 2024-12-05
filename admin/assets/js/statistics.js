@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// Tính toán doanh thu của từng khách hàng
+
 // Tính toán doanh thu của từng khách hàng
 function calculateRevenue() {
     let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
@@ -188,7 +188,7 @@ function getTop5Customers() {
 
 
 
-// Hiển thị thông tin của 5 khách hàng phát sinh doanh thu nhiều nhất
+
 // Hiển thị thông tin 5 khách hàng phát sinh doanh thu nhiều nhất
 function displayTop5Customers() {
     let topCustomers = getTop5Customers();
