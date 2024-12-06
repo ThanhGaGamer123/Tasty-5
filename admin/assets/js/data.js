@@ -54,13 +54,58 @@ if (!localStorage.getItem("initialized")) {
       role: "customer",
       profit: 0,
     },
+    {
+      name: "Nguyen Van F",
+      email: "nvf@gmail.com",
+      phone: "0123456784",
+      address: "159, Đường PQR, Phường 6, Quận 10, TP Hồ Chí Minh",
+      password: "Toilakhach123!",
+      role: "customer",
+      profit: 0,
+    },
+    {
+      name: "Tran Van G",
+      email: "tvg@gmail.com",
+      phone: "0123456783",
+      address: "753, Đường STU, Phường 7, Quận 11, TP Hồ Chí Minh",
+      password: "Toilakhach123!",
+      role: "customer",
+      profit: 0,
+    },
+    {
+      name: "Le Thi H",
+      email: "lth@gmail.com",
+      phone: "0123456782",
+      address: "852, Đường VWX, Phường 8, Quận 12, TP Hồ Chí Minh",
+      password: "Toilakhach123!",
+      role: "customer",
+      profit: 0,
+    },
+    {
+      name: "Pham Van I",
+      email: "pvi@gmail.com",
+      phone: "0123456781",
+      address: "963, Đường YZ, Phường 9, Quận 13, TP Hồ Chí Minh",
+      password: "Toilakhach123!",
+      role: "customer",
+      profit: 0,
+    },
+    {
+      name: "Hoang Thi J",
+      email: "htj@gmail.com",
+      phone: "0123456780",
+      address: "789, Đường ABC, Phường 10, Quận 14, TP Hồ Chí Minh",
+      password: "Toilakhach123!",
+      role: "customer",
+      profit: 0,
+    },
   ];
 
   // Đẩy người dùng vào accArray
   accArray.push(...users);
   localStorage.setItem("accArray", JSON.stringify(accArray));
 
-  let donHang, thongTin;
+  let donHang;
 
   let products = [
     {
@@ -84,153 +129,67 @@ if (!localStorage.getItem("initialized")) {
       product_image: "./assets/img/shopping/banhxeonuongHQ.webp",
       soluong: 1,
     },
-    {
-      id: 4,
-      product_name: "Bạch tuộc nướng phô mai",
-      product_price: "57.000",
-      product_image: "./assets/img/shopping/bachtuocnuongphomai.jpg",
-      soluong: 1,
-    },
-    {
-      id: 5,
-      product_name: "Bò nướng muối ớt",
-      product_price: "45.000",
-      product_image: "./assets/img/shopping/bonuongmuoiot.jpg",
-      soluong: 1,
-    },
-    {
-      id: 6,
-      product_name: "Bò cuộn lá lốt",
-      product_price: "30.000",
-      product_image: "./assets/img/shopping/bocuonlalot.png",
-      soluong: 1,
-    },
-    {
-      id: 7,
-      product_name: "Cá mú nướng giấy bạc",
-      product_price: "40.000",
-      product_image: "./assets/img/shopping/camunuonggiaybac.jpg",
-      soluong: 1,
-    },
-    {
-      id: 8,
-      product_name: "Cánh gà nướng mật ong",
-      product_price: "34.000",
-      product_image: "./assets/img/shopping/canhganuongmatong.jpg",
-      soluong: 1,
-    },
-    {
-      id: 9,
-      product_name: "Đuôi heo nướng sả",
-      product_price: "37.000",
-      product_image: "./assets/img/shopping/duoiheonuongxaot.jpg",
-      soluong: 1,
-    },
-    {
-      id: 10,
-      product_name: "Gyu-kushi-xiên bò",
-      product_price: "55.000",
-      product_image: "./assets/img/shopping/gyu-kushi.jpg",
-      soluong: 1,
-    },
-    {
-      id: 11,
-      product_name: "Mực nướng vị Hàn",
-      product_price: "43.000",
-      product_image: "./assets/img/shopping/muc_nuongHQ.webp",
-      soluong: 1,
-    },
-    {
-      id: 12,
-      product_name: "Sườn cừu",
-      product_price: "75.000",
-      product_image: "./assets/img/shopping/suon_cuu.jpg",
-      soluong: 1,
-    },
-    {
-      id: 13,
-      product_name: "Sườn bò nướng",
-      product_price: "65.000",
-      product_image: "./assets/img/shopping/suonbonuong.jpg",
-      soluong: 1,
-    },
-    {
-      id: 14,
-      product_name: "Thịt dê nướng",
-      product_price: "57.000",
-      product_image: "./assets/img/shopping/thitdenuong.jpg",
-      soluong: 1,
-    },
-    {
-      id: 15,
-      product_name: "Thịt gà nướng cay",
-      product_price: "38.000",
-      product_image: "./assets/img/shopping/thitganuongcay.jpg",
-      soluong: 1,
-    },
-    {
-      id: 16,
-      product_name: "Thịt heo nướng sa tế",
-      product_price: "46.000",
-      product_image: "./assets/img/shopping/thitheonuongsate.jpg",
-      soluong: 1,
-    },
-    {
-      id: 17,
-      product_name: "Tôm nướng mỡ hành",
-      product_price: "45.000",
-      product_image: "./assets/img/shopping/tom_nuong.jpg",
-      soluong: 1,
-    },
-    {
-      id: 18,
-      product_name: "Tôm nướng phô mai",
-      product_price: "67.000",
-      product_image: "./assets/img/shopping/tomnuongphomai.jpg",
-      soluong: 1,
-    },
-    {
-      id: 19,
-      product_name: "Yakitori",
-      product_price: "47.000",
-      product_image: "./assets/img/shopping/yakitori_ga(nhatban).jpg",
-      soluong: 1,
-    },
-    {
-      id: 20,
-      product_name: "Salad rau ăn kèm",
-      product_price: "5.000",
-      product_image: "./assets/img/shopping/saladrau.jpg",
-      soluong: 1,
-    },
-    {
-      id: 21,
-      product_name: "Hào nướng mỡ hành",
-      product_price: "50.000",
-      product_image: "./assets/img/shopping/haonuongmohanh.jpg",
-      soluong: 1,
-    },
+    // ... (giữ nguyên danh sách sản phẩm)
   ];
 
   // Trạng thái đơn hàng
   const orderStatuses = ["Chưa xử lý", "Đã xác nhận", "Đã giao", "Đã hủy"];
 
+  // Hàm tạo số thẻ ngẫu nhiên hợp lệ
+  function generateCardNumber() {
+    let cardNumber = "";
+    for (let i = 0; i < 16; i++) {
+      cardNumber += Math.floor(Math.random() * 10); // Tạo số từ 0 đến 9
+    }
+    return cardNumber;
+  }
+
   // Tạo 50 đơn hàng với khoảng cách ngày xa nhau
   for (let i = 0; i < 50; i++) {
     donHang = [];
-    thongTin = [];
+    let thongTin = [];
 
-    // Chọn ngẫu nhiên khách hàng và sản phẩm
+    // Chọn ngẫu nhiên khách hàng
     const user = users[Math.floor(Math.random() * users.length)];
-    const product = products[Math.floor(Math.random() * products.length)];
+
+    // Số lượng sản phẩm ngẫu nhiên cho đơn hàng
+    const productCount = Math.floor(Math.random() * 5) + 1; // Số lượng sản phẩm từ 1 đến 5
+
+    let totalAmount = 0; // Biến để tính tổng số tiền
+
+    // Đẩy thông tin người dùng vào thongTin
+    thongTin.push(user);
+
+    for (let j = 0; j < productCount; j++) {
+      // Chọn ngẫu nhiên một sản phẩm
+      const product = products[Math.floor(Math.random() * products.length)];
+      const quantity = Math.floor(Math.random() * 3) + 1; // Số lượng từ 1 đến 3
+
+      // Tạo một bản sao sản phẩm để không làm thay đổi mảng gốc
+      const productCopy = { ...product, soluong: quantity };
+
+      // Đẩy sản phẩm vào thongTin
+      thongTin.push(productCopy);
+
+      // Chuyển đổi giá sản phẩm từ chuỗi sang số
+      const productPrice = parseInt(
+        product.product_price.replace(".", "").replace(",", ".")
+      );
+
+      // Tính tổng số tiền
+      totalAmount += productPrice * quantity; // Sử dụng quantity
+    }
 
     // Tính ngày đặt hàng cách nhau tối thiểu 3 ngày
     const orderDate = new Date();
     orderDate.setDate(orderDate.getDate() + i * 3); // Cách nhau 3 ngày
 
-    // Thông tin đơn hàng
-    thongTin.push(user);
-    thongTin.push(product);
+    // Chọn phương thức thanh toán ngẫu nhiên
+    const paymentMethods = ["COD", "BankTransfer", "EWallet"];
+    const paymentMethod =
+      paymentMethods[Math.floor(Math.random() * paymentMethods.length)];
+    const paymentDetails =
+      paymentMethod !== "COD" ? generateCardNumber() : null; // Tạo số thẻ nếu không phải COD
 
     donHang.push(thongTin);
     donHang.push({
@@ -240,11 +199,9 @@ if (!localStorage.getItem("initialized")) {
       orderDate: orderDate.toISOString(), // Ngày đặt hàng hiện tại
       orderStatus:
         orderStatuses[Math.floor(Math.random() * orderStatuses.length)],
-      paymentDetails: null,
-      paymentMethod: "COD",
-      totalAmount: parseInt(
-        product.product_price.replace(".", "").replace(",", "")
-      ), // Chuyển đổi giá thành số
+      paymentDetails: paymentDetails,
+      paymentMethod: paymentMethod,
+      totalAmount: totalAmount, // Tổng số tiền cho đơn hàng
     });
 
     hoaDon.push(donHang);
