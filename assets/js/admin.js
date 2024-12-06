@@ -12,52 +12,16 @@ class Account {
 }
 
 //Tài khoản admin
-const admin_1 = new Account(
-  "Phạm Nguyễn Phú Thành",
-  "thanhphamnguyenphu2k5@gmail.com",
-  "TaolaThanh123!",
+const admin = new Account(
+  "Admin",
+  "admin@gmail.com",
+  "Admin123!",
   "admin",
   "",
   ""
 );
 
-const admin_2 = new Account(
-  "Phạm Nguyễn Phú Thành",
-  "thanhphamnguyenphu2k5@gmail.com",
-  "TaolaThanh123!",
-  "admin",
-  "",
-  ""
-);
-
-const admin_3 = new Account(
-  "Phạm Nguyễn Phú Thành",
-  "thanhphamnguyenphu2k5@gmail.com",
-  "TaolaThanh123!",
-  "admin",
-  "",
-  ""
-);
-
-const admin_4 = new Account(
-  "Phạm Nguyễn Phú Thành",
-  "thanhphamnguyenphu2k5@gmail.com",
-  "TaolaThanh123!",
-  "admin",
-  "",
-  ""
-);
-
-const admin_5 = new Account(
-  "Huỳnh Xuân Thiện",
-  "huynhxuanthien0401@gmail.com",
-  "Taothien111/",
-  "admin",
-  "",
-  ""
-);
-
-let accArray = [admin_1, admin_2, admin_3, admin_4, admin_5];
+let accArray = [admin];
 
 //Kiểm tra tạo mới hoặc ghi đè nếu có
 if (localStorage.getItem("accArray") != null) {
