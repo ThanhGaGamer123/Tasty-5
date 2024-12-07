@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
         username__input.value,
         loginUser.email,
         loginUser.password,
-        "customer",
+        loginUser.role,
         phone__input.value,
         address__input.value
       );
