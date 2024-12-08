@@ -284,11 +284,18 @@
 
     <!-- main -->
     <main class="main">
-      <div class="container">
-        <div id="filter-container">
-          <div class="heading">Thống Kê Khách Hàng</div>
-          <div class="container" id="top-customers-list"></div>
-        </div>
+      <div class="customer-time-filter">
+        <h3>Lọc Top Khách Hàng Theo Thời Gian</h3>
+        <label for="customer-start-date">Từ ngày:</label>
+        <input type="date" id="customer-start-date" />
+        <label for="customer-end-date">Đến ngày:</label>
+        <input type="date" id="customer-end-date" />
+        <button onclick="applyCustomerTimeFilter()">Áp dụng</button>
+      </div>
+      <div id="top-customers-container">
+        <h2>Top 5 Khách Hàng</h2>
+        <div id="top-customers-list"></div>
+      </div>
 
         <div id="time-filter">
           <label for="start-date">Từ ngày:</label>

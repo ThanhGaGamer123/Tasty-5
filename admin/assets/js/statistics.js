@@ -218,17 +218,22 @@ function getTop5Customers() {
 }
 
 // Hiển thị thông tin 5 khách hàng phát sinh doanh thu nhiều nhất
-function displayTop5Customers() {
-  let topCustomers = getTop5Customers(); // Lấy danh sách top 5 khách hàng
+function displayTop5Customers(filteredCustomers = null) {
+  let topCustomers =
+    filteredCustomers || getTop5Customers(); // Lấy danh sách top 5 khách hàng
 
   let customerListContainer = document.getElementById("top-customers-list");
   customerListContainer.innerHTML = ""; // Làm mới danh sách khách hàng
 
   topCustomers.forEach((customer) => {
+    let accArray = JSON.parse(localStorage.getItem("accArray")) || [];
+    let user = accArray.find((u) => u.email === customer.email);
+    let customerName = user ? user.name : "Không rõ";
+
     let customerElement = document.createElement("div");
     customerElement.classList.add("customer-item");
     customerElement.innerHTML = `
-            <h3>${customer.name}</h3>
+            <h3>${customerName}</h3>
             <p>Email: ${customer.email}</p>
             <p>Doanh thu: ${customer.revenue.toLocaleString()} VND</p>
             <button onclick="viewOrdersByCustomer('${
@@ -295,6 +300,68 @@ function closeOrderDetails1() {
     modal.style.display = "none"; // Ẩn modal
   }
 }
+
+
+
+
+
+function filterCustomersByTime(startDate, endDate) {
+  let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+  let filteredOrders = filterOrdersByTime(hoaDon, startDate, endDate); // Dùng hàm lọc đã có
+
+  // Tính doanh thu của từng khách hàng từ các đơn hàng đã lọc
+  let customerRevenue = {};
+  filteredOrders.forEach((order) => {
+    let customerInfo = order[1];
+    let totalAmount = customerInfo.totalAmount;
+
+    if (customerInfo.orderStatus === "Đã giao") {
+      if (customerRevenue[customerInfo.email]) {
+        customerRevenue[customerInfo.email] += totalAmount;
+      } else {
+        customerRevenue[customerInfo.email] = totalAmount;
+      }
+    }
+  });
+
+  // Sắp xếp và lấy top 5 khách hàng
+  let sortedCustomers = Object.keys(customerRevenue)
+    .map((email) => ({
+      email: email,
+      revenue: customerRevenue[email],
+    }))
+    .sort((a, b) => b.revenue - a.revenue)
+    .slice(0, 5);
+
+  return sortedCustomers;
+}
+
+
+
+function applyCustomerTimeFilter() {
+  let startDate = document.getElementById("customer-start-date").value;
+  let endDate = document.getElementById("customer-end-date").value;
+
+  if (!startDate || !endDate) {
+    alert("Vui lòng chọn khoảng thời gian hợp lệ!");
+    return;
+  }
+
+  let filteredCustomers = filterCustomersByTime(startDate, endDate);
+
+  if (filteredCustomers.length === 0) {
+    alert("Không có khách hàng nào trong khoảng thời gian này.");
+    return;
+  }
+
+  displayTop5Customers(filteredCustomers); // Hiển thị kết quả đã lọc
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  displayTop5Customers(); // Hiển thị Top 5 khách hàng tổng quát
+});
+
 
 //////////////////////////////////////////////////////////////
 function filterOrdersByTime(hoaDon, startDate, endDate) {
