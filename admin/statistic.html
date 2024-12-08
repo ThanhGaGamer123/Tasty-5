@@ -37,18 +37,8 @@
     />
     <link
       rel="apple-touch-icon"
-      sizes="114x114"
-      href="./assets/img/favicon/apple-icon-114x114.png"
-    />
-    <link
-      rel="apple-touch-icon"
       sizes="120x120"
       href="./assets/img/favicon/apple-icon-120x120.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="144x144"
-      href="./assets/img/favicon/apple-icon-144x144.png"
     />
     <link
       rel="apple-touch-icon"
@@ -84,12 +74,7 @@
       sizes="16x16"
       href="./assets/img/favicon/favicon-16x16.png"
     />
-    <link rel="manifest" href="./assets/img/favicon/manifest.json" />
     <meta name="msapplication-TileColor" content="#ffffff" />
-    <meta
-      name="msapplication-TileImage"
-      content="./assets/img/favicon/ms-icon-144x144.png"
-    />
     <meta name="theme-color" content="#ffffff" />
     <title>Trang chủ</title>
   </head>
@@ -284,11 +269,16 @@
 
     <!-- main -->
     <main class="main">
-      <div class="container">
-        <div id="filter-container">
-          <div class="heading">Thống Kê Khách Hàng</div>
-          <div class="container" id="top-customers-list"></div>
-        </div>
+      <div class="customer-time-filter">
+        <label for="customer-start-date">Từ ngày:</label>
+        <input type="date" id="customer-start-date" />
+        <label for="customer-end-date">Đến ngày:</label>
+        <input type="date" id="customer-end-date" />
+        <button class="btn-notPagi" onclick="applyCustomerTimeFilter()">Áp dụng</button>
+      </div>
+      <div id="top-customers-container">
+        <div id="top-customers-list"></div>
+      </div>
 
         <div id="statistics-container">
           <div id="time-filter">
@@ -298,9 +288,14 @@
             <label for="end-date">Đến ngày:</label>
             <input type="date" id="end-date" />
 
-            <button onclick="applyTimeFilter()">Lọc thống kê</button>
+            <button class="btn-notPagi" onclick="applyTimeFilter()">Lọc thống kê</button>
           </div>
           <div id="content"></div>
+
+          <div
+          id="pagination"
+          style="margin: 20px 0">
+            </div>
         </div>
       </div>
 
@@ -310,7 +305,7 @@
           <div class="modal-container">
             <div class="modal-content">
               <div id="order-details-container"></div>
-              <button onclick="closeOrderDetails()">Đóng</button>
+              <button class="btn-notPagi" onclick="closeOrderDetails()">Đóng</button>
             </div>
           </div>
         </div>
@@ -322,7 +317,7 @@
           <div class="modal-container">
             <div class="modal-content">
               <div id="order-details-container1"></div>
-              <button onclick="closeOrderDetails1()">Đóng</button>
+              <button class="btn-notPagi" onclick="closeOrderDetails1()">Đóng</button>
             </div>
           </div>
         </div>

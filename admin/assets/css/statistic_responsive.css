@@ -10,6 +10,13 @@ body {
   padding: 0;
 }
 
+.customer-time-filter {
+  max-width: 100%;
+  padding: 20px;
+  margin: 20px 0 0;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
 /* PC */
 @media (min-width: 1200px) {
 }
@@ -26,6 +33,10 @@ body {
     margin-left: 0;
     width: 100%;
     z-index: 9999;
+  }
+
+  .customer-time-filter {
+    margin: 80px 0 0;
   }
 }
 
@@ -83,6 +94,12 @@ body {
     padding: 0;
   }
 
+  .main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .customer-time-filter,
   #time-filter {
     align-self: center;
     align-items: center;

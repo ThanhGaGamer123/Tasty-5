@@ -156,7 +156,7 @@ select {
   margin-right: 10px;
 }
 
-button {
+.btn-notPagi {
   background-color: var(--primary-color); /* Màu nền cho nút */
   color: white; /* Màu chữ */
   border: none; /* Bỏ đường viền */
@@ -169,7 +169,7 @@ button {
   font-size: 1.6rem;
 }
 
-button:hover {
+.btn-notPagi:hover {
   background-color: #27ae60; /* Màu nền khi hover */
 }
 
@@ -303,6 +303,7 @@ tbody tr td {
 }
 
 /* Date time */
+.customer-time-filter,
 #time-filter {
   max-width: 100%;
   background: #fff;
@@ -315,4 +316,22 @@ tbody tr td {
   max-width: 100%;
   width: 100%;
   align-self: center;
+}
+
+#pagination button {
+  margin: 0 5px;
+  border: 0px solid #e92526; /* Changed border style to solid */
+  border-radius: 50%; /* Set border-radius to 50% for a perfect circle */
+  cursor: pointer;
+  color: #fff;
+  background-color: #e92526;
+  font-size: 16px;
+}
+
+#pagination button:hover {
+  background-color: #27ae60;
+}
+
+#pagination button:disabled {
+  cursor: not-allowed;
 }

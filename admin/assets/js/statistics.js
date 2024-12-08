@@ -1,3 +1,5 @@
+
+
 function generateProductStatistics(filteredOrders = null) {
   let hoaDon =
     filteredOrders || JSON.parse(localStorage.getItem("hoaDon")) || [];
@@ -84,7 +86,7 @@ function generateProductStatistics(filteredOrders = null) {
                             <td>${stats.quantity}</td>
                             <td>${stats.revenue.toLocaleString()},000 VND</td>
                             <td>
-                                <button class="btn-detail product-order-detail" data-id="2" onclick="viewProductOrders('${productName}')">Xem Hóa Đơn</button>
+                                <button class="btn-notPagi" class="btn-detail product-order-detail" data-id="2" onclick="viewProductOrders('${productName}')">Xem Hóa Đơn</button>
                             </td>
                         </tr>
                     `;
@@ -94,6 +96,171 @@ function generateProductStatistics(filteredOrders = null) {
         </table>
     `;
 }
+
+
+/** 
+const ITEMS_PER_PAGE = 10; // Số lượng sản phẩm trên mỗi trang
+let currentPage = 1; // Trang hiện tại
+
+function generateProductStatistics(filteredOrders = null) {
+    let hoaDon =
+        filteredOrders || JSON.parse(localStorage.getItem("hoaDon")) || [];
+
+    let productStats = {};
+    let totalRevenue = 0;
+
+    // Lọc các đơn hàng đã giao
+    let deliveredOrders = hoaDon.filter(
+        (order) => order[1].orderStatus === "Đã giao"
+    );
+
+    // Tổng hợp dữ liệu thống kê
+    deliveredOrders.forEach((order) => {
+        let cart = order[0]; // Giỏ hàng
+        cart.forEach((item) => {
+            if (!item || !item.product_name || !item.soluong || !item.product_price) {
+                return; // Bỏ qua nếu dữ liệu mặt hàng không đầy đủ
+            }
+
+            let { product_name, soluong, product_price } = item;
+
+            if (!productStats[product_name]) {
+                productStats[product_name] = {
+                    quantity: 0,
+                    revenue: 0,
+                    orders: [],
+                };
+            }
+
+            productStats[product_name].quantity += soluong;
+            productStats[product_name].revenue += soluong * product_price;
+            productStats[product_name].orders.push(order);
+            totalRevenue += soluong * product_price;
+        });
+    });
+
+    // Tính toán mặt hàng bán chạy nhất và ít bán nhất
+    let mostSoldProduct = null;
+    let leastSoldProduct = null;
+    let maxQuantity = -Infinity;
+    let minQuantity = Infinity;
+
+    for (let productName in productStats) {
+        let { quantity } = productStats[productName];
+        if (quantity > maxQuantity) {
+            maxQuantity = quantity;
+            mostSoldProduct = productName;
+        }
+        if (quantity < minQuantity) {
+            minQuantity = quantity;
+            leastSoldProduct = productName;
+        }
+    }
+
+    // Hiển thị thống kê
+    let statsContainer = document.getElementById("content");
+    statsContainer.innerHTML = `
+        <h2>Thống Kê Mặt Hàng</h2>
+        <p><strong>Tổng Doanh Thu:</strong> ${totalRevenue.toLocaleString()},000 VND</p>
+        <p><strong>Mặt Hàng Bán Chạy Nhất:</strong> ${
+          mostSoldProduct ? mostSoldProduct : "Không xác định"
+        } (${maxQuantity !== -Infinity ? maxQuantity : 0} sản phẩm)</p>
+        <p><strong>Mặt Hàng Ít Bán Nhất:</strong> ${
+          leastSoldProduct ? leastSoldProduct : "Không xác định"
+        } (${minQuantity !== Infinity ? minQuantity : 0} sản phẩm)</p>
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th>Tên Mặt Hàng</th>
+                    <th>Số Lượng Bán</th>
+                    <th>Doanh Thu</th>
+                    <th>Xem Hóa Đơn</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${displayProductRows(productStats)}
+            </tbody>
+        </table>
+    `;
+
+    // Xử lý phân trang
+    Dieukhienpage(Object.keys(productStats).length);
+}
+
+function displayProductRows(productStats) {
+    const productKeys = Object.keys(productStats);
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const currentProducts = productKeys.slice(startIndex, endIndex);
+
+    return currentProducts.map((productName) => {
+        let stats = productStats[productName];
+        return `
+            <tr>
+                <td><div class="prod-img-title"><p>${productName}</p></div></td>
+                <td>${stats.quantity}</td>
+                <td>${stats.revenue.toLocaleString()},000 VND</td>
+                <td>
+                    <button class="btn-notPagi" class="btn-detail product-order-detail" data-id="2" onclick="viewProductOrders('${productName}')">Xem Hóa Đơn</button>
+                </td>
+            </tr>
+        `;
+    }).join("");
+}
+
+function Dieukhienpage(totalProducts) {
+    const phanTrangSp = document.getElementById("pagination");
+    phanTrangSp.innerHTML = "";
+
+    const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
+
+    // Nút trang trước
+    if (currentPage > 1) {
+        const prevButton = document.createElement("button");
+        prevButton.innerText = "<";
+        prevButton.onclick = () => {
+            currentPage--;
+            generateProductStatistics(); // Cập nhật thống kê
+        };
+        phanTrangSp.appendChild(prevButton);
+    }
+
+    // Nút số trang
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement("button");
+        pageButton.innerText = i;
+        pageButton.onclick = () => {
+            currentPage = i;
+            generateProductStatistics(); // Cập nhật thống kê
+        };
+        if (i === currentPage) {
+            pageButton.disabled = true; // Vô hiệu hóa nút trang hiện tại
+        }
+        phanTrangSp.appendChild(pageButton);
+    }
+
+    // Nút trang sau
+    if (currentPage < totalPages) {
+        const nextButton = document.createElement("button");
+        nextButton.innerText = ">";
+        nextButton.onclick = () => {
+            currentPage++;
+            generateProductStatistics(); // Cập nhật thống kê
+        };
+        phanTrangSp.appendChild(nextButton);
+    }
+}
+
+// Gọi hàm để hiển thị dữ liệu ban đầu
+generateProductStatistics();
+
+*/
+//
+
+
+
+
+
 
 // Hiển thị hóa đơn liên quan đến một mặt hàng
 function viewProductOrders(productName) {
@@ -162,6 +329,8 @@ document.addEventListener("DOMContentLoaded", function () {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Tính toán doanh thu của từng khách hàng
+
+// Tính toán doanh thu của từng khách hàng
 function calculateRevenue() {
   let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
   let customerRevenue = {}; // Đối tượng chứa doanh thu của từng khách hàng
@@ -217,20 +386,25 @@ function getTop5Customers() {
 }
 
 // Hiển thị thông tin 5 khách hàng phát sinh doanh thu nhiều nhất
-function displayTop5Customers() {
-  let topCustomers = getTop5Customers(); // Lấy danh sách top 5 khách hàng
+function displayTop5Customers(filteredCustomers = null) {
+  let topCustomers =
+    filteredCustomers || getTop5Customers(); // Lấy danh sách top 5 khách hàng
 
   let customerListContainer = document.getElementById("top-customers-list");
   customerListContainer.innerHTML = ""; // Làm mới danh sách khách hàng
 
   topCustomers.forEach((customer) => {
+    let accArray = JSON.parse(localStorage.getItem("accArray")) || [];
+    let user = accArray.find((u) => u.email === customer.email);
+    let customerName = user ? user.name : "Không rõ";
+
     let customerElement = document.createElement("div");
     customerElement.classList.add("customer-item");
     customerElement.innerHTML = `
-            <h3>${customer.name}</h3>
+            <h3>${customerName}</h3>
             <p>Email: ${customer.email}</p>
             <p>Doanh thu: ${customer.revenue.toLocaleString()} VND</p>
-            <button onclick="viewOrdersByCustomer('${
+            <button class="btn-notPagi" onclick="viewOrdersByCustomer('${
               customer.email
             }')">Hóa đơn người dùng</button>
         `;
@@ -294,6 +468,68 @@ function closeOrderDetails1() {
     modal.style.display = "none"; // Ẩn modal
   }
 }
+
+
+
+
+
+function filterCustomersByTime(startDate, endDate) {
+  let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+  let filteredOrders = filterOrdersByTime(hoaDon, startDate, endDate); // Dùng hàm lọc đã có
+
+  // Tính doanh thu của từng khách hàng từ các đơn hàng đã lọc
+  let customerRevenue = {};
+  filteredOrders.forEach((order) => {
+    let customerInfo = order[1];
+    let totalAmount = customerInfo.totalAmount;
+
+    if (customerInfo.orderStatus === "Đã giao") {
+      if (customerRevenue[customerInfo.email]) {
+        customerRevenue[customerInfo.email] += totalAmount;
+      } else {
+        customerRevenue[customerInfo.email] = totalAmount;
+      }
+    }
+  });
+
+  // Sắp xếp và lấy top 5 khách hàng
+  let sortedCustomers = Object.keys(customerRevenue)
+    .map((email) => ({
+      email: email,
+      revenue: customerRevenue[email],
+    }))
+    .sort((a, b) => b.revenue - a.revenue)
+    .slice(0, 5);
+
+  return sortedCustomers;
+}
+
+
+
+function applyCustomerTimeFilter() {
+  let startDate = document.getElementById("customer-start-date").value;
+  let endDate = document.getElementById("customer-end-date").value;
+
+  if (!startDate || !endDate) {
+    alert("Vui lòng chọn khoảng thời gian hợp lệ!");
+    return;
+  }
+
+  let filteredCustomers = filterCustomersByTime(startDate, endDate);
+
+  if (filteredCustomers.length === 0) {
+    alert("Không có khách hàng nào trong khoảng thời gian này.");
+    return;
+  }
+
+  displayTop5Customers(filteredCustomers); // Hiển thị kết quả đã lọc
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  displayTop5Customers(); // Hiển thị Top 5 khách hàng tổng quát
+});
+
 
 //////////////////////////////////////////////////////////////
 function filterOrdersByTime(hoaDon, startDate, endDate) {
