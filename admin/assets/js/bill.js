@@ -1,48 +1,50 @@
-let currentPage = 1; // Trang hiện tại
-const itemsPerPage = 5; // Số đơn hàng mỗi trang
+let currentPage = 1;
+const itemsPerPage = 20;
+let filteredOrdersCache = null; // Bộ nhớ tạm cho danh sách đã lọc
 
-// Hiển thị danh sách đơn hàng với phân trang
-function displayOrders(startDate = null, endDate = null) {
+displayOrders();
+
+function displayOrders() {
   let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
   let ordersList = document.getElementById("orders-list");
-
   ordersList.innerHTML = ""; // Xóa nội dung hiện tại
 
-  // Lọc các đơn hàng trong khoảng thời gian
-  if (startDate && endDate) {
-    startDate = new Date(startDate);
-    endDate = new Date(endDate);
-
-    hoaDon = hoaDon.filter((order) => {
-      let orderDate = new Date(order[1].orderDate);
-      return orderDate >= startDate && orderDate <= endDate;
-    });
-  }
+  // Sử dụng danh sách đã lọc nếu có, ngược lại sử dụng tất cả đơn hàng
+  let displayedOrders = filteredOrdersCache || hoaDon;
 
   // Tính toán số trang
-  const totalPages = Math.ceil(hoaDon.length / itemsPerPage);
+  const totalPages = Math.ceil(displayedOrders.length / itemsPerPage);
+
+  // Điều chỉnh currentPage nếu cần
+  currentPage = Math.min(Math.max(1, currentPage), totalPages);
 
   // Lấy các đơn hàng cho trang hiện tại
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentOrders = hoaDon.slice(startIndex, endIndex);
+  const currentOrders = displayedOrders.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   // Hiển thị danh sách đơn hàng
   currentOrders.forEach((order, index) => {
     let orderInfo = order[1];
-
+    let userInfo = order[0][0];
     let orderElement = document.createElement("div");
     orderElement.classList.add("order-item");
     orderElement.innerHTML = `
             <h3>Đơn hàng #${startIndex + index + 1}</h3>
-            <p><strong>Phương thức thanh toán:</strong> ${
-              orderInfo.paymentMethod
-            }</p>
+            <p><strong>Tên khách hàng:</strong> ${userInfo.name}</p>
             <p><strong>Ngày đặt hàng:</strong> ${new Date(
               orderInfo.orderDate
             ).toLocaleString()}</p>
             <p><strong>Địa chỉ nhận hàng:</strong> ${
               orderInfo.deliveryAddress
+            }</p>
+            <p><strong>SĐT:</strong> ${userInfo.phone}</p>
+            <p><strong>Tổng tiền:</strong> ${
+              orderInfo.totalAmount
+                ? formatCurrency(orderInfo.totalAmount)
+                : "Chưa tính"
             }</p>
             <p><strong>Trạng thái đơn hàng:</strong> 
                 <select onchange="updateOrderStatus(${
@@ -62,13 +64,6 @@ function displayOrders(startDate = null, endDate = null) {
                     }>Đã huỷ</option>
                 </select>
             </p>
-            <p><strong>Tổng tiền:</strong> ${
-              orderInfo.totalAmount
-                ? orderInfo.totalAmount.toLocaleString() + " VND"
-                : "Chưa tính"
-            }</p>
-            <p><strong>Ghi chú:</strong> ${orderInfo.note}</p>
-            <p><strong>Email:</strong> ${orderInfo.email}</p>
             <button onclick="viewOrderDetails(${
               startIndex + index
             })">Hiển thị chi tiết</button>
@@ -77,304 +72,98 @@ function displayOrders(startDate = null, endDate = null) {
   });
 
   // Hiển thị nút phân trang
-  displayPagination(totalPages);
+  displayPagination(displayedOrders.length);
 }
 
-// Hiển thị các nút phân trang
-function displayPagination(totalPages) {
-  const paginationContainer = document.getElementById("pagination");
-  paginationContainer.innerHTML = ""; // Xóa nội dung hiện tại
+function displayPagination(totalOrders) {
+  const pagination = document.getElementById("pagination");
+  pagination.innerHTML = ""; // Xóa nội dung hiện tại
+
+  // Tính toán số trang
+  const totalPages = Math.ceil(totalOrders / itemsPerPage);
 
   // Nút trang trước
   if (currentPage > 1) {
-    const prevButton = document.createElement("button");
-    prevButton.innerText = "<";
-    prevButton.onclick = () => {
+    const prevButton = createPageButton("<", () => {
       currentPage--;
       displayOrders(); // Hiển thị lại danh sách đơn hàng
-    };
-    paginationContainer.appendChild(prevButton);
+    });
+    pagination.appendChild(prevButton);
   }
 
   // Nút số trang
   for (let i = 1; i <= totalPages; i++) {
-    const pageButton = document.createElement("button");
-    pageButton.innerText = i;
-    pageButton.onclick = () => {
+    const pageButton = createPageButton(i, () => {
       currentPage = i;
       displayOrders(); // Hiển thị lại danh sách đơn hàng
-    };
+    });
     if (i === currentPage) {
       pageButton.disabled = true; // Vô hiệu hóa nút trang hiện tại
       pageButton.style.fontWeight = "bold"; // Làm nổi bật nút
     }
-    paginationContainer.appendChild(pageButton);
+    pagination.appendChild(pageButton);
   }
 
   // Nút trang sau
   if (currentPage < totalPages) {
-    const nextButton = document.createElement("button");
-    nextButton.innerText = ">";
-    nextButton.onclick = () => {
+    const nextButton = createPageButton(">", () => {
       currentPage++;
       displayOrders(); // Hiển thị lại danh sách đơn hàng
-    };
-    paginationContainer.appendChild(nextButton);
+    });
+    pagination.appendChild(nextButton);
   }
 }
 
-// Khi trang được tải, hiển thị danh sách hóa đơn
-window.onload = () => {
-  displayOrders(); // Gọi hàm để hiển thị hóa đơn
-};
+// Hàm tạo nút trang
+function createPageButton(text, onClick) {
+  const button = document.createElement("button");
+  button.innerText = text;
+  button.onclick = onClick;
+  return button;
+}
 
 // Cập nhật trạng thái đơn hàng
 function updateOrderStatus(orderIndex, newStatus) {
   let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+  let displayedOrders = filteredOrdersCache || hoaDon;
 
-  if (hoaDon[orderIndex]) {
-    let currentStatus = hoaDon[orderIndex][1].orderStatus; // Lấy trạng thái hiện tại của đơn hàng
+  // Tìm chỉ số thực trong danh sách gốc
+  let realIndex = hoaDon.findIndex(
+    (order) =>
+      JSON.stringify(order) === JSON.stringify(displayedOrders[orderIndex])
+  );
 
-    // Nếu trạng thái hiện tại là "Đã hủy", không cho phép thay đổi
-    if (currentStatus === "Đã huỷ") {
-      alert("Không thể thay đổi tình trạng của đơn hàng đã hủy.");
-      return;
-    }
-
-    // Cập nhật tình trạng đơn hàng
-    hoaDon[orderIndex][1].orderStatus = newStatus;
-    localStorage.setItem("hoaDon", JSON.stringify(hoaDon)); // Lưu lại vào localStorage
-
-    alert("Tình trạng đơn hàng đã được cập nhật.");
-    applyFilters(); // Hiển thị lại danh sách theo bộ lọc hiện tại
-  }
-}
-
-// Hiển thị chi tiết đơn hàng trong modal
-function viewOrderDetails(originalIndex) {
-  let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
-
-  if (hoaDon[originalIndex]) {
-    let order = hoaDon[originalIndex];
-    let cart = order[0]; // Giỏ hàng
-    let orderInfo = order[1]; // Thông tin đơn hàng
-
-    let detailsContainer = document.getElementById("order-details-container");
-
-    let detailsHTML = `
-            <h2>Chi Tiết Đơn Hàng</h2>
-            <p><strong>Phương thức thanh toán:</strong> ${
-              orderInfo.paymentMethod
-            }</p>
-            <p><strong>Ngày đặt hàng:</strong> ${new Date(
-              orderInfo.orderDate
-            ).toLocaleString()}</p>
-            <p><strong>Địa chỉ nhận hàng:</strong> ${
-              orderInfo.deliveryAddress
-            }</p>
-            <p><strong>Trạng thái đơn hàng:</strong> ${
-              orderInfo.orderStatus
-            }</p>
-            <p><strong>Tổng tiền:</strong> ${
-              orderInfo.totalAmount
-                ? orderInfo.totalAmount.toLocaleString() + " VND"
-                : "Chưa tính"
-            }</p>
-            <p><strong>Ghi chú:</strong> ${orderInfo.note}</p>
-            <p><strong>Email:</strong> ${orderInfo.email}</p>
-            <h3>Sản phẩm trong giỏ hàng:</h3>
-            <ul>
-        `;
-
-    cart.forEach((item) => {
-      if (item && item.product_name && item.soluong && item.product_price) {
-        detailsHTML += `
-                    <li>${item.product_name} - Số lượng: ${
-          item.soluong
-        } - Đơn giá: ${item.product_price.toLocaleString()} VND</li>
-                `;
-      }
-    });
-
-    detailsHTML += "</ul>";
-
-    detailsContainer.innerHTML = detailsHTML;
-
-    // Hiển thị modal
-    document.getElementById("order-details-modal").style.display = "block";
-  }
-}
-
-// Đóng cửa sổ modal
-function closeOrderDetails() {
-  document.getElementById("order-details-modal").style.display = "none";
-}
-
-// Lọc theo ngày
-function applyDateFilter() {
-  let startDate = document.getElementById("start-date").value;
-  let endDate = document.getElementById("end-date").value;
-
-  if (!startDate || !endDate) {
-    alert("Vui lòng chọn khoảng thời gian hợp lệ.");
+  if (realIndex === -1) {
+    alert("Không thể tìm thấy đơn hàng.");
     return;
   }
 
-  displayOrders(startDate, endDate); // Hiển thị lại danh sách đơn hàng với bộ lọc ngày
-}
+  let selectedOrder = hoaDon[realIndex];
+  let currentStatus = selectedOrder[1].orderStatus;
 
-// Lọc theo tình trạng
-function filterByStatus() {
-  let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
-  let statusFilter = document.getElementById("status-filter").value;
-
-  let filteredOrders = hoaDon.filter((order) => {
-    let orderInfo = order[1]; // Lấy thông tin đơn hàng (phần tử thứ 2)
-    return statusFilter === "" || orderInfo.orderStatus === statusFilter;
-  });
-
-  displayFilteredOrders(filteredOrders); // Hiển thị các đơn hàng đã lọc
-}
-
-// Hiển thị đơn hàng đã lọc
-function displayFilteredOrders(filteredOrders) {
-  let ordersList = document.getElementById("orders-list");
-  ordersList.innerHTML = ""; // Xóa danh sách cũ
-
-  filteredOrders.forEach((order, index) => {
-    let orderInfo = order[1];
-    let originalIndex = order[2]; // Chỉ số thực của đơn hàng trong hoaDon
-
-    let orderElement = document.createElement("div");
-    orderElement.classList.add("order-item");
-    orderElement.innerHTML = `
-            <h3>Đơn hàng #${index + 1}</h3>
-            <p><strong>Phương thức thanh toán:</strong> ${
-              orderInfo.paymentMethod
-            }</p>
-            <p><strong>Ngày đặt hàng:</strong> ${new Date(
-              orderInfo.orderDate
-            ).toLocaleString()}</p>
-            <p><strong>Địa chỉ nhận hàng:</strong> ${
-              orderInfo.deliveryAddress
-            }</p>
-            <p><strong>Trạng thái đơn hàng:</strong> 
-                <select onchange="updateOrderStatus(${originalIndex}, this.value)">
-                    <option value="Chưa xử lý" ${
-                      orderInfo.orderStatus === "Chưa xử lý" ? "selected" : ""
-                    }>Chưa xử lý</option>
-                    <option value="Đã xác nhận" ${
-                      orderInfo.orderStatus === "Đã xác nhận" ? "selected" : ""
-                    }>Đã xác nhận</option>
-                    <option value="Đã giao" ${
-                      orderInfo.orderStatus === "Đã giao" ? "selected" : ""
-                    }>Đã giao</option>
-                    <option value="Đã huỷ" ${
-                      orderInfo.orderStatus === "Đã huỷ" ? "selected" : ""
-                    }>Đã huỷ</option>
-                </select>
-            </p>
-            <p><strong>Ghi chú:</strong> ${orderInfo.note}</p>
-            <p><strong>Email:</strong> ${orderInfo.email}</p>
-            <button onclick="viewOrderDetails(${originalIndex})">Hiển thị chi tiết</button>
-        `;
-    ordersList.appendChild(orderElement);
-  });
-
-  if (filteredOrders.length === 0) {
-    ordersList.innerHTML =
-      "<p>Không có đơn hàng nào phù hợp với tiêu chí lọc.</p>";
+  // Không cho phép thay đổi trạng thái đơn hàng đã hủy
+  if (currentStatus === "Đã huỷ" && newStatus !== currentStatus) {
+    alert("Không thể thay đổi tình trạng của đơn hàng đã hủy.");
+    displayOrders();
+    return;
   }
 
-  // Cập nhật phân trang sau khi lọc
-  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
-  displayPagination(totalPages); // Hiển thị lại phân trang
+  // Cập nhật trạng thái mới
+  selectedOrder[1].orderStatus = newStatus;
+
+  // Lưu lại danh sách vào localStorage
+  localStorage.setItem("hoaDon", JSON.stringify(hoaDon));
+  applyFilters();
+
+  // Cập nhật trực tiếp dropdown trên giao diện
+  const orderItems = document.querySelectorAll(".order-item");
+  const dropdown = orderItems[orderIndex].querySelector("select");
+  dropdown.value = newStatus;
+
+  alert("Tình trạng đơn hàng đã được cập nhật.");
 }
 
-// Lọc theo quận/huyện
-function filterByDistrict(hoaDon, districtFilter) {
-  return hoaDon.filter((order) => {
-    let orderInfo = order[1];
-    let deliveryAddress = orderInfo.deliveryAddress;
-
-    // Nếu không chọn quận/huyện, trả về tất cả
-    if (districtFilter === "all") return true;
-
-    // Xác định tên quận/huyện từ bộ lọc
-    let districtName = "";
-    switch (districtFilter) {
-      case "Quận 1":
-        districtName = "Quận 1";
-        break;
-      case "Quận 2":
-        districtName = "Quận 2";
-        break;
-      case "Quận 3":
-        districtName = "Quận 3";
-        break;
-      case "Quận 4":
-        districtName = "Quận 4";
-        break;
-      case "Quận 5":
-        districtName = "Quận 5";
-        break;
-      case "Quận 6":
-        districtName = "Quận 6";
-        break;
-      case "Quận 7":
-        districtName = "Quận 7";
-        break;
-      case "Quận 8":
-        districtName = "Quận 8";
-        break;
-      case "Quận 9":
-        districtName = "Quận 9";
-        break;
-      case "Quận 10":
-        districtName = "Quận 10";
-        break;
-      case "Quận 11":
-        districtName = "Quận 11";
-        break;
-      case "Quận 12":
-        districtName = "Quận 12";
-        break;
-      case "Quận Gò Vấp":
-        districtName = "Gò Vấp";
-        break;
-      case "Quận Bình Tân":
-        districtName = "Bình Tân";
-        break;
-      case "Quận Bình Thạnh":
-        districtName = "Bình Thạnh";
-        break;
-      case "Quận Phú Nhuận":
-        districtName = "Phú Nhuận";
-        break;
-      case "Quận Thủ Đức":
-        districtName = "Thủ Đức";
-        break;
-      case "Huyện Củ Chi":
-        districtName = "Củ Chi";
-        break;
-      case "Huyện Cần Giờ":
-        districtName = "Cần Giờ";
-        break;
-      case "Huyện Hóc Môn":
-        districtName = "Hóc Môn";
-        break;
-      case "Huyện Nhà Bè":
-        districtName = "Nhà Bè";
-        break;
-      // Thêm các trường hợp khác nếu cần
-    }
-
-    // Kiểm tra xem địa chỉ có chứa tên quận/huyện không
-    return deliveryAddress.includes(districtName);
-  });
-}
-
-// Áp dụng tất cả các bộ lọc
+// Lọc và cập nhật danh sách đơn hàng
 function applyFilters() {
   let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
   let startDate = document.getElementById("start-date").value;
@@ -385,28 +174,118 @@ function applyFilters() {
   if (startDate) startDate = new Date(startDate);
   if (endDate) endDate = new Date(endDate);
 
-  let filteredOrders = hoaDon
-    .map((order, index) => {
-      let orderInfo = order[1];
-      let orderDate = new Date(orderInfo.orderDate);
+  filteredOrdersCache = hoaDon.filter((order) => {
+    let orderInfo = order[1];
+    let orderDate = new Date(orderInfo.orderDate);
 
-      let isInDateRange =
-        (!startDate || orderDate >= startDate) &&
-        (!endDate || orderDate <= endDate);
-      let isStatusMatch =
-        statusFilter === "" || orderInfo.orderStatus === statusFilter;
+    let isInDateRange =
+      (!startDate || orderDate >= startDate) &&
+      (!endDate || orderDate <= endDate);
+    let isStatusMatch =
+      statusFilter === "" || orderInfo.orderStatus === statusFilter;
+    let isDistrictMatch = filterByDistrict([order], districtFilter).length > 0;
 
-      if (isInDateRange && isStatusMatch) {
-        return [...order, index]; // Thêm chỉ số thực
+    return isInDateRange && isStatusMatch && isDistrictMatch;
+  });
+
+  // currentPage = 1; // Reset về trang đầu sau khi lọc
+  displayOrders(); // Hiển thị danh sách đã lọc
+}
+
+// Lọc theo quận/huyện
+function filterByDistrict(hoaDon, districtFilter) {
+  return hoaDon.filter((order) => {
+    let orderInfo = order[1];
+    let deliveryAddress = orderInfo.deliveryAddress.trim().toLowerCase();
+
+    if (districtFilter === "all") return true;
+
+    let districtName = districtFilter.trim().toLowerCase();
+    let addressParts = deliveryAddress.split(", ");
+
+    return addressParts.some(
+      (part) => part.trim().toLowerCase() === districtName
+    );
+  });
+}
+
+function formatCurrency(amount) {
+  if (amount === null || amount === undefined) return "0";
+  return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VND";
+}
+
+// Hiển thị chi tiết đơn hàng
+function viewOrderDetails(originalIndex) {
+  let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+  let displayedOrders = filteredOrdersCache || hoaDon;
+
+  // Lấy thông tin đơn hàng từ danh sách đã lọc
+  let selectedOrder = displayedOrders[originalIndex];
+
+  if (!selectedOrder) {
+    alert("Không tìm thấy thông tin đơn hàng.");
+    return;
+  }
+
+  // Tìm chỉ số trong hoaDon dựa trên thuộc tính duy nhất
+  let realIndex = hoaDon.findIndex((order) => {
+    // So sánh các thuộc tính cần thiết để xác định đơn hàng
+    return (
+      order[1].orderDate === selectedOrder[1].orderDate &&
+      order[1].deliveryAddress === selectedOrder[1].deliveryAddress
+    );
+  });
+
+  if (realIndex !== -1) {
+    let order = hoaDon[realIndex];
+    let cart = order[0];
+    let orderInfo = order[1];
+    let userInfo = order[0][0];
+
+    let detailsContainer = document.getElementById("order-details-container");
+    let detailsHTML = `
+            <h2>Chi Tiết Đơn Hàng</h2>
+            <p><strong>Tên Khách Hàng:</strong> ${userInfo.name}</p>
+            <p><strong>Email:</strong> ${userInfo.email}</p>
+            <p><strong>Ngày đặt hàng:</strong> ${new Date(
+              orderInfo.orderDate
+            ).toLocaleString()}</p>
+            <p><strong>Địa chỉ nhận hàng:</strong> ${
+              orderInfo.deliveryAddress
+            }</p>
+            <p><strong>SĐT:</strong> ${userInfo.phone}</p>
+            <p><strong>Phương thức thanh toán:</strong> ${
+              orderInfo.paymentMethod
+            }</p>
+            <p><strong>Ghi chú:</strong> ${
+              orderInfo.note ? orderInfo.note : "Không có"
+            }</p>
+            <p><strong>Tổng tiền:</strong> ${
+              orderInfo.totalAmount
+                ? formatCurrency(orderInfo.totalAmount)
+                : "Chưa tính"
+            }</p>
+            <h3>Sản phẩm trong giỏ hàng:</h3>
+            <ul>
+        `;
+
+    cart.forEach((item) => {
+      if (item && item.product_name && item.soluong && item.product_price) {
+        detailsHTML += `<li>${item.product_name} - Số lượng: ${
+          item.soluong
+        } - Đơn giá: ${item.product_price.toLocaleString()} VND</li>`;
       }
-      return null;
-    })
-    .filter((order) => order !== null);
+    });
 
-  // Lọc tiếp theo địa chỉ (quận/huyện)
-  filteredOrders = filterByDistrict(filteredOrders, districtFilter);
+    detailsHTML += "</ul>";
+    detailsContainer.innerHTML = detailsHTML;
 
-  // Cập nhật lại danh sách đơn hàng
-  currentPage = 1; // Reset về trang đầu
-  displayFilteredOrders(filteredOrders); // Hiển thị danh sách đã lọc
+    document.getElementById("order-details-modal").style.display = "block";
+  } else {
+    alert("Không tìm thấy thông tin chi tiết đơn hàng.");
+  }
+}
+
+function closeOrderDetails() {
+  document.getElementById("order-details-modal").style.display = "none";
 }

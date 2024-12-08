@@ -300,6 +300,7 @@ button:hover {
   justify-content: center;
   align-items: center;
   font-size: 1.6rem;
+  gap: 16px;
 }
 #order-details-container li {
   display: flex;
@@ -379,4 +380,27 @@ p {
 .button__img:hover {
   transform: scale(1.1);
   animation: none;
+}
+
+#pagination button {
+  margin: 0 5px;
+  border: 0px solid #e92526; /* Changed border style to solid */
+  border-radius: 50%; /* Set border-radius to 50% for a perfect circle */
+  cursor: pointer;
+  color: #fff;
+  background-color: #e92526;
+  font-size: 16px;
+}
+
+#pagination button:hover {
+  background-color: #27ae60;
+}
+
+#pagination button:disabled {
+  cursor: not-allowed;
+}
+
+#btn-lochd {
+  align-self: center;
+  margin-top: 12px;
 }

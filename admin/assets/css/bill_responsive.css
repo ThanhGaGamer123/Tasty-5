@@ -92,6 +92,10 @@ body {
   #order-details-container ul {
     padding: 10px 0;
   }
+
+  #pagination {
+    gap: 0;
+  }
 }
 
 @media (max-width: 499.98px) {
