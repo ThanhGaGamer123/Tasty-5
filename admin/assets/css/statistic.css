@@ -240,10 +240,7 @@ tbody tr td {
   column-gap: 10px;
 }
 
-#order-details-modal {
-  margin-left: 25%;
-  width: 75%;
-}
+#order-details-modal,
 #order-details-modal1 {
   margin-left: 25%;
   width: 75%;
@@ -303,4 +300,14 @@ tbody tr td {
   font-size: 2rem;
   font-weight: bold;
   margin: 12px 0;
+}
+
+/* Date time */
+#time-filter {
+  max-width: 100%;
+  background: #fff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 24px;
+  border-radius: 12px;
+  display: flex;
 }

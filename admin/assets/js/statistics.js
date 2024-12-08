@@ -1,5 +1,7 @@
-function generateProductStatistics() {
-  let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+function generateProductStatistics(filteredOrders = null) {
+  let hoaDon =
+    filteredOrders || JSON.parse(localStorage.getItem("hoaDon")) || [];
+
   let productStats = {};
   let totalRevenue = 0;
 
@@ -54,6 +56,7 @@ function generateProductStatistics() {
 
   // Hiển thị kết quả thống kê
   let statsContainer = document.getElementById("statistics-container");
+  let statsItem;
   statsContainer.innerHTML = `
         <h2>Thống Kê Mặt Hàng</h2>
         <p><strong>Tổng Doanh Thu:</strong> ${totalRevenue.toLocaleString()},000 VND</p>
@@ -96,6 +99,7 @@ function generateProductStatistics() {
 // Hiển thị hóa đơn liên quan đến một mặt hàng
 function viewProductOrders(productName) {
   let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+  let accArray = JSON.parse(localStorage.getItem("accArray")) || [];
   let deliveredOrders = hoaDon.filter(
     (order) => order[1].orderStatus === "Đã giao"
   );
@@ -111,9 +115,15 @@ function viewProductOrders(productName) {
   productOrders.forEach((order) => {
     let cart = order[0];
     let orderInfo = order[1];
+    let customerInfo = accArray.find((user) => user.email === orderInfo.email); // Tìm thông tin khách hàng
+    let customerName = customerInfo ? customerInfo.name : "Không rõ";
+    let phoneNumber = customerInfo ? customerInfo.phone : "Không rõ"; // Lấy số điện thoại
 
     let orderDetails = `
             <div class="order-item">
+                <p><strong>Tên khách hàng:</strong> ${customerName}</p>
+                <p><strong>Email:</strong> ${orderInfo.email}</p>
+                <p><strong>Số điện thoại:</strong> ${phoneNumber}</p>
                 <p><strong>Ngày đặt hàng:</strong> ${new Date(
                   orderInfo.orderDate
                 ).toLocaleString()}</p>
@@ -180,9 +190,11 @@ function calculateRevenue() {
 
 // Lấy ra 5 khách hàng phát sinh doanh thu nhiều nhất
 function getTop5Customers() {
+  let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+  let accArray = JSON.parse(localStorage.getItem("accArray")) || [];
   let customerRevenue = calculateRevenue();
 
-  // Chuyển đối tượng thành mảng để có thể sắp xếp
+  // Chuyển doanh thu thành mảng để có thể sắp xếp
   let sortedCustomers = Object.keys(customerRevenue).map((email) => ({
     email: email,
     revenue: customerRevenue[email],
@@ -191,23 +203,33 @@ function getTop5Customers() {
   // Sắp xếp giảm dần theo doanh thu
   sortedCustomers.sort((a, b) => b.revenue - a.revenue);
 
-  // Lấy 5 khách hàng đầu tiên
-  return sortedCustomers.slice(0, 5);
+  // Lấy 5 khách hàng đầu tiên và tìm tên của họ
+  let top5Customers = sortedCustomers.slice(0, 5).map((customer) => {
+    // Đối chiếu email với accArray để lấy tên
+    let user = accArray.find((u) => u.email === customer.email);
+    return {
+      name: user ? user.name : "Không rõ", // Lấy tên, nếu không có thì ghi "Không rõ"
+      email: customer.email,
+      revenue: customer.revenue,
+    };
+  });
+
+  return top5Customers;
 }
 
 // Hiển thị thông tin 5 khách hàng phát sinh doanh thu nhiều nhất
 function displayTop5Customers() {
-  let topCustomers = getTop5Customers();
+  let topCustomers = getTop5Customers(); // Lấy danh sách top 5 khách hàng
+
   let customerListContainer = document.getElementById("top-customers-list");
   customerListContainer.innerHTML = ""; // Làm mới danh sách khách hàng
 
   topCustomers.forEach((customer) => {
-    let orderInfo = getOrderByCustomerEmail(customer.email); // Lấy thông tin đơn hàng
-
     let customerElement = document.createElement("div");
     customerElement.classList.add("customer-item");
     customerElement.innerHTML = `
-            <h3>Email: ${customer.email}</h3>
+            <h3>${customer.name}</h3>
+            <p>Email: ${customer.email}</p>
             <p>Doanh thu: ${customer.revenue.toLocaleString()} VND</p>
             <button onclick="viewOrdersByCustomer('${
               customer.email
@@ -226,12 +248,19 @@ function getOrderByCustomerEmail(email) {
 // Hiển thị các đơn hàng của khách hàng
 function viewOrdersByCustomer(email) {
   let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+  let accArray = JSON.parse(localStorage.getItem("accArray")) || [];
   let ordersForCustomer = hoaDon.filter((order) => order[1].email === email);
 
   let orderDetailsContainer = document.getElementById(
     "order-details-container1"
   );
   orderDetailsContainer.innerHTML = ""; // Làm mới thông tin chi tiết
+
+  if (ordersForCustomer.length > 0) {
+    let user = accArray.find((u) => u.email === email);
+    let customerName = user ? user.name : "Không rõ"; // Lấy tên khách hàng
+    orderDetailsContainer.innerHTML += `<h2>Khách hàng: ${customerName}</h2>`;
+  }
 
   ordersForCustomer.forEach((order) => {
     let orderInfo = order[1];
@@ -246,10 +275,10 @@ function viewOrdersByCustomer(email) {
               orderInfo.deliveryAddress
             }</p>
             <p><strong>Trạng thái:</strong> ${orderInfo.orderStatus}</p>
-            
         `;
     orderDetailsContainer.appendChild(orderElement);
   });
+
   // Hiển thị modal
   const modal = document.getElementById("order-details-modal1");
   if (modal) {
@@ -266,3 +295,58 @@ function closeOrderDetails1() {
     modal.style.display = "none"; // Ẩn modal
   }
 }
+
+//////////////////////////////////////////////////////////////
+function filterOrdersByTime(hoaDon, startDate, endDate) {
+  let start = new Date(startDate);
+  let end = new Date(endDate);
+  // Thêm thời gian cuối ngày vào ngày kết thúc
+  end.setHours(23, 59, 59, 999);
+
+  // Lọc các đơn hàng nằm trong khoảng thời gian
+  return hoaDon.filter((order) => {
+    let orderDate = new Date(order[1].orderDate);
+    return orderDate >= start && orderDate <= end;
+  });
+}
+
+function applyTimeFilter() {
+  let startDate = document.getElementById("start-date").value;
+  let endDate = document.getElementById("end-date").value;
+
+  if (!startDate || !endDate) {
+    alert("Vui lòng chọn khoảng thời gian hợp lệ!");
+    return;
+  }
+
+  let hoaDon = JSON.parse(localStorage.getItem("hoaDon")) || [];
+  let filteredOrders = filterOrdersByTime(hoaDon, startDate, endDate);
+
+  if (filteredOrders.length === 0) {
+    alert("Không có đơn hàng nào trong khoảng thời gian này.");
+    return;
+  }
+
+  generateProductStatistics(filteredOrders);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  generateProductStatistics(); // Thống kê tổng quát
+});
+
+// Thoát khi click ra ngoài
+document
+  .querySelector("#order-details-modal")
+  .addEventListener("click", function (event) {
+    if (event.target === document.querySelector("#order-details-modal")) {
+      closeOrderDetails();
+    }
+  });
+
+document
+  .querySelector("#order-details-modal1")
+  .addEventListener("click", function (event) {
+    if (event.target === document.querySelector("#order-details-modal1")) {
+      closeOrderDetails1();
+    }
+  });

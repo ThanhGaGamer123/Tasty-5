@@ -290,6 +290,15 @@
           <div class="container" id="top-customers-list"></div>
         </div>
 
+        <div id="time-filter">
+          <label for="start-date">Từ ngày:</label>
+          <input type="date" id="start-date" />
+
+          <label for="end-date">Đến ngày:</label>
+          <input type="date" id="end-date" />
+
+          <button onclick="applyTimeFilter()">Lọc thống kê</button>
+        </div>
         <div id="statistics-container"></div>
       </div>
 

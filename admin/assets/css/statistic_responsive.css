@@ -82,4 +82,15 @@ body {
   #statistics-container table tbody tr td {
     padding: 0;
   }
+
+  #time-filter {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  input[type="date"] {
+    width: 100%;
+  }
 }
