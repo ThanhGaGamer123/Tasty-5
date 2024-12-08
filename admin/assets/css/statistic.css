@@ -306,8 +306,13 @@ tbody tr td {
 #time-filter {
   max-width: 100%;
   background: #fff;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  padding: 24px;
+  padding: 0;
   border-radius: 12px;
   display: flex;
+}
+
+#content {
+  max-width: 100%;
+  width: 100%;
+  align-self: center;
 }
