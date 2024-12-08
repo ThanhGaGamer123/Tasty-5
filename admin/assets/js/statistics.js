@@ -55,8 +55,7 @@ function generateProductStatistics(filteredOrders = null) {
   }
 
   // Hiển thị kết quả thống kê
-  let statsContainer = document.getElementById("statistics-container");
-  let statsItem;
+  let statsContainer = document.getElementById("content");
   statsContainer.innerHTML = `
         <h2>Thống Kê Mặt Hàng</h2>
         <p><strong>Tổng Doanh Thu:</strong> ${totalRevenue.toLocaleString()},000 VND</p>
