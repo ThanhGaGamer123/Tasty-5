@@ -156,7 +156,7 @@ select {
   margin-right: 10px;
 }
 
-.btn-notPagi {
+.buttons {
   background-color: var(--primary-color); /* Màu nền cho nút */
   color: white; /* Màu chữ */
   border: none; /* Bỏ đường viền */
@@ -169,7 +169,7 @@ select {
   font-size: 1.6rem;
 }
 
-.btn-notPagi:hover {
+.buttons:hover {
   background-color: #27ae60; /* Màu nền khi hover */
 }
 
