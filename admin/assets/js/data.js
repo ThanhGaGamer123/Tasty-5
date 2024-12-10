@@ -424,7 +424,7 @@ if (!localStorage.getItem("initialized")) {
 
     // Tính ngày đặt hàng cách nhau tối thiểu 3 ngày
     const orderDate = new Date();
-    orderDate.setDate(orderDate.getDate() - i * 3); // Cách nhau 3 ngày
+    orderDate.setDate(orderDate.getDate() + i * 3); // Cách nhau 3 ngày
 
     // Chọn phương thức thanh toán ngẫu nhiên
     const paymentMethods = ["COD", "BankTransfer", "EWallet"];

@@ -477,18 +477,47 @@ function viewOrdersByCustomer(email) {
   ordersForCustomer.forEach((order) => {
     let orderInfo = order[1];
     let orderDate = new Date(orderInfo.orderDate);
+    let cart = order[0];
 
     // If no date range is set, show all orders
     if (!shouldFilterByDate || (orderDate >= start && orderDate <= end)) {
       let orderElement = document.createElement("div");
       orderElement.classList.add("order-item");
       orderElement.innerHTML = `
-          <h4>Đơn hàng ngày: ${orderDate.toLocaleDateString()}</h4>
-          <p><strong>Địa chỉ nhận hàng:</strong> ${
-            orderInfo.deliveryAddress
-          }</p>
-          <p><strong>Trạng thái:</strong> ${orderInfo.orderStatus}</p>
-      `;
+              <h4>Đơn hàng ngày: ${orderDate.toLocaleDateString()}</h4>
+              <p><strong>Địa chỉ nhận hàng:</strong> ${
+                orderInfo.deliveryAddress
+              }</p>
+              <p><strong>Phương thức thanh toán:</strong> ${
+                orderInfo.paymentMethod
+              }</p>
+              <p><strong>Ghi chú:</strong> ${
+                orderInfo.note ? orderInfo.note : "Không có"
+              }</p>
+              <p><strong>Trạng thái:</strong> ${orderInfo.orderStatus}</p>
+              <p><strong>Tổng tiền:</strong> ${orderInfo.totalAmount.toLocaleString()} VND</p>
+              <h3>Sản phẩm trong giỏ hàng:</h3>
+              <ul id="details-container-${orderInfo.orderId}"></ul>
+          `;
+
+      // Khởi tạo biến detailsHTML
+      let detailsHTML = "";
+      cart.forEach((item) => {
+        if (item && item.product_name && item.soluong && item.product_price) {
+          detailsHTML += `<li>${item.product_name} - Số lượng: ${
+            item.soluong
+          } - Đơn giá: ${item.product_price.toLocaleString()} VND</li>`;
+        }
+      });
+
+      // Cập nhật nội dung cho danh sách sản phẩm
+      let detailsContainer = orderElement.querySelector(
+        `#details-container-${orderInfo.orderId}`
+      );
+      if (detailsContainer) {
+        detailsContainer.innerHTML = detailsHTML;
+      }
+
       orderDetailsContainer.appendChild(orderElement);
     }
   });
